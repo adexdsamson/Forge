@@ -7,29 +7,38 @@ import packageJson from "./package.json" assert { type: "json" };
 
 export default [
   {
-    input: "src/index.ts",
-    external: ["react-dom"],
-    output: [
-      {
-        file: packageJson.main,
-        format: "cjs",
-        sourcemap: true,
-      },
-      {
-        file: packageJson.module,
-        format: "esm",
-        sourcemap: true,
-      },
-    ],
+    input: "src/web/index.ts",
+    external: ["react-dom", "react-native", "react"],
+    output: {
+      dir: packageJson.module,
+      format: "esm",
+      sourcemap: true,
+      // exports: "named",
+    },
     plugins: [
       resolve(),
       commonjs(),
-      typescript({ tsconfig: "./tsconfig.json" }),
+      typescript({ tsconfig: "./tsconfig.json", exclude: ["app/src/App.tsx"] }),
     ],
   },
   {
-    input: "dist/esm/types/index.d.ts",
-    output: [{ file: "dist/index.d.ts", format: "esm" }],
-    plugins: [dts()],
+    input: "react-native/index.ts",
+    external: ["react-native", "react"],
+    output: {
+      dir: `dists`,
+      // dir: packageJson.module,
+      format: "esm",
+      sourcemap: true,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      typescript({
+        tsconfig: "./tsconfig.json",
+        declarationDir: `dists`,
+        outDir: `dists`,
+        exclude: ["app/src/App.tsx", "src/web"],
+      }),
+    ],
   },
 ];

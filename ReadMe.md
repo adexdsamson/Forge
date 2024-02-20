@@ -25,12 +25,12 @@ Forge is a lightweight and user-friendly React form library designed to streamli
 You can install `Forge` via npm or yarn:
 
 ```bash
-  npm install @adexdsamson/forge
+  npm install @adexdsamson/forge react-hook-form
 ```
 or 
 
 ```bash
-  yarn add @adexdsamson/forge
+  yarn add @adexdsamson/forge react-hook-form
 ```
 ## Quickstart
 

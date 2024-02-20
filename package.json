@@ -1,6 +1,6 @@
 {
   "name": "@adexdsamson/forge",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Forge is a custom React library that enhances the functionality of react-hook-form library by providing a more streamlined and flexible approach to building forms in React applications.",
   "scripts": {
     "rollup": "rollup -c"
@@ -48,9 +48,10 @@
   "dependencies": {
     "@types/lodash": "^4.14.202"
   },
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "main": "dist",
+  "module": "dist",
   "files": [
-    "dist"
+    "dist",
+    "react-native"
   ]
 }
