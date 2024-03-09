@@ -21,24 +21,4 @@ export default [
       typescript({ tsconfig: "./tsconfig.json", exclude: ["app/src/App.tsx"] }),
     ],
   },
-  {
-    input: "react-native/index.ts",
-    external: ["react-native", "react"],
-    output: {
-      dir: `dists`,
-      // dir: packageJson.module,
-      format: "esm",
-      sourcemap: true,
-    },
-    plugins: [
-      resolve(),
-      commonjs(),
-      typescript({
-        tsconfig: "./tsconfig.json",
-        declarationDir: `dists`,
-        outDir: `dists`,
-        exclude: ["app/src/App.tsx", "src/web"],
-      }),
-    ],
-  },
 ];

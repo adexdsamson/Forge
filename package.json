@@ -51,7 +51,6 @@
   "main": "dist",
   "module": "dist",
   "files": [
-    "dist",
-    "react-native"
+    "dist"
   ]
 }
