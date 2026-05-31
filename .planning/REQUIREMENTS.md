@@ -31,10 +31,10 @@ Requirements for the initial public release. Each maps to a roadmap phase.
 
 ### Packaging
 
-- [ ] **PKG-01**: `package.json` is publish-ready — `@adexdsamson/forge` with populated `description`/`keywords`/`repository`/`homepage`/`author`/`license`, no `private` flag
-- [ ] **PKG-02**: Entry points (`main`/`module`/`types`/`exports`) are correct and a `prepublishOnly`/`prepack` script builds fresh artifacts before publish
-- [ ] **PKG-03**: `dist/` is not committed to git and ships only via the npm `files` field
-- [ ] **PKG-04**: The publish target is settled (public npm vs GitHub Packages) and `package.json` `publishConfig` + the CI workflow are made consistent with that choice
+- [x] **PKG-01**: `package.json` is publish-ready — `@adexdsamson/forge` with populated `description`/`keywords`/`repository`/`homepage`/`author`/`license`, no `private` flag
+- [x] **PKG-02**: Entry points (`main`/`module`/`types`/`exports`) are correct and a `prepublishOnly`/`prepack` script builds fresh artifacts before publish
+- [x] **PKG-03**: `dist/` is not committed to git and ships only via the npm `files` field
+- [x] **PKG-04**: The publish target is settled (public npm vs GitHub Packages) and `package.json` `publishConfig` + the CI workflow are made consistent with that choice
 
 ### Documentation
 
@@ -88,10 +88,10 @@ Explicitly excluded for this milestone.
 | TEST-02 | Phase 3 | Complete |
 | TEST-03 | Phase 3 | Complete |
 | TEST-04 | Phase 3 | Complete |
-| PKG-01 | Phase 4 | Pending |
-| PKG-02 | Phase 4 | Pending |
-| PKG-03 | Phase 4 | Pending |
-| PKG-04 | Phase 4 | Pending |
+| PKG-01 | Phase 4 | Complete |
+| PKG-02 | Phase 4 | Complete |
+| PKG-03 | Phase 4 | Complete |
+| PKG-04 | Phase 4 | Complete |
 | DOCS-01 | Phase 5 | Pending |
 | DOCS-02 | Phase 5 | Pending |
 | DOCS-03 | Phase 5 | Pending |

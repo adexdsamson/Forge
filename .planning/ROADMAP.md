@@ -99,7 +99,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 **Wave 1**
 
-  - [ ] 04-01-PLAN.md — package.json edits (publishConfig/prepack/author/sideEffects/engines), CI working-directory removal, MIT LICENSE creation, PROJECT.md decision log (PKG-01, PKG-02, PKG-03, PKG-04) (wave 1)
+  - [x] 04-01-PLAN.md — package.json edits (publishConfig/prepack/author/sideEffects/engines), CI working-directory removal, MIT LICENSE creation, PROJECT.md decision log (PKG-01, PKG-02, PKG-03, PKG-04) (wave 1)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -143,6 +143,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. Correctness | 3/3 | Complete   | 2026-05-31 |
 | 2. Stability | 8/8 | Complete   | 2026-05-31 |
 | 3. Testing | 4/4 | Complete   | 2026-05-31 |
-| 4. Packaging | 0/2 | Not started | - |
+| 4. Packaging | 1/2 | In Progress|  |
 | 5. Docs & CI | 0/TBD | Not started | - |
 | 6. Publish | 0/TBD | Not started | - |
