@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Stability** - Remove private RHF internal dependencies, drop lodash, gate devtools, harden types (completed 2026-05-31)
 - [x] **Phase 3: Testing** - Add a real cross-platform test suite with enforced coverage (completed 2026-05-31)
 - [x] **Phase 4: Packaging** - Make the package publish-ready (package.json, entry points, dist hygiene, settled registry) (completed 2026-05-31)
-- [ ] **Phase 5: Docs & CI** - Accurate docs, lint config, CI pipeline, automated publish workflow
+- [x] **Phase 5: Docs & CI** - Accurate docs, lint config, CI pipeline, automated publish workflow (completed 2026-05-31)
 - [ ] **Phase 6: Publish** - Ship the package to the chosen registry
 
 ## Phase Details
@@ -130,7 +130,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 — needs lint script from Plan 01)*
 
-  - [ ] 05-04-PLAN.md — CI workflows: ci.yml (lint+test on push/PR) + publish.yml hardening (release trigger, SHA pins, provenance, lint+test gate) (CICD-02, CICD-03)
+  - [x] 05-04-PLAN.md — CI workflows: ci.yml (lint+test on push/PR) + publish.yml hardening (release trigger, SHA pins, provenance, lint+test gate) (CICD-02, CICD-03)
 
 ### Phase 6: Publish
 
@@ -156,5 +156,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Stability | 8/8 | Complete   | 2026-05-31 |
 | 3. Testing | 4/4 | Complete   | 2026-05-31 |
 | 4. Packaging | 2/2 | Complete   | 2026-05-31 |
-| 5. Docs & CI | 3/4 | In Progress|  |
+| 5. Docs & CI | 4/4 | Complete   | 2026-05-31 |
 | 6. Publish | 0/TBD | Not started | - |

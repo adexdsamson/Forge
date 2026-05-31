@@ -45,8 +45,8 @@ Requirements for the initial public release. Each maps to a roadmap phase.
 ### CI/CD
 
 - [x] **CICD-01**: Lint + format tooling (ESLint + Prettier) is configured and runnable
-- [ ] **CICD-02**: A CI workflow runs lint + tests on every pull request and push
-- [ ] **CICD-03**: Automated publish runs on release to the chosen registry, with the publish action pinned to a SHA and requiring an auth-token secret
+- [x] **CICD-02**: A CI workflow runs lint + tests on every pull request and push
+- [x] **CICD-03**: Automated publish runs on release to the chosen registry, with the publish action pinned to a SHA and requiring an auth-token secret
 
 ### Publish
 
@@ -96,8 +96,8 @@ Explicitly excluded for this milestone.
 | DOCS-02 | Phase 5 | Complete |
 | DOCS-03 | Phase 5 | Complete |
 | CICD-01 | Phase 5 | Complete |
-| CICD-02 | Phase 5 | Pending |
-| CICD-03 | Phase 5 | Pending |
+| CICD-02 | Phase 5 | Complete |
+| CICD-03 | Phase 5 | Complete |
 | PUB-01 | Phase 6 | Pending |
 
 ---
