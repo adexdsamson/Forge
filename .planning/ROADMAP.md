@@ -59,10 +59,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [x] 02-02-PLAN.md — lodash removal: centralize native predicates in utils.ts + rewire validateField.ts & logic/getDirtyFields.ts & logic/getFieldValueAs.ts & logic/hasPromiseValidation.ts [STAB-03] (wave 1)
   - [x] 02-03-PLAN.md — Forge.tsx: dev-only lazy guarded-require devtools (RISK-03) + as-any-free child-walker retype (RISK-04, 3 manual submit checks) [STAB-04, STAB-05] (wave 1)
   - [x] 02-04-PLAN.md — usePersist onto public useWatch + useFormState (D-12) [STAB-02] (wave 1)
-  - [x] 02-05-PLAN.md — useForge in-place Object.assign control augmentation (D-11) + Forger isEqual→deepEqual & typed component [STAB-05, STAB-03] (wave 2, depends 01,02)
+  - [x] 02-05-PLAN.md — useForge in-place Object.assign control augmentation (D-11) + Forger isEqual->deepEqual & typed component [STAB-05, STAB-03] (wave 2, depends 01,02)
   - [x] 02-06-PLAN.md — useFieldArray decorate-on-top over public RHF useFieldArray, inputProps keeper, unstable effect removed [STAB-01] (wave 3, depends 01,05)
   - [x] 02-07-PLAN.md — useForgeValues collapse to thin public-API wrapper; getValue throws on unknown field via dot-path key-presence (RISK-01) [STAB-02] (wave 3, depends 01,05)
-  - [x] 02-08-PLAN.md — package.json: drop lodash/@types/lodash, devtools → devDep + optional peer, RHF peer ^7.34.0; refresh lockfile + rebuild [STAB-03, STAB-04, STAB-05] (wave 4, depends 02,03,05,06,07)
+  - [x] 02-08-PLAN.md — package.json: drop lodash/@types/lodash, devtools to devDep + optional peer, RHF peer ^7.34.0; refresh lockfile + rebuild [STAB-03, STAB-04, STAB-05] (wave 4, depends 02,03,05,06,07)
 
 ### Phase 3: Testing
 
@@ -78,7 +78,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Plans**: 4 plans
 
-  - [x] 03-01-PLAN.md — Coverage infrastructure: @vitest/coverage-v8 devDep, vitest.config.ts coverage block (placeholder thresholds=0), scripts.test → vitest run --coverage [TEST-01, TEST-04] (wave 1)
+  - [x] 03-01-PLAN.md — Coverage infrastructure: @vitest/coverage-v8 devDep, vitest.config.ts coverage block (placeholder thresholds=0), scripts.test to vitest run --coverage [TEST-01, TEST-04] (wave 1)
   - [x] 03-02-PLAN.md — Web-mode tests: shared TextInput helper, Forge.errors (CORR-02/D-06), validateField rules (web), useFieldArray append/remove, usePersist subscription, useForgeValues getValue/setValue/throws [TEST-02, TEST-03] (wave 1, depends 03-01)
   - [x] 03-03-PLAN.md — RN-branch tests: Forger.rn (onChangeText/onValueChange via hoisted vi.mock), validateField.rn (setNativeProps via hoisted vi.mock) [TEST-03] (wave 2, depends 03-01, 03-02)
   - [x] 03-04-PLAN.md — Measure coverage, set real thresholds in vitest.config.ts, verify npm test enforces them [TEST-04] (wave 3, depends all)
@@ -128,7 +128,7 @@ Plans:
   - [x] 05-02-PLAN.md — README full rewrite + docs/API.md creation + examples/ReactNativeExample.md refresh (DOCS-01, DOCS-02)
   - [x] 05-03-PLAN.md — Housekeeping: MIGRATION.md repurpose (RHF-to-Forge), CHANGELOG.md generation + curation, .versionrc.json skip config (DOCS-03)
 
-**Wave 2** *(blocked on Wave 1 — needs lint script from Plan 01)*
+**Wave 2** *(blocked on Wave 1 -- needs lint script from Plan 01)*
 
   - [x] 05-04-PLAN.md — CI workflows: ci.yml (lint+test on push/PR) + publish.yml hardening (release trigger, SHA pins, provenance, lint+test gate) (CICD-02, CICD-03)
 
@@ -143,12 +143,26 @@ Plans:
   2. After install, `import { useForge, Forge, Forger, useFieldArray, useForgeValues, usePersist } from "@adexdsamson/forge"` resolves and passes TypeScript type-checking with zero errors
   3. The published version tag on the registry matches the version in `package.json` and a corresponding git tag exists on the main branch
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+**Wave 1** (parallel -- no shared files)
+
+  - [ ] 06-01-PLAN.md -- Prepare live-registry smoke scaffold (6-export smoke.ts + remove tarball reference) (wave 1, autonomous)
+  - [ ] 06-02-PLAN.md -- Pre-publish readiness gate: npm token type/expiry confirmed, scope ownership, dry-run green (wave 1, human-gated)
+
+**Wave 2** *(blocked on Wave 1 -- readiness gate must pass before bump)*
+
+  - [ ] 06-03-PLAN.md -- Version bump + CHANGELOG heading + release PR opened + human merges to main (wave 2, depends 06-02)
+
+**Wave 3** *(blocked on Wave 2 -- release PR must be on main before GitHub Release)*
+
+  - [ ] 06-04-PLAN.md -- Create GitHub Release, monitor CI publish with provenance, post-publish live smoke SC1+SC2+SC3 (wave 3, depends 06-01, 06-03)
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -157,4 +171,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Testing | 4/4 | Complete   | 2026-05-31 |
 | 4. Packaging | 2/2 | Complete   | 2026-05-31 |
 | 5. Docs & CI | 4/4 | Complete   | 2026-05-31 |
-| 6. Publish | 0/TBD | Not started | - |
+| 6. Publish | 0/4 | Not started | - |
