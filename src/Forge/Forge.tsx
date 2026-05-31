@@ -17,13 +17,10 @@ import {
   isInputSlot,
   isNestedSlot,
   isReactNative,
-  // isWeb,
 } from "../utils";
 import {
   getComponentType,
   getEventHandlerName,
-  // mergePlatformProps,
-  // REACT_NATIVE_COMPONENTS,
 } from "../reactNative";
 import { Forger } from "../Forger";
 
@@ -81,8 +78,16 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
     handleWizardSubmit,
   } = control;
 
+  // AnyElement: a React element with an open prop bag (Record<string, unknown>) so we can
+  // read typed props without `as any`. Every branch and prop-merge is byte-for-byte
+  // equivalent to the previous implementation — this is a TYPE-ONLY change (D-10, RISK-04).
+  type AnyElement = React.ReactElement<Record<string, unknown>>;
+
   // Recursive function to traverse and process the entire nested tree of children
-  const processChildrenRecursively = (children: any, depth = 0): any => {
+  const processChildrenRecursively = (
+    children: React.ReactNode,
+    depth = 0
+  ): React.ReactNode => {
     // Prevent infinite recursion with a reasonable depth limit
     if (depth > 10) {
       return children;
@@ -94,7 +99,16 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
         return child;
       }
 
+      // isElementSlot is a type guard (child is ReactElement). Cast to AnyElement so
+      // childProps reads as Record<string, unknown> instead of {} (the default ReactElement
+      // props type when no generic is supplied). NO runtime change.
+      const el = child as AnyElement;
+      const childProps = el.props;
+
       // Handle render props pattern - if child is a function, call it with wizard step info
+      // NOTE: a ReactElement's .type can be a function (FC/class), but the element itself
+      // is never a function after isValidElement. This branch guards legacy render-prop
+      // consumers who accidentally pass a bare function as a child before Forge wraps it.
       if (typeof child === "function") {
         const wizardProps = isWizard
           ? {
@@ -108,16 +122,16 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
             }
           : {};
 
-        return (child as any)({ control, ...wizardProps });
+        return (child as unknown as (p: Record<string, unknown>) => React.ReactNode)({ control, ...wizardProps });
       }
 
       // Handle submit button
       if (isButtonSubmitSlot(child)) {
         if (isRNMode) {
           // Native: no <form> element exists, so wire onClick to drive handleSubmit
-          return cloneElement(child, {
+          return cloneElement(el, {
             onClick: control.handleSubmit(safeOnSubmit),
-          } as any);
+          });
         }
         // Web: the <form onSubmit> drives handleSubmit via native form submit
         // (Enter + button click), so do NOT inject a second onClick binding here
@@ -127,11 +141,10 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
 
       // Handle button elements - attach form submit handler or wizard navigation
       if (isButtonSlot(child)) {
-        const childProps = (child as any).props as any;
         const wizardNav = childProps["data-wizard-nav"];
 
         if (isWizard && wizardNav) {
-          let onClick;
+          let onClick: (() => void) | undefined;
           let disabled = false;
 
           if (wizardNav === "next") {
@@ -150,25 +163,24 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
             disabled = currentStep === 0;
           }
 
-          return cloneElement(child, {
+          return cloneElement(el, {
             ...childProps,
             onClick,
-            className: `${childProps.className || ""} ${
+            className: `${(childProps.className as string) || ""} ${
               isWizard ? "wizard-button" : ""
             }`,
             disabled: disabled || childProps.disabled,
-          } as any);
+          });
         }
 
-        return cloneElement(child, {} as any);
+        return cloneElement(el, {});
       }
 
       // Handle input elements in native/React Native mode - register with form control
       if (isInputSlot(child) && (isNative || isRNMode)) {
-        const childProps = (child as any).props as any;
         const componentType = getComponentType(child);
         const eventHandlerName = getEventHandlerName(componentType);
-        const registrationProps = control.register(childProps.name);
+        const registrationProps = control.register(childProps.name as Parameters<typeof control.register>[0]);
 
         // Merge platform-specific props
         const platformProps = isRNMode
@@ -180,7 +192,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
             }
           : registrationProps;
 
-        return createElement((child as any).type, {
+        return createElement(el.type, {
           ...childProps,
           ...platformProps,
           key: childProps.name,
@@ -188,7 +200,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
       }
 
       // Get child's children for recursive processing
-      const childChildren = ((child as any).props as any)?.children;
+      const childChildren = childProps?.children as React.ReactNode | undefined;
 
       // If this element has children, process them recursively
       if (childChildren) {
@@ -199,11 +211,9 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
 
         // For nested container elements (div, section, main), use createElement to preserve structure
         if (isNestedSlot(child)) {
-          return createElement((child as any).type, {
-            ...{
-              ...((child as any).props as any),
-              children: processedChildren,
-            },
+          return createElement(el.type, {
+            ...childProps,
+            children: processedChildren,
           });
         }
 
@@ -220,11 +230,11 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
             }
           : {};
 
-        return cloneElement(child, {
+        return cloneElement(el, {
           control,
           ...wizardProps,
           children: processedChildren,
-        } as any);
+        });
       }
 
       // For leaf elements without children, pass control prop and wizard props if in wizard mode
@@ -240,7 +250,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
           }
         : {};
 
-      return cloneElement(child, { control, ...wizardProps } as any);
+      return cloneElement(el, { control, ...wizardProps });
     });
   };
 
@@ -290,7 +300,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
       handleNext?.();
       return;
     }
-    return control.handleSubmit(safeOnSubmit)(e as any);
+    return control.handleSubmit(safeOnSubmit)(e as unknown as React.BaseSyntheticEvent);
   };
 
   const renderFieldProps = control.hasFields
@@ -324,9 +334,15 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
   }
 
   return (
+    // FormProvider expects the full UseFormReturn<T> methods object. <Forge> receives only
+    // `control` (ForgeControl<T>), which is RHF's Control instance augmented in-place by
+    // useForge via Object.assign. Spreading control here makes FormProvider's context
+    // available to child useFormContext() calls. This narrow cast is intentional: changing
+    // it would alter the runtime wiring that Phase-1 CORR-01/CORR-04 fixes depend on.
+    // Tracked for a clean retype in a future phase when <Forge> accepts `methods` directly.
     <FormProvider
-      {...(control as unknown as any)}
-      control={control as unknown as any}
+      {...(control as unknown as Parameters<typeof FormProvider>[0])}
+      control={control as unknown as Parameters<typeof FormProvider>[0]["control"]}
     >
       {isRNMode ? (
         // React Native: render a plain Fragment — no wrapper element, no className/style
