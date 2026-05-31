@@ -34,8 +34,8 @@ A React developer — on web **or** React Native — can install Forge, follow t
 - [ ] Stability: stop depending on react-hook-form private `control._*` internals (or contain/justify them), drop the `lodash` runtime dependency, stop shipping `@hookform/devtools` to production
 - [x] Testing: a real cross-platform test suite with enforced coverage — ✓ Phase 3 complete (2026-05-31)
 - [x] Packaging: clean publish-ready `package.json`, settled publish target (public npm), no `dist/` in git, prepack build hook — ✓ Phase 4 complete (2026-05-31)
-- [ ] Documentation: accurate README + API reference + migration/license cleanup
-- [ ] CI/CD: lint + test on every PR/push; automated publish on release
+- [x] Documentation: accurate README + API reference + migration/license cleanup — ✓ Phase 5 complete (2026-05-31)
+- [x] CI/CD: lint + test on every PR/push; automated publish on release — ✓ Phase 5 complete (2026-05-31)
 - [ ] Publish: ship the package to the chosen registry
 
 ### Out of Scope
@@ -87,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-31 — Phase 4 (Packaging) complete: registry settled to public npm (PKG-04), prepack build hook (PKG-02), MIT LICENSE (PKG-01), dist hygiene confirmed (PKG-03), CI publishes from root with `npm ci` install step (CR-01 fix). Verified 4/4 incl. live human tarball smoke test.*
+*Last updated: 2026-05-31 — Phase 5 (Docs & CI) complete: README rewritten as OSS landing page + docs/API.md reference tables (DOCS-01/02), MIGRATION/CHANGELOG/LICENSE housekeeping (DOCS-03), ESLint 9 flat config + Prettier (CICD-01), ci.yml lint/test on every PR/push + hardened SHA-pinned release-gated publish.yml with provenance (CICD-02/03). Code review surfaced and fixed a missing public export (validateField + useSubscribe now re-exported from src/index.ts) and a broken RN example/README quickstart. Verified 5/5. Next: Phase 6 (Publish).*
