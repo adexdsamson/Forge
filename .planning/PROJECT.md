@@ -33,7 +33,7 @@ A React developer — on web **or** React Native — can install Forge, follow t
 - [x] Correctness fixes: real `<form>` element, component-named child errors, stale JSDoc removed, wizard last-step submit wired — ✓ Phase 1 complete (2026-05-31)
 - [ ] Stability: stop depending on react-hook-form private `control._*` internals (or contain/justify them), drop the `lodash` runtime dependency, stop shipping `@hookform/devtools` to production
 - [x] Testing: a real cross-platform test suite with enforced coverage — ✓ Phase 3 complete (2026-05-31)
-- [ ] Packaging: clean publish-ready `package.json`, settled publish target, no `dist/` in git, modern build
+- [x] Packaging: clean publish-ready `package.json`, settled publish target (public npm), no `dist/` in git, prepack build hook — ✓ Phase 4 complete (2026-05-31)
 - [ ] Documentation: accurate README + API reference + migration/license cleanup
 - [ ] CI/CD: lint + test on every PR/push; automated publish on release
 - [ ] Publish: ship the package to the chosen registry
@@ -87,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-31 — Phase 4 (Packaging) in progress: registry settled to public npm (PKG-04), prepack hook added (PKG-02), MIT LICENSE added (PKG-01)*
+*Last updated: 2026-05-31 — Phase 4 (Packaging) complete: registry settled to public npm (PKG-04), prepack build hook (PKG-02), MIT LICENSE (PKG-01), dist hygiene confirmed (PKG-03), CI publishes from root with `npm ci` install step (CR-01 fix). Verified 4/4 incl. live human tarball smoke test.*
