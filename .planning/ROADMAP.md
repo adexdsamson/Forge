@@ -12,7 +12,7 @@ Forge was extracted from the orbipayx app into a standalone repo. It typechecks 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Correctness** - Fix the four known behavioral bugs so the library does what it claims
+- [x] **Phase 1: Correctness** - Fix the four known behavioral bugs so the library does what it claims (completed 2026-05-31)
 - [ ] **Phase 2: Stability** - Remove private RHF internal dependencies, drop lodash, gate devtools, harden types
 - [ ] **Phase 3: Testing** - Add a real cross-platform test suite with enforced coverage
 - [ ] **Phase 4: Packaging** - Make the package publish-ready (package.json, entry points, dist hygiene, settled registry)
@@ -31,8 +31,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Hovering over `useForge` in an IDE shows JSDoc referencing `UseForgeProps` / `UseForgeResult` (not the phantom `ForgeFormProps` / `UseForgeFormResult`), and the duplicated `updateFieldArrayRootError` function no longer appears in both `utils.ts` and `logic/`
   4. A wizard form reaches its last step, the user clicks the next/submit button, and `onSubmit` fires with the collected form data — the call is not a silent no-op
 **Plans**: 2 plans
-  - [ ] 01-01-PLAN.md — Real cross-platform <form> render + submit semantics (CORR-01), wizard last-step submit (CORR-04), useForge JSDoc fix (CORR-03)
-  - [ ] 01-02-PLAN.md — Layered fail-fast Forger/Slot child errors (CORR-02), dedupe updateFieldArrayRootError (CORR-03)
+  - [x] 01-01-PLAN.md — Real cross-platform <form> render + submit semantics (CORR-01), wizard last-step submit (CORR-04), useForge JSDoc fix (CORR-03)
+  - [x] 01-02-PLAN.md — Layered fail-fast Forger/Slot child errors (CORR-02), dedupe updateFieldArrayRootError (CORR-03)
 
 ### Phase 2: Stability
 **Goal**: The library no longer depends on react-hook-form private `_*` internals for its public API hooks, lodash is removed from the runtime bundle, devtools are dev-only, and the public API is properly typed
@@ -98,7 +98,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Correctness | 0/2 | Not started | - |
+| 1. Correctness | 2/2 | Complete   | 2026-05-31 |
 | 2. Stability | 0/TBD | Not started | - |
 | 3. Testing | 0/TBD | Not started | - |
 | 4. Packaging | 0/TBD | Not started | - |
