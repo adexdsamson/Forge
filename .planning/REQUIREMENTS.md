@@ -16,7 +16,7 @@ Requirements for the initial public release. Each maps to a roadmap phase.
 
 ### Stability
 
-- [ ] **STAB-01**: `useFieldArray` no longer depends on react-hook-form private `control._*` internals — reimplemented on the public `useFieldArray`/RHF API, or the unavoidable internal access is isolated, documented, and version-guarded
+- [x] **STAB-01**: `useFieldArray` no longer depends on react-hook-form private `control._*` internals — reimplemented on the public `useFieldArray`/RHF API, or the unavoidable internal access is isolated, documented, and version-guarded
 - [x] **STAB-02**: `usePersist`, `useForgeValues`, and `useSubscribe` obtain values via public RHF APIs (`watch`/`useWatch`) instead of `control._subjects`/`control._formValues`
 - [x] **STAB-03**: `lodash` is removed as a runtime dependency (replaced with native equivalents), shrinking the published bundle
 - [x] **STAB-04**: `@hookform/devtools` is no longer shipped to production — it is lazy-loaded/dev-gated or moved out of runtime `dependencies`, so `debug` mode never forces DevTools into consumer bundles
@@ -79,7 +79,7 @@ Explicitly excluded for this milestone.
 | CORR-02 | Phase 1 | Pending |
 | CORR-03 | Phase 1 | Pending |
 | CORR-04 | Phase 1 | Pending |
-| STAB-01 | Phase 2 | Pending |
+| STAB-01 | Phase 2 | Complete |
 | STAB-02 | Phase 2 | Complete |
 | STAB-03 | Phase 2 | Complete |
 | STAB-04 | Phase 2 | Complete |
