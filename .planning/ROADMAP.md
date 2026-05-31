@@ -79,8 +79,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. `npm pack --dry-run` lists a `main` (CJS), `module` (ESM), and `types` (`.d.ts`) entry; importing from the packed tarball in a fresh TypeScript project resolves types without manual path configuration; `prepublishOnly` or `prepack` rebuilds artifacts from source
   3. `dist/` is listed in `.gitignore` and is absent from `git ls-files`; a `files` field in `package.json` limits the published artifact to only `dist/` and the necessary root files
   4. `publishConfig.registry` in `package.json` and the registry URL in the CI publish workflow agree on the same registry (public npm or GitHub Packages); the choice is documented in a comment or in PROJECT.md Key Decisions
-**Plans**: TBD
-**UI hint**: no
+**Plans**: 2 plans
+Plans:
+  - [ ] 04-01-PLAN.md — package.json edits (publishConfig/prepack/author/sideEffects/engines), CI working-directory removal, MIT LICENSE creation, PROJECT.md decision log (PKG-01, PKG-02, PKG-03, PKG-04) (wave 1)
+  - [ ] 04-02-PLAN.md — Verification: dist hygiene check, prepack smoke, npm pack --dry-run, manual tarball type-resolution smoke test (PKG-02, PKG-03) (wave 2, depends 04-01)
 
 ### Phase 5: Docs & CI
 **Goal**: The README is accurate and complete, the API is documented, housekeeping files are corrected, lint tooling is configured, and CI guards every PR and automates publish
@@ -114,6 +116,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. Correctness | 3/3 | Complete   | 2026-05-31 |
 | 2. Stability | 8/8 | Complete   | 2026-05-31 |
 | 3. Testing | 4/4 | Complete   | 2026-05-31 |
-| 4. Packaging | 0/TBD | Not started | - |
+| 4. Packaging | 0/2 | Not started | - |
 | 5. Docs & CI | 0/TBD | Not started | - |
 | 6. Publish | 0/TBD | Not started | - |
