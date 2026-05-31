@@ -1,16 +1,24 @@
 import React from "react";
-import { useSubscribe } from "../useSubscribe";
-import { Control, FieldValues, EventType } from "react-hook-form";
+import { Control, FieldValues, useWatch, useFormState } from "react-hook-form";
 
+/**
+ * ForgePersist handler signature (D-12, D-01 break from pre-v1 firehose shape).
+ *
+ * The handler receives:
+ *   - `values`   — current snapshot of all form values (from useWatch)
+ *   - `state`    — scoped form state flags { isDirty, isValid }
+ *
+ * Firing contract: useWatch returns a new object reference on every subscription
+ * tick (RHF Pitfall 5), so the effect fires on every value change — which is the
+ * intended behaviour for an autosave/draft subscription. If a consumer needs to
+ * de-duplicate no-op saves it should compare values externally (e.g. serialise +
+ * compare, or gate on `isDirty`).
+ */
 type ForgePersist<TFieldValues extends FieldValues = FieldValues> = {
   control: Control<TFieldValues>;
   handler: (
-    payload: FieldValues,
-    formState: {
-      name?: string | undefined;
-      type?: EventType | undefined;
-      values: FieldValues;
-    }
+    values: TFieldValues,
+    state: { isDirty: boolean; isValid: boolean }
   ) => void;
 };
 
@@ -18,14 +26,16 @@ export const usePersist = <TFieldProps extends FieldValues = FieldValues>({
   control,
   handler,
 }: ForgePersist<TFieldProps>) => {
+  // Preserve handler identity so the effect below does not re-bind on every
+  // render when the consumer passes an inline function (KEEPER idiom).
   const handlerRef = React.useRef(handler);
   handlerRef.current = handler;
 
-  useSubscribe({
-    disabled: false,
-    subject: (control as any)._subjects.state,
-    next: (formState) => {
-      handlerRef.current((formState as any).values, (formState as any));
-    },
-  });
+  // Public reactive subscriptions — zero _* access (D-12 / STAB-02).
+  const values = useWatch({ control });
+  const { isDirty, isValid } = useFormState({ control });
+
+  React.useEffect(() => {
+    handlerRef.current(values as TFieldProps, { isDirty, isValid });
+  }, [values, isDirty, isValid]);
 };
