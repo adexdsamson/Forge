@@ -124,7 +124,7 @@ Plans:
 Plans:
 **Wave 1** (all parallel — no shared files)
 
-  - [ ] 05-01-PLAN.md — Lint tooling: ESLint 9 flat config (eslint.config.mjs), Prettier (.prettierrc/.prettierignore), devDeps install, lint/lint:fix/changelog scripts in package.json (CICD-01)
+  - [x] 05-01-PLAN.md — Lint tooling: ESLint 9 flat config (eslint.config.mjs), Prettier (.prettierrc/.prettierignore), devDeps install, lint/lint:fix/changelog scripts in package.json (CICD-01)
   - [ ] 05-02-PLAN.md — README full rewrite + docs/API.md creation + examples/ReactNativeExample.md refresh (DOCS-01, DOCS-02)
   - [ ] 05-03-PLAN.md — Housekeeping: MIGRATION.md repurpose (RHF-to-Forge), CHANGELOG.md generation + curation, .versionrc.json skip config (DOCS-03)
 
@@ -156,5 +156,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Stability | 8/8 | Complete   | 2026-05-31 |
 | 3. Testing | 4/4 | Complete   | 2026-05-31 |
 | 4. Packaging | 2/2 | Complete   | 2026-05-31 |
-| 5. Docs & CI | 0/4 | Not started | - |
+| 5. Docs & CI | 1/4 | In Progress|  |
 | 6. Publish | 0/TBD | Not started | - |
