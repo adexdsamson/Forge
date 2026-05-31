@@ -73,7 +73,20 @@ export const useForge = <
   // D-11: Augment control IN PLACE — same instance, prototype + _* internals intact.
   // This fixes the unstable-control identity that caused the useFieldArray useEffect
   // (D-07) to misfire on every render when the old spread produced a new object.
-  const forgeProps = { hasFields, fields, ...wizardProps };
+  //
+  // Also forward getValues/setValue/handleSubmit/getFieldState onto control so that
+  // useFormContext() consumers (e.g. useForgeValues) can call ctx.getValues() when
+  // Forge spreads `control` into FormProvider (which provides control as the context
+  // value, not the full methods object). Without this, ctx.getValues is not a function.
+  const forgeProps = {
+    hasFields,
+    fields,
+    ...wizardProps,
+    getValues: methods.getValues,
+    setValue: methods.setValue,
+    handleSubmit: methods.handleSubmit,
+    getFieldState: methods.getFieldState,
+  };
   Object.assign(methods.control, forgeProps);
 
   return {
