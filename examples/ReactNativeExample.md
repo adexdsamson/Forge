@@ -15,7 +15,7 @@ import {
   Alert,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { useForge, Forge, Forger } from '../index';
+import { useForge, Forge, Forger } from '@adexdsamson/forge';
 
 // Form data interface
 interface FormData {
@@ -165,7 +165,7 @@ const ReactNativeExample: React.FC = () => {
 
       <Forge
         control={control}
-        onSubmit={handleSubmit(onSubmit, onError)}
+        onSubmit={onSubmit}
         platform="react-native"
       >
         {/* Personal Information Section */}
@@ -332,7 +332,7 @@ const ReactNativeExample: React.FC = () => {
         <View style={styles.buttonContainer}>
           <Button
             title="Submit Form"
-            onPress={handleSubmit(onSubmit, onError)}
+            onPress={handleSubmit(onSubmit)}
             disabled={!isValid}
           />
         </View>
