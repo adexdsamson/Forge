@@ -208,7 +208,7 @@ interface SignupFormData {
 }
 
 export function SignupFormRN() {
-  const { control } = useForge<SignupFormData>({
+  const { control, handleSubmit } = useForge<SignupFormData>({
     defaultValues: { name: '', role: '', acceptTerms: false },
     mode: 'onBlur',
   });
@@ -219,11 +219,6 @@ export function SignupFormRN() {
 
   return (
     <Forge control={control} onSubmit={onSubmit} platform="react-native">
-      <RNTextInput
-        // Direct RN input usage — Forge injects registration props automatically
-        // when isNative/platform is set and the input is inside <Forge>.
-      />
-
       <Forger
         name="name"
         component={RNTextInput}
@@ -243,7 +238,7 @@ export function SignupFormRN() {
         label="I accept the terms and conditions"
       />
 
-      <TouchableOpacity onPress={() => {/* submit is wired by Forge on type="submit" buttons */}}>
+      <TouchableOpacity onPress={handleSubmit(onSubmit)}>
         <Text>Sign up</Text>
       </TouchableOpacity>
     </Forge>
