@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 5 context gathered
-last_updated: "2026-05-31T18:08:38.912Z"
+stopped_at: Completed 05-03-PLAN.md
+last_updated: "2026-05-31T18:15:04.578Z"
 last_activity: 2026-05-31
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 21
-  completed_plans: 19
+  completed_plans: 20
   percent: 67
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-05-31)
 ## Current Position
 
 Phase: 05 (docs-ci) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-05-31
 
-Progress: [█████████░] 90%
+Progress: [██████████] 95%
 
 ## Performance Metrics
 
@@ -69,6 +69,7 @@ Progress: [█████████░] 90%
 | Phase 04-packaging P04-02 | 30min | 2 tasks | 0 files |
 | Phase 05-docs-ci P01 | 4min | 2 tasks | 5 files |
 | Phase 05-docs-ci P02 | 12min | 2 tasks | 3 files |
+| Phase 05-docs-ci P03 | 8min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -101,6 +102,8 @@ Recent decisions affecting current work:
 - [Phase ?]: [03-03] Use capturing component pattern for RN prop assertions — jsdom does not fire onChangeText as a DOM event; invoke handlers directly via act()
 - [Phase ?]: All coverage metrics below D-05 band floors; thresholds set at floor(measured-2)
 - [Phase ?]: 04-01 packaging metadata complete
+- [Phase ?]: D-15/D-16: CHANGELOG.md generated with commit-and-tag-version; version header set to [Unreleased]; .versionrc.json prevents phase-5 version bump
+- [Phase ?]: D-17: MIGRATION.md rewritten as public RHF-to-Forge migration guide; dead __tests__ reference removed
 
 ### Pending Todos
 
@@ -121,6 +124,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-31T18:08:38.874Z
-Stopped at: Phase 5 context gathered
+Last session: 2026-05-31T18:15:04.511Z
+Stopped at: Completed 05-03-PLAN.md
 Resume file: None
