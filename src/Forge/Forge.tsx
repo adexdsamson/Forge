@@ -30,12 +30,14 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
   className,
   children,
   onSubmit,
+  noValidate = false,
   control,
   ref,
   isNative,
   debug,
   platform = "auto",
 }: ForgeProps<TFieldValues>) => {
+  const safeOnSubmit = onSubmit ?? (() => {});
   // Determine the actual platform to use
   const actualPlatform =
     platform === "auto" ? (isReactNative ? "react-native" : "web") : platform;
@@ -92,10 +94,16 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
 
       // Handle submit button
       if (isButtonSubmitSlot(child)) {
-        return cloneElement(child, {
-          onClick: control.handleSubmit(onSubmit),
-          // disabled: !control._formState.isValid,
-        } as any);
+        if (isRNMode) {
+          // Native: no <form> element exists, so wire onClick to drive handleSubmit
+          return cloneElement(child, {
+            onClick: control.handleSubmit(safeOnSubmit),
+          } as any);
+        }
+        // Web: the <form onSubmit> drives handleSubmit via native form submit
+        // (Enter + button click), so do NOT inject a second onClick binding here
+        // — that would cause double-submit. Return the button unchanged.
+        return child;
       }
 
       // Handle button elements - attach form submit handler or wizard navigation
@@ -109,8 +117,8 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
 
           if (wizardNav === "next") {
             if (currentStep === totalSteps - 1) {
-              // Last step - submit form
-              onClick = handleWizardSubmit;
+              // Last step - submit form via RHF-validated handleWizardSubmit threaded with onSubmit
+              onClick = control.handleWizardSubmit?.(safeOnSubmit);
             } else {
               // Navigate to next step
               onClick = handleNext;
@@ -230,13 +238,13 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
     () => {
       return {
         onSubmit: () => {
-          control.handleSubmit(onSubmit)();
+          control.handleSubmit(safeOnSubmit)();
         },
         currentStep,
         totalSteps,
       };
     },
-    [onSubmit, control, currentStep, totalSteps]
+    [safeOnSubmit, control, currentStep, totalSteps]
   );
 
   const renderFieldProps = control.hasFields
@@ -245,23 +253,44 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
       ))
     : null;
 
+  const formChildren = (
+    <>
+      {renderFieldProps}
+      {updatedChildren}
+      {isWizard && (
+        <div
+          className="wizard-info"
+          style={{ marginTop: "1rem", fontSize: "0.875rem", color: "#666" }}
+        >
+          Step {currentStep + 1} of {totalSteps}
+        </div>
+      )}
+    </>
+  );
+
   return (
     <FormProvider
       {...(control as unknown as any)}
       control={control as unknown as any}
     >
-      <div className={className}>
-        {renderFieldProps}
-        {updatedChildren}
-        {isWizard && (
-          <div
-            className="wizard-info"
-            style={{ marginTop: "1rem", fontSize: "0.875rem", color: "#666" }}
-          >
-            Step {currentStep + 1} of {totalSteps}
-          </div>
-        )}
-      </div>
+      {isRNMode ? (
+        // React Native: render a plain Fragment — no wrapper element, no className/style
+        // (consumers wrap in their own <View> for layout). No hard react-native import.
+        <>
+          {formChildren}
+        </>
+      ) : (
+        // Web: render a real <form> element so native browser submit semantics apply
+        // (Enter-to-submit, type="submit" button, native required/pattern validation).
+        // RHF's handleSubmit calls event.preventDefault() internally (T-01-01).
+        <form
+          className={className}
+          noValidate={noValidate}
+          onSubmit={control.handleSubmit(safeOnSubmit)}
+        >
+          {formChildren}
+        </form>
+      )}
       {debug && <DevTool control={control} />}
     </FormProvider>
   );

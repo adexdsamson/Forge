@@ -28,7 +28,7 @@ export type ForgeControl<
   isLastStep?: boolean;
   handleNext?: () => void;
   handlePrevious?: () => void;
-  handleWizardSubmit?: () => void;
+  handleWizardSubmit?: (onSubmit?: (data: any) => void) => () => void;
 };
 
 type AsyncDefaultValues<TFieldValues> = (
@@ -116,7 +116,8 @@ export type ForgeProps<
   TFieldValues extends FieldValues,
   TFieldProps = unknown
 > = {
-  onSubmit: (submit: TFieldValues) => void;
+  onSubmit?: (submit: TFieldValues) => void;
+  noValidate?: boolean;
   className?: string;
   children?: ReactNode;
   control: ForgeControl<TFieldValues, TFieldProps>;
