@@ -309,17 +309,6 @@ export function unset(object: any, path: string | (string | number)[]) {
   return object;
 }
 
-export const updateFieldArrayRootError = <T extends FieldValues = FieldValues>(
-  errors: FieldErrors<T>,
-  error: Partial<Record<string, FieldError>>,
-  name: InternalFieldName
-): FieldErrors<T> => {
-  const fieldArrayErrors = compact(get(errors, name));
-  set(fieldArrayErrors, "root", error[name]);
-  set(errors, name, fieldArrayErrors);
-  return errors;
-};
-
 export function getValidateError(
   result: ValidateResult,
   ref: Ref,

@@ -28,9 +28,9 @@ import {
   isWatched,
   iterateFieldsByAction,
   removeArrayAt,
-  updateFieldArrayRootError,
   VALIDATION_MODE,
 } from "../utils";
+import updateFieldArrayRootError from "../logic/updateFieldArrayRootError";
 import validateField from "../validateField";
 
 type ForgeFieldArray<
@@ -89,7 +89,6 @@ export const useFieldArray = <
         const fieldValues = get(values, _name.current);
         if (Array.isArray(fieldValues)) {
           setFields(fieldValues);
-          // ids.current = fieldValues.map(generateId);
         }
       }
     },
