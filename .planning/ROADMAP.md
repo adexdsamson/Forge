@@ -46,7 +46,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. A consumer project that installs Forge and does NOT pass `debug={true}` has zero trace of `@hookform/devtools` in its dependency graph; `@hookform/devtools` appears only in `devDependencies` and is lazy-loaded when `debug` is active
   5. `useForge` returns an augmented `control` typed as `ForgeControl<T>` with no `as any` on its public API surface; `yarn tsc --noEmit` passes cleanly
 **Plans**: 8 plans
-  - [ ] 02-01-PLAN.md — Type hardening sweep of types.ts (ForgeControl<T> shape preserved, component: React.ElementType, JSX.Element → React.ReactElement, react-dropzone import type) [STAB-05] (wave 1)
+  - [x] 02-01-PLAN.md — Type hardening sweep of types.ts (ForgeControl<T> shape preserved, component: React.ElementType, JSX.Element → React.ReactElement, react-dropzone import type) [STAB-05] (wave 1)
   - [ ] 02-02-PLAN.md — lodash removal: centralize native predicates in utils.ts + rewire validateField.ts & logic/getDirtyFields.ts [STAB-03] (wave 1)
   - [ ] 02-03-PLAN.md — Forge.tsx: dev-only lazy guarded-require devtools (RISK-03) + as-any-free child-walker retype (RISK-04, 3 manual submit checks) [STAB-04, STAB-05] (wave 1)
   - [ ] 02-04-PLAN.md — usePersist onto public useWatch + useFormState (D-12) [STAB-02] (wave 1)
@@ -108,7 +108,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Correctness | 3/3 | Complete   | 2026-05-31 |
-| 2. Stability | 0/8 | Not started | - |
+| 2. Stability | 1/8 | In Progress|  |
 | 3. Testing | 0/TBD | Not started | - |
 | 4. Packaging | 0/TBD | Not started | - |
 | 5. Docs & CI | 0/TBD | Not started | - |

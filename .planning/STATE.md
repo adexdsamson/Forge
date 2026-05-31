@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 context gathered
-last_updated: "2026-05-31T10:26:20.770Z"
-last_activity: 2026-05-31 -- Phase 02 planning complete
+stopped_at: Completed 02-01 (type surface hardening)
+last_updated: "2026-05-31T10:47:00.000Z"
+last_activity: 2026-05-31
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 11
-  completed_plans: 3
+  completed_plans: 4
   percent: 17
 ---
 
@@ -21,22 +21,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-31)
 
 **Core value:** A React developer — on web or React Native — can install Forge, follow the README, and build a working, validated form with custom components in minutes; it behaves correctly and stays stable across react-hook-form updates.
-**Current focus:** Phase 2 — stability
+**Current focus:** Phase 02 — stability
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
+Phase: 02 (stability) — EXECUTING
+Plan: 2 of 8
 Status: Ready to execute
-Last activity: 2026-05-31 -- Phase 02 planning complete
+Last activity: 2026-05-31
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [████░░░░░░] 36%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 3
+- Total plans completed: 4
 - Average duration: —
 - Total execution time: —
 
@@ -45,6 +45,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01 | 3 | - | - |
+| 02 | 1 (of 8) | ~5min | ~5min |
 
 **Recent Trend:**
 
@@ -63,6 +64,8 @@ Recent decisions affecting current work:
 - [Init]: Re-based milestone onto orbipayx-extracted codebase (Forge repo, not Forge-2)
 - [Init]: v1 is cross-platform Web + React Native (runtime detection, not separate trees)
 - [Init]: Publish target (npm vs GitHub Packages) deliberately deferred to Phase 4 (PKG-04)
+- [02-01]: React.ElementType chosen for ForgerProps.component (not ForgerSlotProps-constrained generic — avoids false positives on cross-platform inputs, per RISK-04)
+- [02-01]: import type pattern established for react-dropzone — first import type in repo; erased at runtime, fixes consumers without optional peer
 
 ### Pending Todos
 
@@ -83,6 +86,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-31T09:46:53.057Z
+Last session: 2026-05-31T10:44:22.932Z
 Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-stability/02-CONTEXT.md
+Resume file: None
