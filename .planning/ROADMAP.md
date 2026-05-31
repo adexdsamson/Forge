@@ -96,6 +96,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. `publishConfig.registry` in `package.json` and the registry URL in the CI publish workflow agree on the same registry (public npm or GitHub Packages); the choice is documented in a comment or in PROJECT.md Key Decisions
 
 **Plans**: 2 plans
+
 Plans:
 **Wave 1**
 
@@ -118,7 +119,18 @@ Plans:
   4. `yarn lint` runs ESLint + Prettier across `src/` and exits non-zero on violations; a GitHub Actions workflow runs `yarn lint` and `yarn test` on every push and pull request and the status check is visible in the PR
   5. A GitHub Actions publish workflow triggers on release events, pins the publish action to a commit SHA, reads the appropriate auth token secret, and publishes only after lint and tests pass
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+**Wave 1** (all parallel — no shared files)
+
+  - [ ] 05-01-PLAN.md — Lint tooling: ESLint 9 flat config (eslint.config.mjs), Prettier (.prettierrc/.prettierignore), devDeps install, lint/lint:fix/changelog scripts in package.json (CICD-01)
+  - [ ] 05-02-PLAN.md — README full rewrite + docs/API.md creation + examples/ReactNativeExample.md refresh (DOCS-01, DOCS-02)
+  - [ ] 05-03-PLAN.md — Housekeeping: MIGRATION.md repurpose (RHF-to-Forge), CHANGELOG.md generation + curation, .versionrc.json skip config (DOCS-03)
+
+**Wave 2** *(blocked on Wave 1 — needs lint script from Plan 01)*
+
+  - [ ] 05-04-PLAN.md — CI workflows: ci.yml (lint+test on push/PR) + publish.yml hardening (release trigger, SHA pins, provenance, lint+test gate) (CICD-02, CICD-03)
 
 ### Phase 6: Publish
 
@@ -144,5 +156,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Stability | 8/8 | Complete   | 2026-05-31 |
 | 3. Testing | 4/4 | Complete   | 2026-05-31 |
 | 4. Packaging | 2/2 | Complete   | 2026-05-31 |
-| 5. Docs & CI | 0/TBD | Not started | - |
+| 5. Docs & CI | 0/4 | Not started | - |
 | 6. Publish | 0/TBD | Not started | - |
