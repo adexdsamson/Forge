@@ -19,7 +19,13 @@ import {
   Message,
   ValidationRule,
 } from "react-hook-form";
-import { isUndefined, isObject, isString, isNumber } from "lodash";
+export const isUndefined = (v: unknown): v is undefined => v === undefined;
+export const isString = (v: unknown): v is string => typeof v === "string";
+const isNumber = (v: unknown): v is number => typeof v === "number";
+// CRITICAL: lodash isObject semantics — true for functions and arrays, false for null.
+// Do NOT use bare `typeof v === "object"` (true for null, false for functions — breaks deepEqual/getDirtyFields).
+export const isObject = (v: unknown): v is object =>
+  v !== null && (typeof v === "object" || typeof v === "function");
 
 export const isNullOrUndefined = (value: unknown): value is null | undefined =>
   value == null;
@@ -34,7 +40,7 @@ export const isPlainObject = (tempObject: object) => {
 };
 
 const isKey = (value: string) => /^\w*$/.test(value);
-const isBoolean = (value: unknown): value is boolean =>
+export const isBoolean = (value: unknown): value is boolean =>
   typeof value === "boolean";
 export const isMessage = (value: unknown): value is Message => isString(value);
 export const isDateObject = (value: unknown): value is Date =>
