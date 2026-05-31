@@ -1,5 +1,5 @@
-import { Component, ReactNode, RefObject } from "react";
-import { Accept } from "react-dropzone";
+import { ReactNode, RefObject } from "react";
+import type { Accept } from "react-dropzone";
 import {
   Control,
   DefaultValues,
@@ -40,13 +40,13 @@ export type ForgerProps<TFieldValues extends FieldValues = FieldValues> = Omit<
   "onChange" | "name"
 > & {
   name: Path<TFieldValues>;
-  component: any;
-  label?: string | JSX.Element;
+  component: React.ElementType;
+  label?: string | React.ReactElement;
   onChange?: (value: string) => void;
   accept?: Accept;
   multiple?: boolean;
   control?: ForgeControl<TFieldValues>;
-} & Record<string, any>;
+} & Record<string, unknown>;
 
 export type ForgerControllerProps<
   TFieldValues extends FieldValues = FieldValues
@@ -61,11 +61,11 @@ export type ForgerControllerProps<
     input?: (value: unknown) => unknown;
     output?: (val: unknown) => unknown;
   };
-  component: Component<ForgerSlotProps>;
+  component: React.ElementType;
   handler?: string;
   methods: UseFormReturn<TFieldValues>;
   dependencies?: any[];
-} & Record<string, any>;
+} & Record<string, unknown>;
 
 export type ForgerSlotProps = {
   name: string;
@@ -79,7 +79,7 @@ export type ForgerSlotProps = {
 
 export type TForgerProps = {
   name: string;
-  component: typeof Component<ForgerSlotProps> | any;
+  component: React.ElementType;
   label?: string;
 };
 
