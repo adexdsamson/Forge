@@ -12,7 +12,7 @@ Forge was extracted from the orbipayx app into a standalone repo. It typechecks 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [x] **Phase 1: Correctness** - Fix the four known behavioral bugs so the library does what it claims (completed 2026-05-31)
+- [ ] **Phase 1: Correctness** - Fix the four known behavioral bugs so the library does what it claims (verification gaps_found 2026-05-31: 3/4 — wizard intermediate-step submit regression, see 01-VERIFICATION.md)
 - [ ] **Phase 2: Stability** - Remove private RHF internal dependencies, drop lodash, gate devtools, harden types
 - [ ] **Phase 3: Testing** - Add a real cross-platform test suite with enforced coverage
 - [ ] **Phase 4: Packaging** - Make the package publish-ready (package.json, entry points, dist hygiene, settled registry)
