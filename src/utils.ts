@@ -14,7 +14,6 @@ import {
   FieldArrayMethodProps,
   FieldValues,
   EmptyObject,
-  FieldErrors,
   FieldError,
   ValidateResult,
   Message,

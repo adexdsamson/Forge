@@ -4,6 +4,8 @@ import {
   Children,
   cloneElement,
   createElement,
+  FormEvent,
+  useCallback,
   useImperativeHandle,
 } from "react";
 import { FieldValues, FormProvider } from "react-hook-form";
@@ -37,7 +39,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
   debug,
   platform = "auto",
 }: ForgeProps<TFieldValues>) => {
-  const safeOnSubmit = onSubmit ?? (() => {});
+  const safeOnSubmit = useCallback(onSubmit ?? (() => {}), [onSubmit]);
   // Determine the actual platform to use
   const actualPlatform =
     platform === "auto" ? (isReactNative ? "react-native" : "web") : platform;
@@ -117,8 +119,11 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
 
           if (wizardNav === "next") {
             if (currentStep === totalSteps - 1) {
-              // Last step - submit form via RHF-validated handleWizardSubmit threaded with onSubmit
-              onClick = control.handleWizardSubmit?.(safeOnSubmit);
+              // Last step - submit form via RHF-validated handleWizardSubmit threaded with onSubmit.
+              // Fall back to handleSubmit when handleWizardSubmit is absent (hand-built ForgeControl).
+              onClick = control.handleWizardSubmit
+                ? control.handleWizardSubmit(safeOnSubmit)
+                : control.handleSubmit(safeOnSubmit);
             } else {
               // Navigate to next step
               onClick = handleNext;
@@ -238,14 +243,38 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
     () => {
       return {
         onSubmit: () => {
-          control.handleSubmit(safeOnSubmit)();
+          if (isWizard && !isLastStep) {
+            // On intermediate wizard steps, programmatic submit advances the wizard,
+            // agreeing with the in-tree wizard nav button behavior (WR-02).
+            handleNext?.();
+            return;
+          }
+          // On the last step (or non-wizard), submit via the same path as the nav button.
+          if (control.handleWizardSubmit) {
+            control.handleWizardSubmit(safeOnSubmit)();
+          } else {
+            control.handleSubmit(safeOnSubmit)();
+          }
         },
         currentStep,
         totalSteps,
       };
     },
-    [safeOnSubmit, control, currentStep, totalSteps]
+    [safeOnSubmit, control, currentStep, totalSteps, isWizard, isLastStep, handleNext]
   );
+
+  // CR-01: Wizard-aware form submit guard.
+  // On intermediate wizard steps, Enter/implicit submit advances the wizard instead
+  // of calling safeOnSubmit with partial data. On the last step (or non-wizard),
+  // delegate to RHF's handleSubmit which calls event.preventDefault() internally.
+  const onFormSubmit = (e: FormEvent) => {
+    if (isWizard && !isLastStep) {
+      e.preventDefault();
+      handleNext?.();
+      return;
+    }
+    return control.handleSubmit(safeOnSubmit)(e as any);
+  };
 
   const renderFieldProps = control.hasFields
     ? control?.fields?.map((inputs, index) => (
@@ -286,7 +315,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
         <form
           className={className}
           noValidate={noValidate}
-          onSubmit={control.handleSubmit(safeOnSubmit)}
+          onSubmit={onFormSubmit}
         >
           {formChildren}
         </form>

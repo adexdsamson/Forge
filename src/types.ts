@@ -58,8 +58,8 @@ export type ForgerControllerProps<
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
   >;
   transform?: {
-    input?: (value: string) => string;
-    output?: (val: string) => string;
+    input?: (value: unknown) => unknown;
+    output?: (val: unknown) => unknown;
   };
   component: Component<ForgerSlotProps>;
   handler?: string;

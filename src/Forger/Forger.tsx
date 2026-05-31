@@ -30,36 +30,37 @@ const ForgerController = <TFieldValues extends FieldValues = FieldValues>(
   } = useController<TFieldValues>({ name, rules, control: methods?.control });
   const Component = component as any;
 
-  const getTextTransform = (text: string) => {
+  const getTextTransform = (text: unknown) => {
     return typeof transform === "undefined" ? text : transform.output?.(text);
   };
 
-  const getTransformedValue = (text: string) => {
+  const getTransformedValue = (text: unknown) => {
     return typeof transform === "undefined" ? text : transform.input?.(text);
   };
 
   // Platform-specific event handlers
   const getEventHandlers = () => {
     const handlers: any = {};
-    
+
     if (handler) {
-      handlers[handler] = (value: string) => onChange(getTextTransform(value));
+      handlers[handler] = (value: unknown) => onChange(getTextTransform(value));
       handlers.onChange = () => {};
     } else if (isReactNative) {
       // React Native components use different event handlers
       if (isTextInput(component) || (component as any)?.displayName === 'TextInput') {
-        handlers.onChangeText = (value: string) => onChange(getTextTransform(value));
+        handlers.onChangeText = (value: unknown) => onChange(getTextTransform(value));
         handlers.onChange = () => {};
       } else if (isSwitch(component) || isPicker(component) || isSlider(component)) {
-        handlers.onValueChange = (value: string) => onChange(getTextTransform(value));
+        // Switch/Slider/Picker pass boolean/number values — must not be typed string (WR-05)
+        handlers.onValueChange = (value: unknown) => onChange(getTextTransform(value));
       } else {
-        handlers.onChange = (value: string) => onChange(getTextTransform(value));
+        handlers.onChange = (value: unknown) => onChange(getTextTransform(value));
       }
     } else {
       // Web components use standard onChange
-      handlers.onChange = (value: string) => onChange(getTextTransform(value));
+      handlers.onChange = (value: unknown) => onChange(getTextTransform(value));
     }
-    
+
     return handlers;
   };
   
