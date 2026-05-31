@@ -42,7 +42,7 @@ Make Forge's public hooks stop depending on react-hook-form's private `_*` inter
 - **D-12 — Rewrite `usePersist` onto public APIs; deliver values + key state flags.** Replace the `_subjects.state` subscription (`usePersist.tsx:26`) with `useWatch` (values) + a scoped `useFormState` (`isDirty`/`isValid`). Handler receives **values + `isDirty` + `isValid`** — not the full `dirtyFields`/`touchedFields`/`errors` firehose. Lighter re-render footprint, matches the real autosave/draft-persistence use case.
 
 ### STAB-03 — lodash removal (mechanical)
-- **D-13 — Replace the six lodash utilities with inline native checks and drop `lodash` from `dependencies`.** Sites: `src/utils.ts`, `src/useForgeValues/useForgeValues.tsx`, `src/validateField.ts`, `src/Forger/Forger.tsx`, `src/logic/getDirtyFields.ts` (`isUndefined`/`isObject`/`isString`/`isNumber`/`isBoolean`/`isFunction`/`isEqual`). Keep RHF version range broad (`^7`) since the phase removes the private-API coupling that motivated pinning.
+- **D-13 — Replace the lodash utilities with inline native checks and drop `lodash` from `dependencies`.** Sites (7 files): `src/utils.ts`, `src/useForgeValues/useForgeValues.tsx`, `src/validateField.ts`, `src/Forger/Forger.tsx`, `src/logic/getDirtyFields.ts`, `src/logic/getFieldValueAs.ts`, `src/logic/hasPromiseValidation.ts` (`isUndefined`/`isObject`/`isString`/`isNumber`/`isBoolean`/`isFunction`/`isEqual`). Keep RHF version range broad (`^7`) since the phase removes the private-API coupling that motivated pinning.
 
 ### Claude's Discretion
 - Exact lazy-load mechanism for devtools (subject to D-09's synchronous-throw constraint) — see RISK-03.
