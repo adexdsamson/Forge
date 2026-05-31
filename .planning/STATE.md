@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-01 (type surface hardening)
-last_updated: "2026-05-31T10:47:00.000Z"
+stopped_at: Completed 02-02 (lodash removal - 5 owned files)
+last_updated: "2026-05-31T11:00:00.000Z"
 last_activity: 2026-05-31
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 11
-  completed_plans: 4
-  percent: 17
+  completed_plans: 5
+  percent: 45
 ---
 
 # Project State
@@ -26,18 +26,18 @@ See: .planning/PROJECT.md (updated 2026-05-31)
 ## Current Position
 
 Phase: 02 (stability) — EXECUTING
-Plan: 2 of 8
+Plan: 3 of 8
 Status: Ready to execute
 Last activity: 2026-05-31
 
-Progress: [████░░░░░░] 36%
+Progress: [█████░░░░░] 45%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 4
-- Average duration: —
+- Total plans completed: 5
+- Average duration: ~10min
 - Total execution time: —
 
 **By Phase:**
@@ -45,7 +45,7 @@ Progress: [████░░░░░░] 36%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01 | 3 | - | - |
-| 02 | 1 (of 8) | ~5min | ~5min |
+| 02 | 2 (of 8) | ~15min | ~7.5min |
 
 **Recent Trend:**
 
@@ -66,6 +66,8 @@ Recent decisions affecting current work:
 - [Init]: Publish target (npm vs GitHub Packages) deliberately deferred to Phase 4 (PKG-04)
 - [02-01]: React.ElementType chosen for ForgerProps.component (not ForgerSlotProps-constrained generic — avoids false positives on cross-platform inputs, per RISK-04)
 - [02-01]: import type pattern established for react-dropzone — first import type in repo; erased at runtime, fixes consumers without optional peer
+- [02-02]: isObject exported with lodash semantics (fn->true, null->false) — bare typeof === 'object' would break getDirtyFields/deepEqual/hasPromiseValidation
+- [02-02]: isBoolean promoted from local-only to exported in utils.ts so validateField.ts can import without re-declaring
 
 ### Pending Todos
 
@@ -86,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-31T10:44:22.932Z
-Stopped at: Phase 2 context gathered
+Last session: 2026-05-31T11:00:00.000Z
+Stopped at: Completed 02-02-PLAN.md (lodash removal - 5 owned files)
 Resume file: None
