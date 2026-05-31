@@ -44,7 +44,9 @@ metrics:
 
 # Phase 1 Plan 03: Wizard Submit Regression Fix + Cleanups Summary
 
-**One-liner:** Wizard-aware onFormSubmit guard closes CR-01 BLOCKER; handleWizardSubmit fallback, wizard-aware imperative handle, memoized safeOnSubmit, compact-restored field-array errors, dead FieldErrors import removed, and event-handler/transform value types widened off false `string` annotation.
+**One-liner:** Wizard-aware onFormSubmit guard closes CR-01 BLOCKER; handleWizardSubmit fallback, wizard-aware imperative handle, memoized safeOnSubmit, index-aligned field-array errors, dead FieldErrors import removed, and event-handler/transform value types widened off false `string` annotation.
+
+> **Post-review correction (commit `cc45f03`):** The WR-03 fix below originally used `compact(get(errors, name))`. Code review (01-REVIEW.md, CR-01) found this regressed correctness — `compact`'s `filter(Boolean)` strips *all* `undefined` holes from the index-aligned field-array error array, not just the leading phantom, silently shifting later rows' errors to earlier indices. It was reverted to `Array.isArray(existing) ? existing : []`, which still removes the original `[undefined]` phantom but preserves index alignment. The WR-03 narrative below describes the superseded approach.
 
 ## Tasks Completed
 
