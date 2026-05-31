@@ -13,6 +13,7 @@
     }
   },
   "scripts": {
+    "prepack": "npm run build",
     "build": "rollup -c",
     "rollup": "rollup -c",
     "typecheck": "tsc --noEmit",
@@ -24,7 +25,8 @@
     "url": "git+https://github.com/adexdsamson/Forge.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/adexdsamson"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "keywords": [
     "react",
@@ -35,8 +37,15 @@
     "hooks",
     "cross-platform"
   ],
-  "author": "adexdsamson",
+  "author": {
+    "name": "adexdsamson",
+    "url": "https://github.com/adexdsamson"
+  },
   "license": "MIT",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "bugs": {
     "url": "https://github.com/adexdsamson/Forge/issues"
   },
