@@ -24,6 +24,7 @@ A React developer — on web **or** React Native — can install Forge, follow t
 - ✓ Wizard / multi-step form mode (state + navigation) — existing (last-step submit fixed in Phase 1)
 - ✓ Builds to CJS + ESM + bundled type declarations via Rollup — existing (build wired during re-base)
 - ✓ Correctness fixes (Phase 1, validated 2026-05-31): real cross-platform `<form>` render + native submit/validation (CORR-01), component-named fail-fast `Forger`/`Slot` child errors (CORR-02), stale JSDoc + duplicate `updateFieldArrayRootError` removed (CORR-03), wizard last-step submit wired with intermediate-step Enter guarded and index-aligned field-array errors (CORR-04)
+- ✓ Test suite (Phase 3, validated 2026-05-31): vitest + `@vitest/coverage-v8` wired with `vitest run --coverage` (TEST-01); web-mode integration tests for render/fill/submit, `useFieldArray`, `usePersist`, `useForgeValues`, `validateField`, CORR-02 regression (TEST-02); React-Native branch tests via hoisted `vi.mock` on `utils.ts` for `Forger` event wiring + `validateField` `setNativeProps` (TEST-03); enforced coverage thresholds documented in `vitest.config.ts` that fail the run on shortfall (TEST-04) — 21 tests across 8 files; thresholds set conservatively below measured coverage (lines 56.7%/branches 38.8%), accepted at the human-verify gate
 
 ### Active
 
@@ -31,7 +32,7 @@ A React developer — on web **or** React Native — can install Forge, follow t
 
 - [x] Correctness fixes: real `<form>` element, component-named child errors, stale JSDoc removed, wizard last-step submit wired — ✓ Phase 1 complete (2026-05-31)
 - [ ] Stability: stop depending on react-hook-form private `control._*` internals (or contain/justify them), drop the `lodash` runtime dependency, stop shipping `@hookform/devtools` to production
-- [ ] Testing: a real cross-platform test suite with enforced coverage
+- [x] Testing: a real cross-platform test suite with enforced coverage — ✓ Phase 3 complete (2026-05-31)
 - [ ] Packaging: clean publish-ready `package.json`, settled publish target, no `dist/` in git, modern build
 - [ ] Documentation: accurate README + API reference + migration/license cleanup
 - [ ] CI/CD: lint + test on every PR/push; automated publish on release
@@ -86,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-31 — Phase 1 (Correctness) complete: CORR-01..04 validated*
+*Last updated: 2026-05-31 — Phase 3 (Testing) complete: TEST-01..04 validated (21 tests, enforced coverage gate)*
