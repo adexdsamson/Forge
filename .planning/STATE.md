@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 02-04 (usePersist onto useWatch + useFormState, D-12)
-last_updated: "2026-05-31T11:14:01.631Z"
+last_updated: "2026-05-31T11:20:47.934Z"
 last_activity: 2026-05-31
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 11
-  completed_plans: 7
+  completed_plans: 8
   percent: 17
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-05-31)
 ## Current Position
 
 Phase: 02 (stability) — EXECUTING
-Plan: 5 of 8
+Plan: 6 of 8
 Status: Ready to execute
 Last activity: 2026-05-31
 
-Progress: [██████░░░░] 64%
+Progress: [███████░░░] 73%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [██████░░░░] 64%
 *Updated after each plan completion*
 | Phase 02-stability P02-03 | 35min | 3 tasks | 6 files |
 | Phase 02-stability P04 | 4min | 1 tasks | 1 files |
+| Phase 02-stability P05 | 12min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,9 @@ Recent decisions affecting current work:
 - [Phase ?]: [02-03]: AnyElement = React.ReactElement<Record<string,unknown>> eliminates as-any in child-walker (STAB-05 type-only)
 - [Phase ?]: [02-03]: RISK-04 manual gate converted to automated Vitest harness — project's first regression tests (3/3 GREEN)
 - [02-04]: usePersist rewritten onto useWatch + useFormState (D-12) — handler signature changed to (values, { isDirty, isValid }), documented D-01 break from old firehose shape; zero _* access
+- [Phase ?]: Object.assign(methods.control, forgeProps) returns same RHF instance typed as ForgeControl<T>
+- [Phase ?]: STAB-05 gate is the typed control: ForgeControl<T> return, not the useForm input spread
+- [Phase ?]: deepEqual is the cycle-safe isEqual replacement; React.ElementType makes component as any unnecessary
 
 ### Pending Todos
 
@@ -96,6 +100,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-31T11:15:00Z
+Last session: 2026-05-31T11:20:47.902Z
 Stopped at: Completed 02-04 (usePersist onto useWatch + useFormState, D-12)
 Resume file: None
