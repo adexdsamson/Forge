@@ -1,8 +1,6 @@
-"use strict";
-
 import { FieldValues, useForm } from "react-hook-form";
 import { useState } from "react";
-import { UseForgeProps, UseForgeResult } from "../types";
+import { ForgeControl, UseForgeProps, UseForgeResult } from "../types";
 
 /**
  * A custom hook that returns a form component and form control functions using the `react-hook-form` library.
@@ -22,7 +20,11 @@ export const useForge = <
   initialStep = 0,
   ...props
 }: UseForgeProps<TFieldProps, TFieldValues>): UseForgeResult<TFieldValues> => {
-  // Initialize react-hook-form directly
+  // Initialize react-hook-form directly.
+  // NOTE: `...(props as any)` is an INTERNAL INPUT spread — it passes remaining
+  // UseForgeProps options (e.g. reValidateMode, criteriaMode) into useForm. This
+  // is NOT the public return surface; the STAB-05 public-return gate is the typed
+  // `control: ForgeControl<T>` in the return statement below.
   const methods = useForm<TFieldValues>({
     defaultValues,
     resolver,
@@ -33,12 +35,12 @@ export const useForge = <
   const hasFields =
     (typeof fields !== "undefined" && fields?.length !== 0) ?? false;
 
-  // Wizard state management
+  // Wizard state management — currentStep stays in React state so that wizard
+  // step transitions trigger re-renders independently of control identity.
   const [currentStep, setCurrentStep] = useState(initialStep);
 
   // Wizard navigation handlers
   const handleNext = () => {
-    
     if (currentStep < totalSteps - 1) {
       setCurrentStep(currentStep + 1);
     }
@@ -56,7 +58,7 @@ export const useForge = <
   const handleWizardSubmit = (onSubmit?: (data: TFieldValues) => void) =>
     methods.handleSubmit(onSubmit ?? (() => {}));
 
-  // Create wizard props object
+  // Create wizard props object (same shape as before; only the attach mechanism changes).
   const wizardProps = isWizard ? {
     isWizard,
     currentStep,
@@ -68,13 +70,14 @@ export const useForge = <
     handleWizardSubmit,
   } : {};
 
-  return { 
-    ...methods, 
-    control: { 
-      ...methods.control, 
-      hasFields, 
-      fields,
-      ...wizardProps
-    } 
+  // D-11: Augment control IN PLACE — same instance, prototype + _* internals intact.
+  // This fixes the unstable-control identity that caused the useFieldArray useEffect
+  // (D-07) to misfire on every render when the old spread produced a new object.
+  const forgeProps = { hasFields, fields, ...wizardProps };
+  Object.assign(methods.control, forgeProps);
+
+  return {
+    ...methods,
+    control: methods.control as ForgeControl<TFieldValues, TFieldProps>,
   };
 };
