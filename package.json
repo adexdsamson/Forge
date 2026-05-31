@@ -1,9 +1,21 @@
 {
   "name": "@adexdsamson/forge",
   "version": "1.0.3",
-  "description": "Forge is a custom React library that enhances the functionality of react-hook-form library by providing a more streamlined and flexible approach to building forms in React applications.",
+  "description": "Forge is a custom React library that enhances the functionality of react-hook-form by providing a more streamlined, composable approach to building forms in React (web and React Native).",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
   "scripts": {
-    "rollup": "rollup -c"
+    "build": "rollup -c",
+    "rollup": "rollup -c",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -14,11 +26,12 @@
   },
   "keywords": [
     "react",
-    "react",
-    "native",
+    "react-native",
     "form",
-    "hook",
-    "react-hooks"
+    "forms",
+    "react-hook-form",
+    "hooks",
+    "cross-platform"
   ],
   "author": "adexdsamson",
   "license": "MIT",
@@ -26,30 +39,34 @@
     "url": "https://github.com/adexdsamson/Forge/issues"
   },
   "homepage": "https://github.com/adexdsamson/Forge#readme",
+  "dependencies": {
+    "@hookform/devtools": "^4.3.1",
+    "lodash": "^4.17.21"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-hook-form": "^7.50.1"
+  },
+  "peerDependenciesMeta": {
+    "react-dropzone": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.6",
+    "@types/lodash": "^4.14.202",
     "@types/react": "^18.2.55",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
+    "react-hook-form": "^7.50.1",
     "rollup": "^4.12.0",
     "rollup-plugin-dts": "^6.1.0",
-    "@types/react-native": "^0.73.0",
+    "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
-  "peerDependencies": {
-    "lodash": "^4.17.21",
-    "react": "^18.2.0",
-    "react-hook-form": "^7.50.1",
-    "react-native": "^0.73.2",
-    "tslib": "^2.6.2"
-  },
-  "dependencies": {
-    "@types/lodash": "^4.14.202"
-  },
-  "main": "dist",
-  "module": "dist",
   "files": [
     "dist"
   ]

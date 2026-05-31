@@ -1,21 +1,19 @@
 {
   "compilerOptions": {
-    // Default
-    "target": "es5",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    // Added
-    "jsx": "react",
+    "target": "ES2019",
     "module": "ESNext",
-    "declaration": true,
-    "declarationDir": "dist",
-    "sourceMap": true,
-    "outDir": "dist",
     "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "lib": ["ES2019", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "emitDeclarationOnly": true
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "dist"
   },
-  "exclude": ["app/*"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "examples"]
 }
