@@ -38,8 +38,8 @@ Requirements for the initial public release. Each maps to a roadmap phase.
 
 ### Documentation
 
-- [ ] **DOCS-01**: README has accurate install instructions, a quickstart, and working end-to-end examples for BOTH web and React Native using the real current API (`useForge` + `<Forge control={...}>` + `<Forger>`)
-- [ ] **DOCS-02**: API reference (prop/return tables) for `useForge`, `Forge`, `Forger`, `useFieldArray`, `useForgeValues`, `usePersist`, `validateField`, and the platform-detection utilities
+- [x] **DOCS-01**: README has accurate install instructions, a quickstart, and working end-to-end examples for BOTH web and React Native using the real current API (`useForge` + `<Forge control={...}>` + `<Forger>`)
+- [x] **DOCS-02**: API reference (prop/return tables) for `useForge`, `Forge`, `Forger`, `useFieldArray`, `useForgeValues`, `usePersist`, `validateField`, and the platform-detection utilities
 - [ ] **DOCS-03**: `MIGRATION.md`, `README`, and `LICENSE` are corrected — remove the "part of the Swifter project" blurb, fix placeholder install text, and remove references to `__tests__/` that do not exist; add a `CHANGELOG.md` with an initial entry
 
 ### CI/CD
@@ -92,8 +92,8 @@ Explicitly excluded for this milestone.
 | PKG-02 | Phase 4 | Complete |
 | PKG-03 | Phase 4 | Complete |
 | PKG-04 | Phase 4 | Complete |
-| DOCS-01 | Phase 5 | Pending |
-| DOCS-02 | Phase 5 | Pending |
+| DOCS-01 | Phase 5 | Complete |
+| DOCS-02 | Phase 5 | Complete |
 | DOCS-03 | Phase 5 | Pending |
 | CICD-01 | Phase 5 | Complete |
 | CICD-02 | Phase 5 | Pending |
