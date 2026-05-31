@@ -397,10 +397,10 @@ Async field validator. Runs the full RHF validation rule set against a single fi
 ### Import
 
 ```ts
-import validateField from '@adexdsamson/forge';
+import { validateField } from '@adexdsamson/forge';
 ```
 
-> **Note:** `validateField` is the default export from the module and re-exported from `@adexdsamson/forge`.
+> **Note:** `validateField` is a named export of `@adexdsamson/forge` (re-exported from the module's `validateField` default).
 
 ### Signature
 

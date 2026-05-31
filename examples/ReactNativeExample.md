@@ -181,10 +181,8 @@ const ReactNativeExample: React.FC = () => {
                 component={StyledTextInput}
                 placeholder="Enter first name"
                 rules={validationRules.firstName}
-                reactNative={{
-                  autoCapitalize: 'words',
-                  autoCorrect: false,
-                }}
+                autoCapitalize="words"
+                autoCorrect={false}
               />
               {errors.firstName && (
                 <Text style={styles.errorText}>{errors.firstName.message}</Text>
@@ -199,10 +197,8 @@ const ReactNativeExample: React.FC = () => {
                 component={StyledTextInput}
                 placeholder="Enter last name"
                 rules={validationRules.lastName}
-                reactNative={{
-                  autoCapitalize: 'words',
-                  autoCorrect: false,
-                }}
+                autoCapitalize="words"
+                autoCorrect={false}
               />
               {errors.lastName && (
                 <Text style={styles.errorText}>{errors.lastName.message}</Text>
@@ -222,11 +218,9 @@ const ReactNativeExample: React.FC = () => {
             component={StyledTextInput}
             placeholder="Enter email address"
             rules={validationRules.email}
-            reactNative={{
-              keyboardType: 'email-address',
-              autoCapitalize: 'none',
-              autoCorrect: false,
-            }}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
           />
           {errors.email && (
             <Text style={styles.errorText}>{errors.email.message}</Text>
@@ -239,9 +233,7 @@ const ReactNativeExample: React.FC = () => {
             component={StyledTextInput}
             placeholder="Enter phone number"
             rules={validationRules.phone}
-            reactNative={{
-              keyboardType: 'phone-pad',
-            }}
+            keyboardType="phone-pad"
           />
           {errors.phone && (
             <Text style={styles.errorText}>{errors.phone.message}</Text>
@@ -259,9 +251,7 @@ const ReactNativeExample: React.FC = () => {
             component={StyledTextInput}
             placeholder="Enter your age"
             rules={validationRules.age}
-            reactNative={{
-              keyboardType: 'numeric',
-            }}
+            keyboardType="numeric"
           />
           {errors.age && (
             <Text style={styles.errorText}>{errors.age.message}</Text>
@@ -302,11 +292,9 @@ const ReactNativeExample: React.FC = () => {
             component={StyledTextInput}
             placeholder="Tell us about yourself (optional)"
             rules={validationRules.bio}
-            reactNative={{
-              multiline: true,
-              numberOfLines: 4,
-              textAlignVertical: 'top',
-            }}
+            multiline={true}
+            numberOfLines={4}
+            textAlignVertical="top"
           />
           {errors.bio && (
             <Text style={styles.errorText}>{errors.bio.message}</Text>
@@ -319,9 +307,7 @@ const ReactNativeExample: React.FC = () => {
             component={StyledTextInput}
             placeholder="Rate our service"
             rules={validationRules.rating}
-            reactNative={{
-              keyboardType: 'numeric',
-            }}
+            keyboardType="numeric"
           />
           {errors.rating && (
             <Text style={styles.errorText}>{errors.rating.message}</Text>

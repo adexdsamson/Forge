@@ -6,9 +6,11 @@ export * from "./useFieldArray";
 export * from "./useForgeValues";
 export * from './types';
 export * from './reactNative';
-export { 
-  isWeb, 
-  isReactNative, 
+export * from './useSubscribe';
+export { default as validateField } from './validateField';
+export {
+  isWeb,
+  isReactNative,
   isMobile,
   isTextInput,
   isCheckBoxInput,
