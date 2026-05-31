@@ -1,0 +1,6 @@
+dist/
+node_modules/
+*.cjs.js
+*.esm.js
+coverage/
+.planning/
