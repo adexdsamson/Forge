@@ -32,8 +32,8 @@ import deepEqual, {
   isEmptyObject,
   iterateFieldsByAction,
   VALIDATION_MODE,
-  updateFieldArrayRootError,
 } from "../utils";
+import updateFieldArrayRootError from "../logic/updateFieldArrayRootError";
 import { isObject, isString, isUndefined } from "lodash";
 import getDirtyFields from "../logic/getDirtyFields";
 import getFieldValueAs from "../logic/getFieldValueAs";

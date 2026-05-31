@@ -309,17 +309,6 @@ export function unset(object: any, path: string | (string | number)[]) {
   return object;
 }
 
-export const updateFieldArrayRootError = <T extends FieldValues = FieldValues>(
-  errors: FieldErrors<T>,
-  error: Partial<Record<string, FieldError>>,
-  name: InternalFieldName
-): FieldErrors<T> => {
-  const fieldArrayErrors = compact(get(errors, name));
-  set(fieldArrayErrors, "root", error[name]);
-  set(errors, name, fieldArrayErrors);
-  return errors;
-};
-
 export function getValidateError(
   result: ValidateResult,
   ref: Ref,
@@ -405,7 +394,7 @@ type SlotProps = {
 
 export function Slot({ children, ...props }: SlotProps) {
   if (React.Children.count(children) > 1) {
-    throw new Error("Only one child allowed");
+    throw new Error("Slot: only one child is allowed");
   }
 
   if (React.isValidElement(children)) {
@@ -419,7 +408,13 @@ export function Slot({ children, ...props }: SlotProps) {
     } as any);
   }
 
-  return null;
+  // Allow empty Slot (null/undefined children) — return null silently
+  if (children == null) {
+    return null;
+  }
+
+  // Non-element, non-null child (e.g. string, number, boolean) — fail fast
+  throw new Error("Slot: child must be a single valid React element");
 }
 
 export type AsChildProps<DefaultElementProps, CustomProps> =
