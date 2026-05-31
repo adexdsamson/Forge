@@ -21,14 +21,15 @@ A React developer — on web **or** React Native — can install Forge, follow t
 - ✓ Dynamic field arrays via `useFieldArray` — existing
 - ✓ Value subscriptions via `usePersist`, `useForgeValues`, `useSubscribe` — existing
 - ✓ Standalone field validation via `validateField` — existing
-- ✓ Wizard / multi-step form mode (state + navigation) — existing (last-step submit currently broken, see Active)
+- ✓ Wizard / multi-step form mode (state + navigation) — existing (last-step submit fixed in Phase 1)
 - ✓ Builds to CJS + ESM + bundled type declarations via Rollup — existing (build wired during re-base)
+- ✓ Correctness fixes (Phase 1, validated 2026-05-31): real cross-platform `<form>` render + native submit/validation (CORR-01), component-named fail-fast `Forger`/`Slot` child errors (CORR-02), stale JSDoc + duplicate `updateFieldArrayRootError` removed (CORR-03), wizard last-step submit wired with intermediate-step Enter guarded and index-aligned field-array errors (CORR-04)
 
 ### Active
 
 <!-- This milestone: fix the foundation, then ship as OSS. Hypotheses until shipped. -->
 
-- [ ] Correctness fixes: real `<form>` element, component-named child errors, stale JSDoc removed, wizard last-step submit wired
+- [x] Correctness fixes: real `<form>` element, component-named child errors, stale JSDoc removed, wizard last-step submit wired — ✓ Phase 1 complete (2026-05-31)
 - [ ] Stability: stop depending on react-hook-form private `control._*` internals (or contain/justify them), drop the `lodash` runtime dependency, stop shipping `@hookform/devtools` to production
 - [ ] Testing: a real cross-platform test suite with enforced coverage
 - [ ] Packaging: clean publish-ready `package.json`, settled publish target, no `dist/` in git, modern build
@@ -85,4 +86,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-31 after initialization (re-base onto orbipayx-extracted cross-platform codebase)*
+*Last updated: 2026-05-31 — Phase 1 (Correctness) complete: CORR-01..04 validated*
