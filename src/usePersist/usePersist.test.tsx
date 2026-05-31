@@ -30,7 +30,7 @@ describe("usePersist — handler fires on value change", () => {
 
     function TestForm() {
       const { control } = useForge({ defaultValues: { name: "" } });
-      usePersist({ control, handler });
+      usePersist({ control: control as any, handler });
       return (
         <Forge control={control} onSubmit={vi.fn()}>
           <Forger name="name" component={TextInput} data-testid="name-input" />

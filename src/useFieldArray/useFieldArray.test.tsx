@@ -31,7 +31,7 @@ function DynamicForm({
   });
 
   return (
-    <Forge control={control} onSubmit={onSubmit}>
+    <Forge control={control} onSubmit={onSubmit as any}>
       {fields.map((field, index) => (
         <div key={field.id}>
           <Forger
