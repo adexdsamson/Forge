@@ -626,17 +626,15 @@ Phase 5 is documentation + CI tooling. Most deliverables are static files (READM
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Should `eslint-plugin-react` be added alongside `eslint-plugin-react-hooks`?**
+1. **RESOLVED: Skip `eslint-plugin-react` for Phase 5.**
    - What we know: D-12 specifies `typescript-eslint recommended` + react-hooks. `eslint-plugin-react` adds broader React rules (prop-types, display-name, etc.). The project is a library, not an app, and prop-types are not used (TypeScript handles types).
-   - What's unclear: Whether the Claude's Discretion note about "whether to add `eslint-plugin-react`" indicates interest.
-   - Recommendation: Skip `eslint-plugin-react` for Phase 5 — it adds 40+ rules, many not relevant to a library, and increases noise. The `recommended` config from `typescript-eslint` plus `react-hooks` is sufficient.
+   - Resolution: Skip `eslint-plugin-react` — it adds 40+ rules, many not relevant to a library, and increases noise. The `recommended` config from `typescript-eslint` plus `react-hooks` is sufficient. (Implemented in Plan 05-01.)
 
-2. **Should `npm run changelog` be a dedicated package.json script?**
+2. **RESOLVED: Add a dedicated `changelog` package.json script.**
    - What we know: `commit-and-tag-version` can be invoked via `npx` or as a script.
-   - What's unclear: Whether the planner wants a persistent `changelog` script in `package.json` vs a one-time `npx` invocation.
-   - Recommendation: Add a `"changelog": "commit-and-tag-version --skip.bump --skip.tag --skip.commit"` script to `package.json` for repeatability. Phase 6 removes/modifies it when doing the real release.
+   - Resolution: Add a `"changelog": "commit-and-tag-version --skip.bump --skip.tag --skip.commit"` script to `package.json` for repeatability. Phase 6 removes/modifies it when doing the real release. (Implemented in Plan 05-01.)
 
 ---
 
