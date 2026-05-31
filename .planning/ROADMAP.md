@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Correctness** - Fix the four known behavioral bugs so the library does what it claims (verification gaps_found 2026-05-31: 3/4 — wizard intermediate-step submit regression; gap-closure plan 01-03 added) (completed 2026-05-31)
 - [x] **Phase 2: Stability** - Remove private RHF internal dependencies, drop lodash, gate devtools, harden types (completed 2026-05-31)
 - [x] **Phase 3: Testing** - Add a real cross-platform test suite with enforced coverage (completed 2026-05-31)
-- [ ] **Phase 4: Packaging** - Make the package publish-ready (package.json, entry points, dist hygiene, settled registry)
+- [x] **Phase 4: Packaging** - Make the package publish-ready (package.json, entry points, dist hygiene, settled registry) (completed 2026-05-31)
 - [ ] **Phase 5: Docs & CI** - Accurate docs, lint config, CI pipeline, automated publish workflow
 - [ ] **Phase 6: Publish** - Ship the package to the chosen registry
 
@@ -103,7 +103,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-  - [ ] 04-02-PLAN.md — Verification: dist hygiene check, prepack smoke, npm pack --dry-run, manual tarball type-resolution smoke test (PKG-02, PKG-03) (wave 2, depends 04-01)
+  - [x] 04-02-PLAN.md — Verification: dist hygiene check, prepack smoke, npm pack --dry-run, manual tarball type-resolution smoke test (PKG-02, PKG-03) (wave 2, depends 04-01)
 
 ### Phase 5: Docs & CI
 
@@ -143,6 +143,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. Correctness | 3/3 | Complete   | 2026-05-31 |
 | 2. Stability | 8/8 | Complete   | 2026-05-31 |
 | 3. Testing | 4/4 | Complete   | 2026-05-31 |
-| 4. Packaging | 1/2 | In Progress|  |
+| 4. Packaging | 2/2 | Complete   | 2026-05-31 |
 | 5. Docs & CI | 0/TBD | Not started | - |
 | 6. Publish | 0/TBD | Not started | - |
