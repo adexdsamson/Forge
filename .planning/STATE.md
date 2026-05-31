@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: "Completed 04-01-PLAN.md: package.json metadata, CI publish-from-root, MIT LICENSE, PROJECT.md registry decision"
-last_updated: "2026-05-31T16:29:33.128Z"
+status: ready_to_plan
+stopped_at: Phase 04 complete (2/2) — ready to discuss Phase 5
+last_updated: 2026-05-31T16:46:35.117Z
 last_activity: 2026-05-31
 progress:
   total_phases: 6
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-31)
 
 **Core value:** A React developer — on web or React Native — can install Forge, follow the README, and build a working, validated form with custom components in minutes; it behaves correctly and stays stable across react-hook-form updates.
-**Current focus:** Phase 04 — packaging
+**Current focus:** Phase 5 — docs & ci
 
 ## Current Position
 
-Phase: 04 (packaging) — EXECUTING
-Plan: 2 of 2
-Status: Phase complete — ready for verification
+Phase: 5
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-05-31
 
 Progress: [██████████] 100%
@@ -36,7 +36,7 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 17
+- Total plans completed: 19
 - Average duration: ~10min
 - Total execution time: —
 
@@ -47,6 +47,7 @@ Progress: [██████████] 100%
 | 01 | 3 | - | - |
 | 02 | 8 | - | - |
 | 03 | 4 | - | - |
+| 04 | 2 | - | - |
 
 **Recent Trend:**
 
