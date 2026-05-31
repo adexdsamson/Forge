@@ -1,5 +1,4 @@
-import { isObject, isUndefined } from "lodash";
-import deepEqual, { isNullOrUndefined, isPrimitive, objectHasFunction } from "../utils";
+import deepEqual, { isNullOrUndefined, isObject, isPrimitive, isUndefined, objectHasFunction } from "../utils";
 
 function markFieldsDirty<T>(data: T, fields: Record<string, any> = {}) {
   const isParentNodeArray = Array.isArray(data);

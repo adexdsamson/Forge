@@ -30,7 +30,7 @@ import {
   // isSwitch,
   // isSlider,
 } from "./utils";
-import { isBoolean, isFunction, isObject, isString, isUndefined } from "lodash";
+import { isBoolean, isFunction, isObject, isString, isUndefined } from "./utils";
 
 type RadioFieldResult = {
   isValid: boolean;
