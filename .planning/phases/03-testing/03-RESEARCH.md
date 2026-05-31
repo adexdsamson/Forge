@@ -651,17 +651,17 @@ await waitFor(() => expect(handler).toHaveBeenCalledWith(...specific values...))
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Exact threshold numbers (RISK-T2)**
    - What we know: Baseline with 1 test file is 44.81% lines / 27.13% branches. The D-05 target band is 60–70%.
    - What's unclear: How much will the 6–7 new test files move the numbers? `useFieldArray`, `usePersist`, `useForgeValues` are currently at 0% and are small/well-scoped — they should move significantly. `utils.ts` (35.5% lines) is large and partially untestable in isolation; coverage via integration tests will improve it but not to 100%.
-   - Recommendation: Planner writes all tests in waves, runs coverage after the final wave, then sets thresholds at ~5% below the achieved numbers within the D-05 band. Do not set thresholds mid-phase.
+   - **RESOLVED (by design):** No pre-measurement value is needed. Threshold numbers are set in Plan 03-04 (Wave 3) after all tests are written and coverage is measured, at ~5% below the achieved numbers within the D-05 band. Deferring is the correct pattern per RISK-T2 — setting thresholds mid-phase would be aspirational and is explicitly prohibited.
 
 2. **`Forger.rn.test.tsx` render strategy**
    - What we know: RN-mode test mocks `isReactNative=true`. `Forger` still renders a React component tree under jsdom. The RN `onChangeText` handler is injected as a prop.
    - What's unclear: Can `userEvent.type` trigger `onChangeText` in a jsdom environment when a custom component wraps it? The custom component in jsdom is a plain React component — `onChangeText` is a prop, not a DOM event. Simulating it may require calling the prop directly rather than via `userEvent`.
-   - Recommendation: For RN-branch Forger tests, render the component with `render()`, get the underlying input element (or call the prop directly via the component instance), and assert that the RN handler was attached (check it is defined on the component's rendered output). Use `act()` + direct prop invocation rather than `userEvent.type` for RN event handlers.
+   - **RESOLVED:** Do NOT use `userEvent.type` for RN handlers (`onChangeText` is a prop, not a DOM event). Render with `render()`, capture the injected props, and invoke the RN handler directly inside `act()`; assert the handler was attached and that the value propagates. See PATTERNS.md §Forger.rn.test.tsx (Pattern B).
 
 ---
 
