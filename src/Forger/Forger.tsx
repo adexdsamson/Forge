@@ -1,6 +1,7 @@
 "use client";
 
 import { isEqual } from "lodash";
+import React from "react";
 import {
   Slot,
   isReactNative,
@@ -110,7 +111,25 @@ const MemorizeController = memo<ForgerControllerProps<FieldValues>>(
 
 MemorizeController.displayName = "MemorizeController";
 
-export const Forger =<T extends FieldValues> (props: ForgerProps<T>) => {
+export const Forger = <T extends FieldValues>(props: ForgerProps<T>) => {
+  // Fail-fast guard: Forger requires a single valid React element as its component.
+  // Fires before Slot so the developer sees the Forger + field name in the error,
+  // not the generic Slot message (D-08 / CORR-02).
+  if (props.children != null && React.Children.count(props.children) > 1) {
+    throw new Error(
+      `Forger: field "${props.name}" expects exactly one valid React element as its child`
+    );
+  }
+  if (
+    props.children != null &&
+    !React.isValidElement(props.children) &&
+    React.Children.count(props.children) !== 0
+  ) {
+    throw new Error(
+      `Forger: field "${props.name}" expects exactly one valid React element as its child`
+    );
+  }
+
   const methods = useFormContext() ?? { control: props?.control };
 
   return (
@@ -124,3 +143,5 @@ export const Forger =<T extends FieldValues> (props: ForgerProps<T>) => {
     </Slot>
   );
 };
+
+Forger.displayName = "Forger";
