@@ -1,6 +1,6 @@
 "use client";
 
-import { isEqual } from "lodash";
+import deepEqual from "../utils";
 import React from "react";
 import {
   Slot,
@@ -28,7 +28,7 @@ const ForgerController = <TFieldValues extends FieldValues = FieldValues>(
     field: { onBlur, onChange, value, ref },
     fieldState: { error },
   } = useController<TFieldValues>({ name, rules, control: methods?.control });
-  const Component = component as any;
+  const Component = component;
 
   const getTextTransform = (text: unknown) => {
     return typeof transform === "undefined" ? text : transform.output?.(text);
@@ -47,7 +47,7 @@ const ForgerController = <TFieldValues extends FieldValues = FieldValues>(
       handlers.onChange = () => {};
     } else if (isReactNative) {
       // React Native components use different event handlers
-      if (isTextInput(component) || (component as any)?.displayName === 'TextInput') {
+      if (isTextInput(component) || (component as React.ComponentType<unknown>)?.displayName === 'TextInput') {
         handlers.onChangeText = (value: unknown) => onChange(getTextTransform(value));
         handlers.onChange = () => {};
       } else if (isSwitch(component) || isPicker(component) || isSlider(component)) {
@@ -102,7 +102,7 @@ const MemorizeController = memo<ForgerControllerProps<FieldValues>>(
     }
 
     // Check if other props have changed
-    if (!isEqual(rest, others)) {
+    if (!deepEqual(rest, others)) {
       return false; // Re-render if other props changed
     }
 
