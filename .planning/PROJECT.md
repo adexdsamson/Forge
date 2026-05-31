@@ -67,7 +67,7 @@ A React developer — on web **or** React Native — can install Forge, follow t
 | Planning (`.planning/`) lives in the `Forge` repo | Code and planning co-located; the old Forge-2 split is abandoned | ✓ Good |
 | v1 is cross-platform (Web + React Native) | The extracted code already supports both via runtime detection; reverses the earlier web-only-v1 stance | — Pending |
 | Keep `@adexdsamson` scope | Scope already owned | — Pending |
-| Publish target (npm vs GitHub Packages) deferred to the Packaging/Publish phase | `publishConfig` and CI currently disagree; needs deliberate decision | — Pending |
+| Publish target (npm vs GitHub Packages) settled to public npm | GitHub Packages requires authenticated .npmrc for consumers; public npm installs zero-config, aligns with core value and existing CI token (NPM_ACCESS_TOKEN / --access public) | Public npm (D-01) — publishConfig and CI workflow now both point to registry.npmjs.org |
 
 ## Evolution
 
@@ -87,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-31 — Phase 3 (Testing) complete: TEST-01..04 validated (21 tests, enforced coverage gate)*
+*Last updated: 2026-05-31 — Phase 4 (Packaging) in progress: registry settled to public npm (PKG-04), prepack hook added (PKG-02), MIT LICENSE added (PKG-01)*
