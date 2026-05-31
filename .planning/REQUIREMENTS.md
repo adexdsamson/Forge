@@ -24,10 +24,10 @@ Requirements for the initial public release. Each maps to a roadmap phase.
 
 ### Testing
 
-- [ ] **TEST-01**: A test runner + config (Jest or Vitest) is set up for the TypeScript React library, runnable via `yarn test`
+- [x] **TEST-01**: A test runner + config (Jest or Vitest) is set up for the TypeScript React library, runnable via `yarn test`
 - [ ] **TEST-02**: A test renders `useForge` + `<Forge>` + `<Forger>`, fills values, submits, and asserts the `onSubmit` callback receives correct data (web path)
 - [ ] **TEST-03**: Tests cover `useFieldArray` (append/remove), `usePersist`/`useForgeValues` (value subscriptions), `validateField` rules, and wizard navigation incl. last-step submit
-- [ ] **TEST-04**: A meaningful coverage threshold is enforced and fails the run when not met
+- [x] **TEST-04**: A meaningful coverage threshold is enforced and fails the run when not met
 
 ### Packaging
 
@@ -84,10 +84,10 @@ Explicitly excluded for this milestone.
 | STAB-03 | Phase 2 | Complete |
 | STAB-04 | Phase 2 | Complete |
 | STAB-05 | Phase 2 | Complete |
-| TEST-01 | Phase 3 | Pending |
+| TEST-01 | Phase 3 | Complete |
 | TEST-02 | Phase 3 | Pending |
 | TEST-03 | Phase 3 | Pending |
-| TEST-04 | Phase 3 | Pending |
+| TEST-04 | Phase 3 | Complete |
 | PKG-01 | Phase 4 | Pending |
 | PKG-02 | Phase 4 | Pending |
 | PKG-03 | Phase 4 | Pending |

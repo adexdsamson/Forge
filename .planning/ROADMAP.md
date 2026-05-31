@@ -65,7 +65,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Tests exist and pass for: `useFieldArray` append and remove, `usePersist` / `useForgeValues` value subscriptions, `validateField` rules, and wizard navigation including last-step submit
   4. Running `yarn test` fails with a non-zero exit code when coverage falls below the configured threshold; the threshold is documented in the test config
 **Plans**: 4 plans
-  - [ ] 03-01-PLAN.md — Coverage infrastructure: @vitest/coverage-v8 devDep, vitest.config.ts coverage block (placeholder thresholds=0), scripts.test → vitest run --coverage [TEST-01, TEST-04] (wave 1)
+  - [x] 03-01-PLAN.md — Coverage infrastructure: @vitest/coverage-v8 devDep, vitest.config.ts coverage block (placeholder thresholds=0), scripts.test → vitest run --coverage [TEST-01, TEST-04] (wave 1)
   - [ ] 03-02-PLAN.md — Web-mode tests: shared TextInput helper, Forge.errors (CORR-02/D-06), validateField rules (web), useFieldArray append/remove, usePersist subscription, useForgeValues getValue/setValue/throws [TEST-02, TEST-03] (wave 1, depends 03-01)
   - [ ] 03-03-PLAN.md — RN-branch tests: Forger.rn (onChangeText/onValueChange via hoisted vi.mock), validateField.rn (setNativeProps via hoisted vi.mock) [TEST-03] (wave 2, depends 03-01, 03-02)
   - [ ] 03-04-PLAN.md — Measure coverage, set real thresholds in vitest.config.ts, verify npm test enforces them [TEST-04] (wave 3, depends all)
@@ -113,7 +113,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Correctness | 3/3 | Complete   | 2026-05-31 |
 | 2. Stability | 8/8 | Complete   | 2026-05-31 |
-| 3. Testing | 0/4 | Not started | - |
+| 3. Testing | 1/4 | In Progress|  |
 | 4. Packaging | 0/TBD | Not started | - |
 | 5. Docs & CI | 0/TBD | Not started | - |
 | 6. Publish | 0/TBD | Not started | - |
