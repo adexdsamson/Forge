@@ -52,7 +52,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [x] 02-04-PLAN.md — usePersist onto public useWatch + useFormState (D-12) [STAB-02] (wave 1)
   - [x] 02-05-PLAN.md — useForge in-place Object.assign control augmentation (D-11) + Forger isEqual→deepEqual & typed component [STAB-05, STAB-03] (wave 2, depends 01,02)
   - [x] 02-06-PLAN.md — useFieldArray decorate-on-top over public RHF useFieldArray, inputProps keeper, unstable effect removed [STAB-01] (wave 3, depends 01,05)
-  - [ ] 02-07-PLAN.md — useForgeValues collapse to thin public-API wrapper; getValue throws on unknown field via dot-path key-presence (RISK-01) [STAB-02] (wave 3, depends 01,05)
+  - [x] 02-07-PLAN.md — useForgeValues collapse to thin public-API wrapper; getValue throws on unknown field via dot-path key-presence (RISK-01) [STAB-02] (wave 3, depends 01,05)
   - [ ] 02-08-PLAN.md — package.json: drop lodash/@types/lodash, devtools → devDep + optional peer, RHF peer ^7.34.0; refresh lockfile + rebuild [STAB-03, STAB-04, STAB-05] (wave 4, depends 02,03,05,06,07)
 
 ### Phase 3: Testing
@@ -108,7 +108,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Correctness | 3/3 | Complete   | 2026-05-31 |
-| 2. Stability | 6/8 | In Progress|  |
+| 2. Stability | 7/8 | In Progress|  |
 | 3. Testing | 0/TBD | Not started | - |
 | 4. Packaging | 0/TBD | Not started | - |
 | 5. Docs & CI | 0/TBD | Not started | - |
