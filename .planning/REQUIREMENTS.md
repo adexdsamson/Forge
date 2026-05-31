@@ -73,11 +73,32 @@ Explicitly excluded for this milestone.
 
 ## Traceability
 
-Populated during roadmap creation.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (filled by roadmapper) | | |
+| CORR-01 | Phase 1 | Pending |
+| CORR-02 | Phase 1 | Pending |
+| CORR-03 | Phase 1 | Pending |
+| CORR-04 | Phase 1 | Pending |
+| STAB-01 | Phase 2 | Pending |
+| STAB-02 | Phase 2 | Pending |
+| STAB-03 | Phase 2 | Pending |
+| STAB-04 | Phase 2 | Pending |
+| STAB-05 | Phase 2 | Pending |
+| TEST-01 | Phase 3 | Pending |
+| TEST-02 | Phase 3 | Pending |
+| TEST-03 | Phase 3 | Pending |
+| TEST-04 | Phase 3 | Pending |
+| PKG-01 | Phase 4 | Pending |
+| PKG-02 | Phase 4 | Pending |
+| PKG-03 | Phase 4 | Pending |
+| PKG-04 | Phase 4 | Pending |
+| DOCS-01 | Phase 5 | Pending |
+| DOCS-02 | Phase 5 | Pending |
+| DOCS-03 | Phase 5 | Pending |
+| CICD-01 | Phase 5 | Pending |
+| CICD-02 | Phase 5 | Pending |
+| CICD-03 | Phase 5 | Pending |
+| PUB-01 | Phase 6 | Pending |
 
 ---
 *Requirements defined: 2026-05-31 — re-grounded on the cross-platform codebase extracted from orbipayx*
