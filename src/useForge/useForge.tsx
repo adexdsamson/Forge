@@ -6,8 +6,8 @@ import { UseForgeProps, UseForgeResult } from "../types";
 
 /**
  * A custom hook that returns a form component and form control functions using the `react-hook-form` library.
- * @param {ForgeFormProps} options - The options for the form.
- * @returns {UseForgeFormResult} - The form control functions and the form component.
+ * @param {UseForgeProps} options - The options for the form.
+ * @returns {UseForgeResult} - The form control functions and the form component.
  */
 export const useForge = <
   TFieldValues extends FieldValues = FieldValues,
@@ -50,6 +50,12 @@ export const useForge = <
     }
   };
 
+  // Wizard submit handler: accepts the consumer's onSubmit callback and returns
+  // an RHF-validated submit handler. RHF's handleSubmit gates the call on
+  // whole-form validation — invalid form blocks onSubmit and populates errors.
+  const handleWizardSubmit = (onSubmit?: (data: TFieldValues) => void) =>
+    methods.handleSubmit(onSubmit ?? (() => {}));
+
   // Create wizard props object
   const wizardProps = isWizard ? {
     isWizard,
@@ -59,6 +65,7 @@ export const useForge = <
     isLastStep: currentStep === totalSteps - 1,
     handleNext,
     handlePrevious,
+    handleWizardSubmit,
   } : {};
 
   return { 
