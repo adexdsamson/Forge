@@ -6,9 +6,14 @@ import dts from "rollup-plugin-dts";
 import packageJson from "./package.json" with { type: "json" };
 
 // Treat every dependency / peer dependency as external so they are not bundled.
+// @hookform/devtools is listed explicitly because it will be demoted from `dependencies`
+// to an optional peer + devDependency in Plan 08; the externalization must survive that move
+// so the synchronous require("@hookform/devtools") in Forge.tsx stays as an external call
+// in both CJS and ESM output.
 const external = [
   ...Object.keys(packageJson.dependencies || {}),
   ...Object.keys(packageJson.peerDependencies || {}),
+  "@hookform/devtools",
   "react-dropzone",
   "react-dom",
   "react/jsx-runtime",

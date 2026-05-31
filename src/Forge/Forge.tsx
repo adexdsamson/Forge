@@ -1,6 +1,6 @@
 "use client";
 
-import {
+import React, {
   Children,
   cloneElement,
   createElement,
@@ -26,7 +26,24 @@ import {
   // REACT_NATIVE_COMPONENTS,
 } from "../reactNative";
 import { Forger } from "../Forger";
-import { DevTool } from "@hookform/devtools";
+
+// Dev-only: lazy-load @hookform/devtools via synchronous require so it is never
+// included in the production bundle. @hookform/devtools is declared as an optional
+// peer dependency — consumers only need it when they use debug={true}.
+// The `declare` avoids a hard @types/node dependency while keeping the call synchronous
+// (dynamic import() cannot satisfy the synchronous-throw requirement — D-09).
+declare function require(module: string): any; // eslint-disable-line no-var
+
+function loadDevTool(): React.ComponentType<{ control: unknown }> {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return require("@hookform/devtools").DevTool;
+  } catch {
+    throw new Error(
+      "Forge: debug mode requires '@hookform/devtools'. Install it with `npm i -D @hookform/devtools`."
+    );
+  }
+}
 
 export const Forge = <TFieldValues extends FieldValues = FieldValues>({
   className,
@@ -297,6 +314,15 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
     </>
   );
 
+  // Dev-only: load @hookform/devtools synchronously when debug={true}. This call is
+  // inside an if-block so bundlers that tree-shake dead branches (and the rollup
+  // `external` declaration) never pull the package into a production consumer's graph.
+  let devtools: React.ReactNode = null;
+  if (debug) {
+    const DevTool = loadDevTool();
+    devtools = <DevTool control={control} />;
+  }
+
   return (
     <FormProvider
       {...(control as unknown as any)}
@@ -320,7 +346,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
           {formChildren}
         </form>
       )}
-      {debug && <DevTool control={control} />}
+      {devtools}
     </FormProvider>
   );
 };
