@@ -1,4 +1,4 @@
-import { isString, isUndefined } from "lodash";
+import { isString, isUndefined } from "../utils";
 import { Field, NativeFieldValue } from "react-hook-form";
 
 export default <T extends NativeFieldValue>(

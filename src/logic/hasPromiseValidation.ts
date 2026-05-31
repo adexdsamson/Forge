@@ -1,5 +1,4 @@
-
-import { isFunction, isObject } from 'lodash';
+import { isFunction, isObject } from '../utils';
 import { Field, Validate } from 'react-hook-form';
 
 const ASYNC_FUNCTION = 'AsyncFunction';
