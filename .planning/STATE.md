@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-03 (devtools dev-gate + child-walker retype + Vitest harness)
-last_updated: "2026-05-31T11:09:58.899Z"
+stopped_at: Completed 02-04 (usePersist onto useWatch + useFormState, D-12)
+last_updated: "2026-05-31T11:14:01.631Z"
 last_activity: 2026-05-31
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 11
-  completed_plans: 6
+  completed_plans: 7
   percent: 17
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-05-31)
 ## Current Position
 
 Phase: 02 (stability) — EXECUTING
-Plan: 4 of 8
+Plan: 5 of 8
 Status: Ready to execute
 Last activity: 2026-05-31
 
-Progress: [██████░░░░] 55%
+Progress: [██████░░░░] 64%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [██████░░░░] 55%
 
 *Updated after each plan completion*
 | Phase 02-stability P02-03 | 35min | 3 tasks | 6 files |
+| Phase 02-stability P04 | 4min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,7 @@ Recent decisions affecting current work:
 - [Phase ?]: [02-03]: @hookform/devtools explicitly added to rollup external for Plan 08 compatibility (STAB-04)
 - [Phase ?]: [02-03]: AnyElement = React.ReactElement<Record<string,unknown>> eliminates as-any in child-walker (STAB-05 type-only)
 - [Phase ?]: [02-03]: RISK-04 manual gate converted to automated Vitest harness — project's first regression tests (3/3 GREEN)
+- [02-04]: usePersist rewritten onto useWatch + useFormState (D-12) — handler signature changed to (values, { isDirty, isValid }), documented D-01 break from old firehose shape; zero _* access
 
 ### Pending Todos
 
@@ -94,6 +96,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-31T11:09:58.875Z
-Stopped at: Completed 02-03 (devtools dev-gate + child-walker retype + Vitest harness)
+Last session: 2026-05-31T11:15:00Z
+Stopped at: Completed 02-04 (usePersist onto useWatch + useFormState, D-12)
 Resume file: None
