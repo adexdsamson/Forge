@@ -1,0 +1,14 @@
+# @adexdsamson/forge
+
+> Forge is a cross-platform React form library that wraps react-hook-form with a composable API. Call `useForge()` to get the full RHF toolkit plus an augmented `control`, render `<Forge control={...}>` as the form container, and drop `<Forger>` field wrappers around any custom input — web or React Native. Platform detection is automatic: web renders a real `<form>`, React Native renders a Fragment.
+
+## Docs
+
+- [README](ReadMe.md): Quickstart guide with web and React Native examples.
+- [API Reference](docs/API.md): Full prop and return-value tables for every exported symbol.
+- [Agent Usage Guide](AGENTS.md): Recipes, common mistakes, and LLM-optimised usage patterns.
+- [CHANGELOG](CHANGELOG.md): Version history.
+
+## Examples
+
+- [React Native Example](examples/ReactNativeExample.md): Complete runnable RN form with multiple field types, validation, and submission.

@@ -1,0 +1,253 @@
+# @adexdsamson/forge — Full LLM Reference
+
+Forge is a cross-platform React form library that wraps react-hook-form with a composable API. Call `useForge()` to get the full RHF toolkit plus an augmented `control`, render `<Forge control={...}>` as the form container, and drop `<Forger>` field wrappers around any custom input — web or React Native. Platform detection is automatic: web renders a real `<form>`, React Native renders a Fragment. All form state lives in react-hook-form's `Control` object — Forge is a thin orchestration layer, not a separate state store.
+
+---
+
+## What Forge Is
+
+Forge is a cross-platform React form library that wraps [react-hook-form](https://react-hook-form.com/) with a streamlined, composable API. The mental model is three pieces: call `useForge()` to get the full react-hook-form toolkit plus an augmented `control`, render `<Forge control={...}>` as the form container, and drop `<Forger>` field wrappers around any custom input — web or React Native. Platform detection is automatic: on web, `<Forge>` renders a real `<form>` element; on React Native it renders a Fragment. All form state lives in react-hook-form's `Control` object — Forge is a thin orchestration layer, not a separate state store.
+
+## The 8 Exports
+
+| Export | Type | One-line purpose |
+|--------|------|-----------------|
+| `useForge` | Hook | Initializes form; returns full RHF toolkit + augmented `control` |
+| `Forge` | Component | Form container; web=`<form>`, RN=Fragment; wires submit + wizard |
+| `Forger` | Component | Connects one field to RHF via `useController`; auto event handlers |
+| `useFieldArray` | Hook | Dynamic field arrays with per-item `inputProps` preservation |
+| `useForgeValues` | Hook | Thin `setValue`/`getValue`/`getValues` wrapper over RHF public API |
+| `usePersist` | Hook | Autosave/draft: fires handler on every value change + state flags |
+| `useSubscribe` | Hook | Subscribe to any RHF `Subject<T>`; cleans up on unmount |
+| `validateField` | Function | Async field validator; platform-aware (web + RN) |
+
+Additional exports — types (`ForgeControl`, `ForgeProps`, `ForgerProps`, `UseForgeProps`, `UseForgeResult`, `FieldProps`, `ForgeSubmitButtonProps`, `FormPropsRef`, etc.), React Native helpers (`REACT_NATIVE_COMPONENTS`, `getEventHandlerName`, `getValuePropertyName`, `setReactNativeError`, `mergePlatformProps`, etc.), and platform detection booleans (`isWeb`, `isReactNative`, `isMobile`) — see [docs/API.md](docs/API.md) for the full surface.
+
+## Recipes
+
+### a. Basic web form
+
+```tsx
+import { useForge, Forge, Forger } from '@adexdsamson/forge';
+
+function SignupForm() {
+  const { control, formState } = useForge({
+    defaultValues: { email: '', password: '' },
+  });
+
+  const onSubmit = (data: { email: string; password: string }) => {
+    console.log(data);
+  };
+
+  return (
+    <Forge control={control} onSubmit={onSubmit}>
+      <Forger name="email" component={TextInput} rules={{ required: 'Email is required' }} />
+      <Forger name="password" component={PasswordInput} rules={{ minLength: { value: 8, message: 'Too short' } }} />
+      <button type="submit">Sign Up</button>
+    </Forge>
+  );
+}
+```
+
+### b. React Native form
+
+Pass native props (e.g. `keyboardType`, `secureTextEntry`) **directly** on `<Forger>`. Use `forgeSubmit` on buttons — Forge injects `onPress` automatically.
+
+```tsx
+import { useForge, Forge, Forger } from '@adexdsamson/forge';
+
+function LoginForm() {
+  const { control } = useForge({
+    defaultValues: { email: '', password: '' },
+  });
+
+  return (
+    <Forge control={control} platform="react-native" onSubmit={(data) => console.log(data)}>
+      <Forger name="email" component={TextInput} keyboardType="email-address" autoCapitalize="none" />
+      <Forger name="password" component={TextInput} secureTextEntry />
+      <TouchableOpacity forgeSubmit>
+        <Text>Log In</Text>
+      </TouchableOpacity>
+    </Forge>
+  );
+}
+```
+
+### c. Dynamic field array
+
+```tsx
+import { useForge, Forge, Forger, useFieldArray } from '@adexdsamson/forge';
+
+function PhoneList() {
+  const { control } = useForge({ defaultValues: { phones: [{ number: '' }] } });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'phones',
+    inputProps: { placeholder: 'Phone number' },
+  });
+
+  return (
+    <Forge control={control} onSubmit={(d) => console.log(d)}>
+      {fields.map((field, i) => (
+        <div key={field.id}>
+          <Forger name={`phones.${i}.number`} component={TextInput} {...field.inputProps} />
+          <button type="button" onClick={() => remove(i)}>Remove</button>
+        </div>
+      ))}
+      <button type="button" onClick={() => append({ number: '' })}>Add phone</button>
+      <button type="submit">Save</button>
+    </Forge>
+  );
+}
+```
+
+### d. Autosave / persist
+
+The handler fires on every value change and once on mount. Gate on `isDirty` to skip the initial emission if needed.
+
+```tsx
+import { useForge, Forge, Forger, usePersist } from '@adexdsamson/forge';
+
+function AutosaveForm() {
+  const { control } = useForge({ defaultValues: { notes: '' } });
+
+  usePersist({
+    control,
+    handler: (values, { isDirty, isValid }) => {
+      if (isDirty) saveToServer(values);
+    },
+  });
+
+  return (
+    <Forge control={control}>
+      <Forger name="notes" component={TextArea} />
+    </Forge>
+  );
+}
+```
+
+### e. Wizard multi-step
+
+```tsx
+import { useForge, Forge, Forger } from '@adexdsamson/forge';
+
+function WizardForm() {
+  const { control } = useForge({
+    defaultValues: { name: '', email: '', plan: '' },
+    isWizard: true,
+    totalSteps: 2,
+  });
+
+  return (
+    <Forge control={control} onSubmit={(d) => console.log(d)}>
+      {/* Step 0 */}
+      <div>
+        <Forger name="name" component={TextInput} />
+        <Forger name="email" component={TextInput} />
+        <button type="button" data-wizard-nav="next">Next</button>
+      </div>
+      {/* Step 1 */}
+      <div>
+        <Forger name="plan" component={PlanPicker} />
+        <button type="button" data-wizard-nav="previous">Back</button>
+        <button type="button" data-wizard-nav="next">Submit</button>
+      </div>
+    </Forge>
+  );
+}
+```
+
+### f. Transform
+
+`output` transforms the value **before writing to RHF** (display → stored). `input` transforms the value **before passing to the component** (stored → display).
+
+```tsx
+<Forger
+  name="price"
+  component={CurrencyInput}
+  transform={{
+    output: (v) => parseFloat(String(v).replace(/[^0-9.]/g, '')),
+    input: (v) => `$${Number(v).toFixed(2)}`,
+  }}
+/>
+```
+
+### g. Schema resolver (Zod)
+
+```tsx
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const schema = z.object({ email: z.string().email(), age: z.number().min(18) });
+
+const { control } = useForge({
+  resolver: zodResolver(schema),
+  defaultValues: { email: '', age: 0 },
+});
+// No `rules` prop needed on <Forger> — the resolver handles all validation
+```
+
+### h. Standalone validateField
+
+```tsx
+import validateField from '@adexdsamson/forge';
+
+const errors = await validateField(
+  field,           // RHF Field object
+  formValues,      // current form values
+  false,           // validateAllFieldCriteria
+);
+```
+
+## Common Mistakes
+
+1. **do NOT** pass RN native props via a `reactNative={{}}` prop: `<Forger reactNative={{ keyboardType: 'email-pad' }}>` → **do** pass them directly: `<Forger keyboardType="email-pad">`. `ForgerController` spreads `...rest` directly onto the component; there is no `reactNative` key — it would be silently ignored.
+
+2. **do NOT** omit the `name` prop: `<Forger component={MyInput}>` → **do** always include it: `<Forger name="email" component={MyInput}>`. `isInputSlot` checks `child.props.name`; nameless inputs are not wired into the form.
+
+3. **do NOT** hand-wire `onPress={handleSubmit(onSubmit)}` on RN buttons inside `<Forge>`: `<TouchableOpacity onPress={handleSubmit(onSubmit)}>` → **do** use `<TouchableOpacity forgeSubmit>`. Forge injects `onPress` automatically and strips the `forgeSubmit` prop before it reaches the host component. Web: a `<button type="submit">` inside `<Forge>` just works — no manual handler needed.
+
+4. **do NOT** assume `<Forge platform="react-native">` renders a `<View>` or any container element → **do** wrap in your own `<View>` for layout. Forge renders a React Fragment on React Native; there is no wrapper element, and `className` has no effect.
+
+5. **do NOT** confuse transform directions — `output` transforms the display value, `input` transforms the stored value → **do** remember: `output` transforms value **before writing to RHF** (display→stored); `input` transforms value **before passing to the component** (stored→display).
+
+6. **do NOT** render `<Forger>` outside `<Forge>` without a `control` prop: `<Forger name="x" component={Input}>` (no FormProvider context, no `control` prop) → **do** pass `control` explicitly: `<Forger name="x" component={Input} control={control}>`. Forger falls back to the `control` prop when there is no FormProvider context.
+
+7. **do** expect `usePersist` handler to fire once on mount (drain the initial emission; gate on `isDirty` if needed). **do NOT** call `getValue("nonexistentField")` from `useForgeValues` — it throws a named Forge error (`useForgeValues.getValue: field "..." is not registered`) on fields absent from `getValues()`.
+
+## TypeScript Quick Reference
+
+| Type | Source | Notes |
+|------|--------|-------|
+| `ForgeControl<T>` | `@adexdsamson/forge` | RHF `Control<T>` augmented with Forge metadata |
+| `ForgeProps<T>` | `@adexdsamson/forge` | Props for `<Forge>`; `control` is required |
+| `ForgerProps<T>` | `@adexdsamson/forge` | Props for `<Forger>`; extra props spread to `component` |
+| `UseForgeProps` | `@adexdsamson/forge` | Options for `useForge`; mirrors RHF `useForm` options + wizard config |
+| `UseForgeResult<T>` | `@adexdsamson/forge` | Return type of `useForge`; `control` is `ForgeControl<T>` |
+| `FieldProps` | `@adexdsamson/forge` | Shape for declarative `fields` array passed to `useForge` |
+| `FormPropsRef` | `@adexdsamson/forge` | Ref shape for programmatic `onSubmit()` via `<Forge ref={...}>` |
+| `ForgeSubmitButtonProps` | `@adexdsamson/forge` | Add `forgeSubmit` to any RN button to auto-wire `onPress` |
+
+## Further Reading
+
+- [README](ReadMe.md) — quickstart guide with web and React Native examples
+- [API Reference](docs/API.md) — full prop and return-value tables for every exported symbol (unchanged)
+- [React Native Example](examples/ReactNativeExample.md) — complete runnable RN form
+- [CHANGELOG](CHANGELOG.md) — version history
+
+---
+
+## Condensed API Signature Table
+
+| Export | Signature | Notes |
+|--------|-----------|-------|
+| `useForge<T>` | `(props: UseForgeProps) => UseForgeResult<T>` | Props: defaultValues, resolver, fields, mode, isWizard, initialStep, totalSteps |
+| `Forge<T>` | `(props: ForgeProps<T>) => JSX.Element` | Props: control (required), onSubmit, className, noValidate, children, ref, debug, platform, isWizard |
+| `Forger<T>` | `(props: ForgerProps<T>) => JSX.Element` | Props: name (required), component (required), rules, transform, handler, label, control; extra props spread to component via ...rest |
+| `useFieldArray<IP,T>` | `(props: ForgeFieldArray<T,...> & { inputProps: IP }) => UseFieldArrayReturn & { fields: (RHFField & { inputProps: IP })[] }` | Wraps RHF useFieldArray; adds per-item inputProps |
+| `useForgeValues<T>` | `({ control }) => { setValue, getValue, getValues }` | getValue throws on unknown field |
+| `usePersist<T>` | `({ control, handler }) => void` | handler: (values: T, { isDirty, isValid }) => void; fires on mount |
+| `useSubscribe<T>` | `({ subject, next, disabled? }) => void` | Generic Subject<T> observer; cleans up on unmount |
+| `validateField` | `(field: Field, formValues, validateAllFieldCriteria, ...) => Promise<InternalFieldErrors>` | Platform-aware; web uses reportValidity; RN uses setNativeProps |
+
+> Source of truth: AGENTS.md. This file is assembled from AGENTS.md content — do not edit independently.
