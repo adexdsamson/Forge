@@ -19,6 +19,29 @@ type ForgePersist<TFieldValues extends FieldValues = FieldValues> = {
   handler: (values: TFieldValues, state: { isDirty: boolean; isValid: boolean }) => void;
 };
 
+/**
+ * Subscribes to every form value change and fires a handler for autosave / draft persistence.
+ *
+ * @remarks
+ * Handler fires on mount (drain the initial emission; gate on `isDirty` if you only want
+ * to save after the user has interacted). Signature: `(values, { isDirty, isValid }) => void`.
+ *
+ * Uses RHF public `useWatch` + `useFormState` — zero private `_*` API access.
+ * The handler reference is stabilised internally so inline functions are safe.
+ *
+ * @param props - `{ control, handler }` — the `ForgeControl` and a persist callback.
+ * @returns void — side-effect only hook.
+ *
+ * @example
+ * ```tsx
+ * usePersist({
+ *   control,
+ *   handler: (values, { isDirty, isValid }) => {
+ *     if (isDirty) saveToServer(values);
+ *   },
+ * });
+ * ```
+ */
 export const usePersist = <TFieldProps extends FieldValues = FieldValues>({
   control,
   handler,

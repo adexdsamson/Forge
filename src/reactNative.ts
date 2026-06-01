@@ -1,11 +1,15 @@
 /**
- * React Native specific utilities and helpers for the Forge library
- * This file provides React Native compatible implementations for form handling
+ * React Native specific utilities and helpers for the Forge library.
+ * Provides platform-aware event handler routing, value property mapping,
+ * and error propagation for React Native form components.
  */
 
 import { isReactNative, isWeb } from './utils';
 
-// React Native component type mappings
+/**
+ * Map of known React Native component display names used for event-handler and value-prop routing.
+ * Used by `getEventHandlerName` and `getValuePropertyName` to select the correct prop for each component type.
+ */
 export const REACT_NATIVE_COMPONENTS = {
   TextInput: 'TextInput',
   Switch: 'Switch',
@@ -15,7 +19,16 @@ export const REACT_NATIVE_COMPONENTS = {
   RadioButton: 'RadioButton',
 } as const;
 
-// Platform-specific event handler mapping
+/**
+ * Returns the correct event handler prop name for a given React Native component type.
+ *
+ * @remarks
+ * Returns `'onChangeText'` for TextInput, `'onValueChange'` for Switch/Picker/Slider/CheckBox/RadioButton,
+ * and `'onChange'` for all other types (or when not running on React Native).
+ *
+ * @param componentType - A component display name string (e.g. `'TextInput'`, `'Switch'`).
+ * @returns The event handler prop name to use when wiring the field.
+ */
 export const getEventHandlerName = (componentType: string): string => {
   if (!isReactNative) return 'onChange';
 
@@ -34,7 +47,15 @@ export const getEventHandlerName = (componentType: string): string => {
   }
 };
 
-// Platform-specific value property mapping
+/**
+ * Returns the correct value prop name for a given React Native component type.
+ *
+ * @remarks
+ * Returns `'selectedValue'` for Picker/Slider, `'value'` for all other types.
+ *
+ * @param componentType - A component display name string.
+ * @returns The value prop name to use (e.g. `'value'` or `'selectedValue'`).
+ */
 export const getValuePropertyName = (componentType: string): string => {
   if (!isReactNative) return 'value';
 
@@ -53,7 +74,16 @@ export const getValuePropertyName = (componentType: string): string => {
   }
 };
 
-// React Native validation helpers
+/**
+ * Sets an error message on a React Native input ref via `setNativeProps`.
+ *
+ * @remarks
+ * No-ops when not running on React Native or when `ref.setNativeProps` is unavailable.
+ * Clears the error when `error` is `undefined` or an empty string.
+ *
+ * @param ref - The React Native input ref (must expose `setNativeProps`).
+ * @param error - The error message to set, or `undefined` to clear.
+ */
 export const setReactNativeError = (ref: any, error?: string) => {
   if (!isReactNative || !ref?.setNativeProps) return;
 
@@ -63,7 +93,12 @@ export const setReactNativeError = (ref: any, error?: string) => {
   });
 };
 
-// Platform-specific component detection
+/**
+ * Resolves the display name / type string for a React or React Native component or element.
+ *
+ * @param component - A React component, element, or any value.
+ * @returns A string type name (e.g. `'TextInput'`, `'div'`, or `'unknown'`).
+ */
 export const getComponentType = (component: any): string => {
   if (!component) return 'unknown';
 
@@ -87,7 +122,14 @@ export const getComponentType = (component: any): string => {
   return 'unknown';
 };
 
-// Cross-platform props merger
+/**
+ * Merges base props with platform-specific props (`web` or `reactNative`), selecting the
+ * correct branch at runtime based on the detected platform.
+ *
+ * @param baseProps - Props shared across all platforms.
+ * @param platformProps - Optional object with `web` and/or `reactNative` branch props.
+ * @returns Merged props object with the platform-specific branch applied on top.
+ */
 export const mergePlatformProps = (
   baseProps: any,
   platformProps?: { web?: any; reactNative?: any }
@@ -102,7 +144,10 @@ export const mergePlatformProps = (
   };
 };
 
-// React Native specific validation rules
+/**
+ * Validation rule helpers for React Native inputs (textInput, numeric, required).
+ * These are utility predicates — Forge's main validation path goes through `validateField`.
+ */
 export const REACT_NATIVE_VALIDATION_RULES = {
   textInput: {
     maxLength: (value: string, max: number) => value.length <= max,
@@ -122,7 +167,13 @@ export const REACT_NATIVE_VALIDATION_RULES = {
   },
 };
 
-// React Native file handling (for image picker, document picker, etc.)
+/**
+ * Normalises a React Native image/document picker result into a consistent file-like object
+ * `{ uri, type, name, size }`. No-ops on web (returns the file as-is).
+ *
+ * @param file - A file object from an RN image picker, document picker, or any source.
+ * @returns A normalised file descriptor on React Native; the original value on web.
+ */
 export const handleReactNativeFile = (file: any) => {
   if (!isReactNative) return file;
 
@@ -139,13 +190,23 @@ export const handleReactNativeFile = (file: any) => {
   return file;
 };
 
-// Platform detection utilities
+/**
+ * Returns the current platform as a string: `'react-native'`, `'web'`, or `'unknown'`.
+ * Evaluated once at module load time; cannot change at runtime.
+ */
 export const getPlatform = () => {
   if (isReactNative) return 'react-native';
   if (isWeb) return 'web';
   return 'unknown';
 };
 
+/**
+ * Returns `true` when running on React Native **and** the component's display name is a known
+ * RN component type listed in `REACT_NATIVE_COMPONENTS`.
+ *
+ * @param component - A React component or element to test.
+ * @returns `true` if the component is a recognised React Native component on the RN platform.
+ */
 export const isValidReactNativeComponent = (component: any): boolean => {
   if (!isReactNative || !component) return false;
 

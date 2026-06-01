@@ -16,6 +16,33 @@ type ForgeFieldArray<
   inputProps: IN;
 };
 
+/**
+ * Manages dynamic field arrays and layers per-item `inputProps` onto each returned field.
+ *
+ * @remarks
+ * Wraps RHF's `useFieldArray` and layers per-item `inputProps` onto each returned field.
+ * The `inputProps` attachment is the reason this hook exists — do not replace with a plain
+ * RHF `useFieldArray` call, as that would lose per-item input configuration.
+ *
+ * All mutation (`append`, `remove`, `insert`, `swap`, `update`), ID tracking, focus, and
+ * validation are delegated to RHF's public `useFieldArray`. Zero private RHF API access.
+ *
+ * @param props - RHF `UseFieldArrayProps` plus `inputProps` — the input configuration
+ *   object to attach to every returned field entry.
+ * @returns RHF `UseFieldArrayReturn` with `fields` augmented: each entry has `inputProps` attached.
+ *
+ * @example
+ * ```tsx
+ * const { fields, append, remove } = useFieldArray({
+ *   control,
+ *   name: 'phones',
+ *   inputProps: { placeholder: 'Phone number', keyboardType: 'phone-pad' },
+ * });
+ * return fields.map((f, i) => (
+ *   <Forger key={f.id} name={`phones.${i}.number`} component={TextInput} {...f.inputProps} />
+ * ));
+ * ```
+ */
 export const useFieldArray = <
   InputProps = unknown,
   TFieldValues extends FieldValues = FieldValues,

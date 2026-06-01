@@ -120,6 +120,33 @@ const getCheckboxValue = (options?: any[]): CheckboxFieldResult => {
     : defaultResult;
 };
 
+/**
+ * Async field validator that evaluates required, min/max, maxLength/minLength, pattern, and custom
+ * `validate` rules against a single field's value.
+ *
+ * @remarks
+ * Platform-aware: on web uses `inputRef.reportValidity()` for native browser validation feedback;
+ * on React Native uses `setNativeProps({ error })` on the input ref.
+ *
+ * Returns an empty object `{}` for valid fields; returns a keyed `InternalFieldErrors` record on
+ * failure. Skips fields that are unmounted, disabled, or in `disabledFieldNames`.
+ *
+ * @param field - The RHF `Field` descriptor (contains `_f` metadata: ref, rules, name, etc.).
+ * @param formValues - Current snapshot of all form values.
+ * @param validateAllFieldCriteria - When `true`, collects all errors instead of stopping at first.
+ * @param shouldUseNativeValidation - When `true`, calls native validation feedback methods.
+ * @param isFieldArray - When `true`, applies field-array-specific required logic.
+ * @param disabledFieldNames - Set of field names to skip validation for.
+ * @returns A `Promise` resolving to an `InternalFieldErrors` record (empty if valid).
+ *
+ * @example
+ * ```tsx
+ * import validateField from '@adexdsamson/forge';
+ *
+ * const errors = await validateField(field, formValues, false);
+ * if (Object.keys(errors).length > 0) console.error(errors);
+ * ```
+ */
 export default async <T extends FieldValues>(
   field: Field,
   formValues: T,

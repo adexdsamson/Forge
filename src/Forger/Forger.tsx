@@ -100,6 +100,33 @@ const MemorizeController = memo<ForgerControllerProps<FieldValues>>(
 
 MemorizeController.displayName = 'MemorizeController';
 
+/**
+ * Connects a single form field to react-hook-form via `useController`, auto-wiring platform event handlers.
+ *
+ * @remarks
+ * RN: pass native props (e.g. `keyboardType`, `secureTextEntry`) **directly** on `<Forger>`, not via
+ * a `reactNative={{}}` prop — extra props are spread to the component via `...rest`. There is no
+ * `reactNative` key; passing it would be silently ignored.
+ *
+ * Every `<Forger>` must have a `name` prop; nameless instances are not wired into the form
+ * (`isInputSlot` checks `child.props.name`).
+ *
+ * `transform`: `output` transforms value **before writing to RHF** (display→stored);
+ * `input` transforms value **before passing to the component** (stored→display).
+ *
+ * When rendered outside `<Forge>` (no FormProvider context), pass `control` explicitly.
+ *
+ * @param props - {@link ForgerProps} — `name` and `component` are required; extra props are spread to `component`.
+ * @returns A memoised field controller wrapped in a `Slot`.
+ *
+ * @example
+ * ```tsx
+ * // Web
+ * <Forger name="email" component={TextInput} rules={{ required: 'Required' }} />
+ * // React Native — native props go directly on <Forger>
+ * <Forger name="phone" component={TextInput} keyboardType="phone-pad" />
+ * ```
+ */
 export const Forger = <T extends FieldValues>(props: ForgerProps<T>) => {
   // Fail-fast guard: Forger requires a single valid React element as its component.
   // Fires before Slot so the developer sees the Forger + field name in the error,

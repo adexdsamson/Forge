@@ -43,13 +43,24 @@ const hasPath = (obj: unknown, path: string): boolean => {
 };
 
 /**
- * Thin pass-through wrapper over RHF's public setValue / getValues.
+ * Thin pass-through wrapper over RHF's public `setValue` / `getValues`.
  *
- * getValue(name) delegates to RHF getValues(name) but throws a Forge-named error
- * when the field is not found in the whole-form getValues() object (RISK-01 / D-04).
+ * @remarks
+ * `getValue(name)` throws a Forge-named error (`useForgeValues.getValue: field "..." is not registered`)
+ * if the field is not found in `getValues()` — only call it for fields that have a `defaultValue`
+ * or have been written at least once.
  *
- * @param {UseForgeValuesProps} props - The props containing forgeControl
- * @returns {UseForgeValuesReturn} - Object containing setValue, getValue, and getValues
+ * Zero private RHF API access — all operations go through `useFormContext`.
+ *
+ * @param props - `{ control }` — the `ForgeControl` instance from `useForge`.
+ * @returns `{ setValue, getValue, getValues }` — thin wrappers over the RHF equivalents.
+ *
+ * @example
+ * ```tsx
+ * const { setValue, getValue } = useForgeValues({ control });
+ * setValue('email', 'user@example.com');
+ * const current = getValue('email'); // throws if field not registered
+ * ```
  */
 export const useForgeValues = <TFieldValues extends FieldValues = FieldValues>({
   control: _control,

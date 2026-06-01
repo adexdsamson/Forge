@@ -3,9 +3,26 @@ import { useState } from 'react';
 import { ForgeControl, UseForgeProps, UseForgeResult } from '../types';
 
 /**
- * A custom hook that returns a form component and form control functions using the `react-hook-form` library.
- * @param {UseForgeProps} options - The options for the form.
- * @returns {UseForgeResult} - The form control functions and the form component.
+ * Initializes a Forge form and returns the full react-hook-form toolkit plus an augmented `control` handle.
+ *
+ * @remarks
+ * Returns the full react-hook-form `UseFormReturn` toolkit plus an augmented `control` handle.
+ * Pass `control` (not the whole return object) to `<Forge>`. Wizard state (`currentStep`,
+ * `handleNext`, etc.) is overlaid onto the same `control` instance via `Object.assign` —
+ * the RHF prototype chain and all private fields remain intact.
+ *
+ * @param props - {@link UseForgeProps} — mirrors RHF `useForm` options plus Forge wizard config
+ *   (`isWizard`, `totalSteps`, `initialStep`) and a declarative `fields` array.
+ * @returns {@link UseForgeResult} — same as RHF `UseFormReturn` but `control` is `ForgeControl<T>`.
+ *
+ * @example
+ * ```tsx
+ * const { control, formState } = useForge({
+ *   defaultValues: { email: '' },
+ *   mode: 'onChange',
+ * });
+ * return <Forge control={control} onSubmit={onSubmit}> ... </Forge>;
+ * ```
  */
 export const useForge = <TFieldValues extends FieldValues = FieldValues, TFieldProps = unknown>({
   defaultValues,

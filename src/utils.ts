@@ -81,12 +81,26 @@ export const isWatched = (name: InternalFieldName, _names: Names, isBlurEvent?: 
       (watchName) => name.startsWith(watchName) && /^\.\w+/.test(name.slice(watchName.length))
     ));
 
+/**
+ * `true` when running in a browser environment with a real DOM.
+ * Module-level constant evaluated once at import time; cannot change per-instance.
+ */
 export const isWeb =
   typeof window !== 'undefined' &&
   typeof window.HTMLElement !== 'undefined' &&
   typeof document !== 'undefined';
+
+/**
+ * `true` when running inside React Native (no DOM, `navigator.product === 'ReactNative'`).
+ * Module-level constant evaluated once at import time; cannot change per-instance.
+ */
 export const isReactNative =
   !isWeb && typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
+
+/**
+ * `true` on React Native **or** on a web browser with a mobile user-agent string.
+ * Module-level constant evaluated once at import time.
+ */
 export const isMobile =
   isReactNative ||
   (isWeb &&
@@ -330,7 +344,10 @@ export const isHTMLElement = (value: unknown): value is HTMLElement => {
   );
 };
 
-// React Native compatible element type checking
+/**
+ * Returns `true` for TextInput / INPUT / TEXTAREA elements (web or React Native).
+ * Cross-platform: checks `displayName`/`type` on RN, `tagName` on web.
+ */
 export const isTextInput = (element: any): boolean => {
   if (isReactNative) {
     return element && (element.displayName === 'TextInput' || element.type === 'TextInput');
@@ -343,6 +360,9 @@ export const isFileInput = (element: any): boolean => {
   return element && element.type === 'file';
 };
 
+/**
+ * Returns `true` for checkbox inputs (web `type="checkbox"`) or RN `CheckBox` components.
+ */
 export const isCheckBoxInput = (element: any): boolean => {
   if (isReactNative) {
     return element && (element.displayName === 'CheckBox' || element.type === 'CheckBox');
@@ -350,6 +370,9 @@ export const isCheckBoxInput = (element: any): boolean => {
   return isWeb && element && element.type === 'checkbox';
 };
 
+/**
+ * Returns `true` for radio inputs (web `type="radio"`) or RN `RadioButton` components.
+ */
 export const isRadioInput = (element: any): boolean => {
   if (isReactNative) {
     return element && (element.displayName === 'RadioButton' || element.type === 'RadioButton');
@@ -357,17 +380,25 @@ export const isRadioInput = (element: any): boolean => {
   return isWeb && element && element.type === 'radio';
 };
 
-// React Native specific component checks
+/**
+ * Returns `true` for RN `Picker` components. Always `false` on web.
+ */
 export const isPicker = (element: any): boolean => {
   if (!isReactNative) return false;
   return element && (element.displayName === 'Picker' || element.type === 'Picker');
 };
 
+/**
+ * Returns `true` for RN `Switch` components. Always `false` on web.
+ */
 export const isSwitch = (element: any): boolean => {
   if (!isReactNative) return false;
   return element && (element.displayName === 'Switch' || element.type === 'Switch');
 };
 
+/**
+ * Returns `true` for RN `Slider` components. Always `false` on web.
+ */
 export const isSlider = (element: any): boolean => {
   if (!isReactNative) return false;
   return element && (element.displayName === 'Slider' || element.type === 'Slider');

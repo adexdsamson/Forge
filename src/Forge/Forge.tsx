@@ -39,6 +39,33 @@ function loadDevTool(): React.ComponentType<{ control: unknown }> {
   }
 }
 
+/**
+ * Form container component that wires submit, wizard navigation, and RN input registration.
+ *
+ * @remarks
+ * Web: renders a real `<form>` element so native browser submit semantics apply
+ * (Enter-to-submit, `type="submit"` button, native `required`/`pattern` validation).
+ *
+ * React Native: renders a Fragment (no wrapper element); use `platform="react-native"` or
+ * rely on auto-detection. Wrap in your own `<View>` for layout — `className` has no effect on RN.
+ *
+ * Submit wiring: on web, a `<button type="submit">` just works. On RN, add `forgeSubmit` to any
+ * pressable component — Forge injects `onPress` and strips the prop before it reaches the host.
+ *
+ * @param props - {@link ForgeProps} — `control` is required and must come from `useForge`.
+ * @returns A `<form>` element on web, a React Fragment on React Native, both wrapped in `FormProvider`.
+ *
+ * @example
+ * ```tsx
+ * const { control } = useForge({ defaultValues: { name: '' } });
+ * return (
+ *   <Forge control={control} onSubmit={(data) => console.log(data)}>
+ *     <Forger name="name" component={TextInput} />
+ *     <button type="submit">Submit</button>
+ *   </Forge>
+ * );
+ * ```
+ */
 export const Forge = <TFieldValues extends FieldValues = FieldValues>({
   className,
   children,
