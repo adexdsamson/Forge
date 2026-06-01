@@ -4,6 +4,18 @@ All notable changes will be documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.1.0] - 2026-06-01
+
+### Features
+
+* **Forger / Forge:** new opt-in `forgeSubmit` marker prop for React Native submit buttons — `<TouchableOpacity forgeSubmit>` auto-wires `onPress` to the form's `handleSubmit`, removing the redundant manual `onPress={handleSubmit(onSubmit)}` previously required on native. Web `<button type="submit">` inside `<Forge>` continues to work unchanged. Fully backward compatible (manual wiring still works).
+
+### Documentation
+
+* **AGENTS.md:** authoritative LLM / AI-coding-agent usage guide at the repo root — mental model, the public-export reference, copy-paste recipes (web, React Native, field arrays, persistence, wizard, transforms, schema resolvers, standalone validation), and a "Common Mistakes" section covering predictable API pitfalls.
+* **llms.txt / llms-full.txt:** machine-discoverable documentation index (per llmstxt.org) and a single-file consolidated reference.
+* **TSDoc:** inline documentation added to all public exports, now carried in the shipped `dist/index.d.ts` type declarations.
+
 ## [1.0.0] - 2026-06-01
 
 ### Features
