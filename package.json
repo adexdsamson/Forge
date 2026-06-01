@@ -1,6 +1,6 @@
 {
   "name": "@adexdsamson/forge",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "description": "Forge is a custom React library that enhances the functionality of react-hook-form by providing a more streamlined, composable approach to building forms in React (web and React Native).",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
