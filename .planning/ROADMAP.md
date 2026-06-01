@@ -153,7 +153,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 -- readiness gate must pass before bump)*
 
-  - [ ] 06-03-PLAN.md -- Version bump + CHANGELOG heading + release PR opened + human merges to main (wave 2, depends 06-02)
+  - [x] 06-03-PLAN.md -- Version bump + CHANGELOG heading + release PR opened + human merges to main (wave 2, depends 06-02)
 
 **Wave 3** *(blocked on Wave 2 -- release PR must be on main before GitHub Release)*
 
@@ -171,4 +171,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 3. Testing | 4/4 | Complete   | 2026-05-31 |
 | 4. Packaging | 2/2 | Complete   | 2026-05-31 |
 | 5. Docs & CI | 4/4 | Complete   | 2026-05-31 |
-| 6. Publish | 2/4 | In Progress|  |
+| 6. Publish | 3/4 | In Progress|  |
