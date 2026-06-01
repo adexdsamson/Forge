@@ -128,3 +128,13 @@ export type PlatformSpecificProps = {
 
 export type CrossPlatformForgerProps<TFieldValues extends FieldValues = FieldValues> =
   ForgerProps<TFieldValues> & PlatformSpecificProps;
+
+/**
+ * Props interface for a submit button used inside `<Forge>` in React Native mode.
+ * Add `forgeSubmit` (or `forgeSubmit={true}`) to any button and Forge will
+ * automatically inject an `onPress` handler wired to `handleSubmit(onSubmit)`.
+ * The `forgeSubmit` prop is stripped before it reaches the host component.
+ */
+export interface ForgeSubmitButtonProps {
+  forgeSubmit?: boolean;
+}

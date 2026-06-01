@@ -408,7 +408,10 @@ export type AsChildProps<DefaultElementProps, CustomProps> =
   | ({ asChild: true; children: React.ReactNode } & CustomProps);
 
 export function isButtonSubmitSlot(child: ReactNode): child is ReactElement {
-  return isValidElement(child) && (child as any).props.type === 'submit';
+  return (
+    isValidElement(child) &&
+    ((child as any).props.type === 'submit' || (child as any).props.forgeSubmit === true)
+  );
 }
 
 export function isButtonSlot(child: ReactNode): child is ReactElement {
