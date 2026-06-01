@@ -148,7 +148,7 @@ Plans:
 Plans:
 **Wave 1** (parallel -- no shared files)
 
-  - [ ] 06-01-PLAN.md -- Prepare live-registry smoke scaffold (6-export smoke.ts + remove tarball reference) (wave 1, autonomous)
+  - [x] 06-01-PLAN.md -- Prepare live-registry smoke scaffold (6-export smoke.ts + remove tarball reference) (wave 1, autonomous)
   - [ ] 06-02-PLAN.md -- Pre-publish readiness gate: npm token type/expiry confirmed, scope ownership, dry-run green (wave 1, human-gated)
 
 **Wave 2** *(blocked on Wave 1 -- readiness gate must pass before bump)*
@@ -171,4 +171,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 3. Testing | 4/4 | Complete   | 2026-05-31 |
 | 4. Packaging | 2/2 | Complete   | 2026-05-31 |
 | 5. Docs & CI | 4/4 | Complete   | 2026-05-31 |
-| 6. Publish | 0/4 | Not started | - |
+| 6. Publish | 1/4 | In Progress|  |
