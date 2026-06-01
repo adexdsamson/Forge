@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-31)
 Phase: 06
 Plan: Not started
 Status: Milestone complete
-Last activity: 2026-06-01 - Completed quick task 260601-bp5: RN submit-button parity (forgeSubmit)
+Last activity: 2026-06-01 - Completed quick task 260601-ciw: LLM-friendly docs (AGENTS.md + llms.txt + llms-full.txt + TSDoc)
 
 Progress: [█████████░] 88%
 
@@ -122,6 +122,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260601-bp5 | RN submit-button parity via `forgeSubmit` marker + onPress wiring (v1.1, unreleased) | 2026-06-01 | 50e48e8 | [260601-bp5-rn-submit-button-parity](./quick/260601-bp5-rn-submit-button-parity/) |
+| 260601-ciw | LLM-friendly docs: AGENTS.md + llms.txt + llms-full.txt + TSDoc on all exports (v1.1, unreleased) | 2026-06-01 | 59741ef | [260601-ciw-llm-friendly-docs](./quick/260601-ciw-llm-friendly-docs/) |
 
 ## Deferred Items
 
