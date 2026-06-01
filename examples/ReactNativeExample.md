@@ -120,7 +120,7 @@ const StyledPicker = ({ error, ...props }: any) => (
 // Main component
 const ReactNativeExample: React.FC = () => {
   // Initialize form with default values
-  const { control, handleSubmit, formState: { errors, isValid } } = useForge<FormData>({
+  const { control, formState: { errors, isValid } } = useForge<FormData>({
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -318,7 +318,7 @@ const ReactNativeExample: React.FC = () => {
         <View style={styles.buttonContainer}>
           <Button
             title="Submit Form"
-            onPress={handleSubmit(onSubmit)}
+            forgeSubmit
             disabled={!isValid}
           />
         </View>

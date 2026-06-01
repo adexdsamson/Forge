@@ -140,7 +140,8 @@ import { Forge } from '@adexdsamson/forge';
 ### Behavior
 
 - **Web mode:** Renders a `<form>` element. `onSubmit` fires via RHF's `handleSubmit` (calls `event.preventDefault()` internally).
-- **React Native mode:** Renders a React Fragment. Submit buttons must use `type` or `data-wizard-nav` props so `<Forge>` can wire `onClick`.
+- **React Native mode:** Renders a React Fragment. Submit buttons must use `type="submit"` or `forgeSubmit` prop so `<Forge>` can detect and wire `onPress`. No manual `handleSubmit` call needed.
+- **`forgeSubmit` (on child button):** Add `forgeSubmit` (or `forgeSubmit={true}`) to any button inside `<Forge>` in React Native mode. Forge injects `onPress` pointing to `handleSubmit(onSubmit)` automatically and strips the `forgeSubmit` prop before it reaches the host component. Backward compatible: `type="submit"` continues to work.
 - **Wizard mode:** Renders only `children[currentStep]`. Buttons with `data-wizard-nav="next"` or `data-wizard-nav="previous"` get navigation handlers injected automatically.
 - **Declarative fields:** When `control.hasFields` is `true`, renders `<Forger>` elements from `control.fields` before `children`.
 

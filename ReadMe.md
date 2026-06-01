@@ -157,7 +157,7 @@ export function SignupForm() {
 
 ## React Native
 
-The same API works on React Native. Pass `platform="react-native"` to `<Forge>` (or let it auto-detect). Forge maps `onChange` to `onChangeText` for `TextInput` and `onValueChange` for `Switch`/`Picker`/`Slider` automatically.
+The same API works on React Native. Pass `platform="react-native"` to `<Forge>` (or let it auto-detect). Forge maps `onChange` to `onChangeText` for `TextInput` and `onValueChange` for `Switch`/`Picker`/`Slider` automatically. Mark your submit button with `forgeSubmit` and Forge auto-wires `onPress` — no manual `handleSubmit` call needed.
 
 ```tsx
 import React from 'react';
@@ -208,7 +208,7 @@ interface SignupFormData {
 }
 
 export function SignupFormRN() {
-  const { control, handleSubmit } = useForge<SignupFormData>({
+  const { control } = useForge<SignupFormData>({
     defaultValues: { name: '', role: '', acceptTerms: false },
     mode: 'onBlur',
   });
@@ -238,7 +238,7 @@ export function SignupFormRN() {
         label="I accept the terms and conditions"
       />
 
-      <TouchableOpacity onPress={handleSubmit(onSubmit)}>
+      <TouchableOpacity forgeSubmit>
         <Text>Sign up</Text>
       </TouchableOpacity>
     </Forge>
