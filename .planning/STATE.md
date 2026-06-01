@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-31)
 Phase: 06
 Plan: Not started
 Status: Milestone complete
-Last activity: 2026-06-01
+Last activity: 2026-06-01 - Completed quick task 260601-bp5: RN submit-button parity (forgeSubmit)
 
 Progress: [█████████░] 88%
 
@@ -116,6 +116,12 @@ None yet.
 
 - STAB-01/02: 118 `control._*` call sites across 3 files — `useForgeValues` (562 lines) may need full replacement rather than a surgical fix; scope for Phase 2 planning to assess
 - PKG-04: `publishConfig` (GitHub Packages) and CI workflow (npmjs) currently disagree — deliberate decision required in Phase 4
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260601-bp5 | RN submit-button parity via `forgeSubmit` marker + onPress wiring (v1.1, unreleased) | 2026-06-01 | 50e48e8 | [260601-bp5-rn-submit-button-parity](./quick/260601-bp5-rn-submit-button-parity/) |
 
 ## Deferred Items
 
