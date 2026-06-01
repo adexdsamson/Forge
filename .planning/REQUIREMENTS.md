@@ -50,7 +50,7 @@ Requirements for the initial public release. Each maps to a roadmap phase.
 
 ### Publish
 
-- [ ] **PUB-01**: The package is published to the chosen registry and `install` in a fresh project succeeds with `{ useForge, Forge, Forger, useFieldArray, useForgeValues, usePersist }` importing and type-checking correctly
+- [x] **PUB-01**: The package is published to the chosen registry and `install` in a fresh project succeeds with `{ useForge, Forge, Forger, useFieldArray, useForgeValues, usePersist }` importing and type-checking correctly
 
 ## v2 Requirements
 
@@ -98,7 +98,7 @@ Explicitly excluded for this milestone.
 | CICD-01 | Phase 5 | Complete |
 | CICD-02 | Phase 5 | Complete |
 | CICD-03 | Phase 5 | Complete |
-| PUB-01 | Phase 6 | In Progress |
+| PUB-01 | Phase 6 | Complete |
 
 ---
 *Requirements defined: 2026-05-31 — re-grounded on the cross-platform codebase extracted from orbipayx*

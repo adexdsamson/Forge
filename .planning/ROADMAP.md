@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Testing** - Add a real cross-platform test suite with enforced coverage (completed 2026-05-31)
 - [x] **Phase 4: Packaging** - Make the package publish-ready (package.json, entry points, dist hygiene, settled registry) (completed 2026-05-31)
 - [x] **Phase 5: Docs & CI** - Accurate docs, lint config, CI pipeline, automated publish workflow (completed 2026-05-31)
-- [ ] **Phase 6: Publish** - Ship the package to the chosen registry
+- [x] **Phase 6: Publish** - Ship the package to the chosen registry (completed 2026-06-01)
 
 ## Phase Details
 
@@ -157,7 +157,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 -- release PR must be on main before GitHub Release)*
 
-  - [ ] 06-04-PLAN.md -- Create GitHub Release, monitor CI publish with provenance, post-publish live smoke SC1+SC2+SC3 (wave 3, depends 06-01, 06-03)
+  - [x] 06-04-PLAN.md -- Create GitHub Release, monitor CI publish with provenance, post-publish live smoke SC1+SC2+SC3 (wave 3, depends 06-01, 06-03)
 
 ## Progress
 
@@ -171,4 +171,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 3. Testing | 4/4 | Complete   | 2026-05-31 |
 | 4. Packaging | 2/2 | Complete   | 2026-05-31 |
 | 5. Docs & CI | 4/4 | Complete   | 2026-05-31 |
-| 6. Publish | 3/4 | In Progress|  |
+| 6. Publish | 4/4 | Complete   | 2026-06-01 |
