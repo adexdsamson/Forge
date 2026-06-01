@@ -123,10 +123,16 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
       if (isButtonSubmitSlot(child)) {
         if (isRNMode) {
           // Native: no <form> element exists — wire onPress (not onClick) to drive handleSubmit.
-          // Strip forgeSubmit from the forwarded props so it does not leak to the host component
-          // (avoids unknown-prop React warning on RN primitives).
+          // Use createElement (not cloneElement) to get a clean prop set: cloneElement shallow-
+          // merges new props over the original element, which would preserve the forgeSubmit prop
+          // even if omitted from the new props object. createElement starts fresh.
+          // Strip forgeSubmit so it does not leak to the host component (avoids unknown-prop
+          // React warning on RN primitives).
           const { forgeSubmit: _fg, ...restProps } = childProps;
-          return cloneElement(el, { ...restProps, onPress: control.handleSubmit(safeOnSubmit) });
+          return createElement(el.type, {
+            ...restProps,
+            onPress: control.handleSubmit(safeOnSubmit),
+          });
         }
         // Web: the <form onSubmit> drives handleSubmit via native form submit
         // (Enter + button click), so do NOT inject a second handler here
