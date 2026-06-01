@@ -4,7 +4,7 @@ All notable changes will be documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/).
 
-## [Unreleased]
+## [1.0.0] - 2026-06-01
 
 ### Features
 
