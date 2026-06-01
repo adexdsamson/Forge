@@ -1,11 +1,11 @@
 /// <reference types="vitest/globals" />
-import React from "react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render } from "@testing-library/react";
-import { Forge } from "./Forge";
-import { Forger } from "../Forger/Forger";
-import { useForge } from "../useForge/useForge";
-import { TextInput } from "../test-utils";
+import React from 'react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render } from '@testing-library/react';
+import { Forge } from './Forge';
+import { Forger } from '../Forger/Forger';
+import { useForge } from '../useForge/useForge';
+import { TextInput } from '../test-utils';
 
 // ---------------------------------------------------------------------------
 // CORR-02 regression test (D-06):
@@ -14,20 +14,20 @@ import { TextInput } from "../test-utils";
 // so it cannot silently regress.
 // ---------------------------------------------------------------------------
 
-describe("Forge errors — CORR-02 regression", () => {
+describe('Forge errors — CORR-02 regression', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it("CORR-02: Forger with two children throws error matching /Forger/ and /myField/", () => {
+  it('CORR-02: Forger with two children throws error matching /Forger/ and /myField/', () => {
     // Suppress React 18 error boundary console noise (Pitfall 3 from RESEARCH.md).
     // React 18 logs to console even when the thrown error is caught by expect().toThrow().
-    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     // ThrowingForm is defined as a named component (not inline JSX) to avoid React 18
     // render reconciler edge cases with anonymous component trees.
     function ThrowingForm() {
-      const { control } = useForge({ defaultValues: { myField: "" } });
+      const { control } = useForge({ defaultValues: { myField: '' } });
       return (
         <Forge control={control} onSubmit={vi.fn()}>
           <Forger name="myField" component={TextInput}>
@@ -45,11 +45,11 @@ describe("Forge errors — CORR-02 regression", () => {
     consoleError.mockRestore();
   });
 
-  it("CORR-02: thrown error message also contains the field name", () => {
-    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+  it('CORR-02: thrown error message also contains the field name', () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     function ThrowingForm() {
-      const { control } = useForge({ defaultValues: { myField: "" } });
+      const { control } = useForge({ defaultValues: { myField: '' } });
       return (
         <Forge control={control} onSubmit={vi.fn()}>
           <Forger name="myField" component={TextInput}>

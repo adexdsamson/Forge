@@ -8,33 +8,33 @@
 // module-level isReactNative constant via closure. Spreading the original module
 // preserves the closed-over isReactNative=false in those functions. We must
 // explicitly override them to use the mocked isReactNative=true value.
-vi.mock("../utils", async (importOriginal) => {
-  const original = await importOriginal<typeof import("../utils")>();
+vi.mock('../utils', async (importOriginal) => {
+  const original = await importOriginal<typeof import('../utils')>();
   return {
-    ...original,       // preserve Slot, deepEqual, cloneObject, etc.
+    ...original, // preserve Slot, deepEqual, cloneObject, etc.
     isReactNative: true,
     isWeb: false,
     isMobile: true,
     // Override component-type checkers to use isReactNative=true (they close over the const)
     isTextInput: (element: any): boolean =>
-      element != null && (element.displayName === "TextInput" || element.type === "TextInput"),
+      element != null && (element.displayName === 'TextInput' || element.type === 'TextInput'),
     isSwitch: (element: any): boolean =>
-      element != null && (element.displayName === "Switch" || element.type === "Switch"),
+      element != null && (element.displayName === 'Switch' || element.type === 'Switch'),
     isPicker: (element: any): boolean =>
-      element != null && (element.displayName === "Picker" || element.type === "Picker"),
+      element != null && (element.displayName === 'Picker' || element.type === 'Picker'),
     isSlider: (element: any): boolean =>
-      element != null && (element.displayName === "Slider" || element.type === "Slider"),
+      element != null && (element.displayName === 'Slider' || element.type === 'Slider'),
   };
 });
 
 /// <reference types="vitest/globals" />
-import React from "react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render } from "@testing-library/react";
-import { act } from "@testing-library/react";
-import { Forge } from "../Forge/Forge";
-import { Forger } from "./Forger";
-import { useForge } from "../useForge/useForge";
+import React from 'react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render } from '@testing-library/react';
+import { act } from '@testing-library/react';
+import { Forge } from '../Forge/Forge';
+import { Forger } from './Forger';
+import { useForge } from '../useForge/useForge';
 
 // ---------------------------------------------------------------------------
 // Capturing component for TextInput RN branch
@@ -47,7 +47,7 @@ const CapturingRNTextInput = React.forwardRef<any, any>((props, ref) => {
   capturedTextInputProps = props;
   return <span ref={ref} />;
 });
-CapturingRNTextInput.displayName = "TextInput";
+CapturingRNTextInput.displayName = 'TextInput';
 
 // ---------------------------------------------------------------------------
 // Capturing component for Switch RN branch
@@ -60,21 +60,21 @@ const CapturingSwitchInput = React.forwardRef<any, any>((props, ref) => {
   capturedSwitchProps = props;
   return <span ref={ref} />;
 });
-CapturingSwitchInput.displayName = "Switch";
+CapturingSwitchInput.displayName = 'Switch';
 
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
-describe("Forger — RN event-handler wiring (isReactNative=true via vi.mock)", () => {
+describe('Forger — RN event-handler wiring (isReactNative=true via vi.mock)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     capturedTextInputProps = {};
     capturedSwitchProps = {};
   });
 
-  it("Test 1: Forger injects onChangeText (not onChange) for TextInput in RN mode", async () => {
+  it('Test 1: Forger injects onChangeText (not onChange) for TextInput in RN mode', async () => {
     function TestForm() {
-      const { control } = useForge({ defaultValues: { username: "" } });
+      const { control } = useForge({ defaultValues: { username: '' } });
       return (
         <Forge control={control} onSubmit={vi.fn()}>
           <Forger name="username" component={CapturingRNTextInput} />
@@ -94,11 +94,11 @@ describe("Forger — RN event-handler wiring (isReactNative=true via vi.mock)", 
 
     // Invoke onChangeText directly — must update RHF state without throwing
     await act(async () => {
-      capturedTextInputProps.onChangeText("hello");
+      capturedTextInputProps.onChangeText('hello');
     });
   });
 
-  it("Test 2: Forger injects onValueChange for Switch in RN mode", async () => {
+  it('Test 2: Forger injects onValueChange for Switch in RN mode', async () => {
     function TestForm() {
       const { control } = useForge({ defaultValues: { toggle: false } });
       return (

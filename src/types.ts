@@ -1,5 +1,5 @@
-import { ReactNode, RefObject } from "react";
-import type { Accept } from "react-dropzone";
+import { ReactNode, RefObject } from 'react';
+import type { Accept } from 'react-dropzone';
 import {
   Control,
   DefaultValues,
@@ -8,16 +8,13 @@ import {
   RegisterOptions,
   Resolver,
   UseFormReturn,
-} from "react-hook-form";
+} from 'react-hook-form';
 
 export type FormPropsRef = {
   onSubmit: () => void;
 };
 
-export type ForgeControl<
-  T extends FieldValues,
-  TFieldProps = unknown
-> = Control<T, any> & {
+export type ForgeControl<T extends FieldValues, TFieldProps = unknown> = Control<T, any> & {
   fields?: FieldProps<TFieldProps>[];
   hasFields: boolean;
   // Wizard state and functions
@@ -31,13 +28,11 @@ export type ForgeControl<
   handleWizardSubmit?: (onSubmit?: (data: any) => void) => () => void;
 };
 
-type AsyncDefaultValues<TFieldValues> = (
-  payload?: unknown
-) => Promise<TFieldValues>;
+type AsyncDefaultValues<TFieldValues> = (payload?: unknown) => Promise<TFieldValues>;
 
 export type ForgerProps<TFieldValues extends FieldValues = FieldValues> = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "onChange" | "name"
+  'onChange' | 'name'
 > & {
   name: Path<TFieldValues>;
   component: React.ElementType;
@@ -48,14 +43,12 @@ export type ForgerProps<TFieldValues extends FieldValues = FieldValues> = Omit<
   control?: ForgeControl<TFieldValues>;
 } & Record<string, unknown>;
 
-export type ForgerControllerProps<
-  TFieldValues extends FieldValues = FieldValues
-> = {
+export type ForgerControllerProps<TFieldValues extends FieldValues = FieldValues> = {
   name: Path<TFieldValues>;
   className?: string;
   rules?: Omit<
     RegisterOptions<TFieldValues, any>,
-    "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
   transform?: {
     input?: (value: unknown) => unknown;
@@ -73,8 +66,8 @@ export type ForgerSlotProps = {
   value: string;
   placeholder?: string;
   control: ForgeControl<FieldValues>;
-  onBlur: RegisterOptions["onBlur"];
-  onChange: RegisterOptions["onChange"];
+  onBlur: RegisterOptions['onBlur'];
+  onChange: RegisterOptions['onChange'];
 };
 
 export type TForgerProps = {
@@ -85,21 +78,15 @@ export type TForgerProps = {
 
 export type FieldProps<
   TFieldProps = unknown,
-  TFieldValues extends FieldValues = FieldValues
+  TFieldValues extends FieldValues = FieldValues,
 > = ForgerProps<TFieldValues> & TFieldProps;
 
-export type UseForgeProps<
-  TFieldProps = unknown,
-  TFieldValues extends FieldValues = FieldValues
-> = {
-  defaultValues?:
-    | AsyncDefaultValues<TFieldValues>
-    | DefaultValues<TFieldValues>
-    | undefined;
+export type UseForgeProps<TFieldProps = unknown, TFieldValues extends FieldValues = FieldValues> = {
+  defaultValues?: AsyncDefaultValues<TFieldValues> | DefaultValues<TFieldValues> | undefined;
   resolver?: Resolver<TFieldValues>;
   fields?: FieldProps<TFieldProps>[];
-  mode?: "onBlur" | "onChange" | "onSubmit" | "onTouched" | "all";
-   // Wizard configuration
+  mode?: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all';
+  // Wizard configuration
   initialStep?: number;
   totalSteps?: number;
   isWizard?: boolean;
@@ -107,15 +94,12 @@ export type UseForgeProps<
 
 export type UseForgeResult<T extends FieldValues, TFieldProps = unknown> = Omit<
   UseFormReturn<T>,
-  "control"
+  'control'
 > & {
   control: ForgeControl<T, TFieldProps>;
 };
 
-export type ForgeProps<
-  TFieldValues extends FieldValues,
-  TFieldProps = unknown
-> = {
+export type ForgeProps<TFieldValues extends FieldValues, TFieldProps = unknown> = {
   onSubmit?: (submit: TFieldValues) => void;
   noValidate?: boolean;
   className?: string;
@@ -142,5 +126,5 @@ export type PlatformSpecificProps = {
   reactNative?: ReactNativeInputProps;
 };
 
-export type CrossPlatformForgerProps<TFieldValues extends FieldValues = FieldValues> = 
+export type CrossPlatformForgerProps<TFieldValues extends FieldValues = FieldValues> =
   ForgerProps<TFieldValues> & PlatformSpecificProps;

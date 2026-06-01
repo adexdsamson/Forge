@@ -1,5 +1,5 @@
 /// <reference types="vitest/globals" />
-import React from "react";
+import React from 'react';
 
 // ---------------------------------------------------------------------------
 // Shared TextInput forwardRef helper for web-mode test files.
@@ -13,10 +13,10 @@ export const TextInput = React.forwardRef<
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
     name?: string;
-    "data-testid"?: string;
+    'data-testid'?: string;
   }
 >((props, ref) => {
-  const { value = "", onChange, onBlur, name, ...rest } = props;
+  const { value = '', onChange, onBlur, name, ...rest } = props;
   return (
     <input
       ref={ref}
@@ -29,4 +29,4 @@ export const TextInput = React.forwardRef<
     />
   );
 });
-TextInput.displayName = "TextInput";
+TextInput.displayName = 'TextInput';

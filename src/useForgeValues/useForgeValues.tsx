@@ -5,18 +5,14 @@ import {
   UseFormSetValue,
   UseFormGetValues,
   useFormContext,
-} from "react-hook-form";
-import { ForgeControl } from "../types";
+} from 'react-hook-form';
+import { ForgeControl } from '../types';
 
-export type UseForgeValuesProps<
-  TFieldValues extends FieldValues = FieldValues
-> = {
+export type UseForgeValuesProps<TFieldValues extends FieldValues = FieldValues> = {
   control: ForgeControl<TFieldValues>;
 };
 
-export type UseForgeValuesReturn<
-  TFieldValues extends FieldValues = FieldValues
-> = {
+export type UseForgeValuesReturn<TFieldValues extends FieldValues = FieldValues> = {
   setValue: UseFormSetValue<TFieldValues>;
   getValue: <TFieldName extends Path<TFieldValues>>(
     name: TFieldName
@@ -36,10 +32,10 @@ export type UseForgeValuesReturn<
  */
 const hasPath = (obj: unknown, path: string): boolean => {
   // Normalize bracket notation: items[0].name → items.0.name
-  const segments = path.replace(/\[(\d+)\]/g, ".$1").split(".");
+  const segments = path.replace(/\[(\d+)\]/g, '.$1').split('.');
   let cur: unknown = obj;
   for (const seg of segments) {
-    if (cur == null || typeof cur !== "object") return false;
+    if (cur == null || typeof cur !== 'object') return false;
     if (!(seg in (cur as Record<string, unknown>))) return false;
     cur = (cur as Record<string, unknown>)[seg];
   }
@@ -69,9 +65,7 @@ export const useForgeValues = <TFieldValues extends FieldValues = FieldValues>({
   ): PathValue<TFieldValues, TFieldName> => {
     const all = ctx.getValues();
     if (!hasPath(all, String(name))) {
-      throw new Error(
-        `useForgeValues.getValue: field "${String(name)}" is not registered`
-      );
+      throw new Error(`useForgeValues.getValue: field "${String(name)}" is not registered`);
     }
     return ctx.getValues(name);
   };

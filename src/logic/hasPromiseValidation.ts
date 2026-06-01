@@ -12,6 +12,6 @@ export default (fieldReference: Field['_f']) =>
     (isObject(fieldReference.validate) &&
       Object.values(fieldReference.validate).find(
         (validateFunction: Validate<unknown, unknown>) =>
-          validateFunction.constructor.name === ASYNC_FUNCTION,
+          validateFunction.constructor.name === ASYNC_FUNCTION
       ))
   );

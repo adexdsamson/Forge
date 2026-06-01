@@ -1,29 +1,16 @@
-"use client";
+'use client';
 
-import deepEqual from "../utils";
-import React from "react";
-import {
-  Slot,
-  isReactNative,
-  isTextInput,
-  isPicker,
-  isSwitch,
-  isSlider,
-} from "../utils";
-import { memo } from "react";
-import {
-  FieldValues,
-  useController,
-  useFormContext,
-} from "react-hook-form";
-import { ForgerControllerProps, ForgerProps } from "../types";
-
+import deepEqual from '../utils';
+import React from 'react';
+import { Slot, isReactNative, isTextInput, isPicker, isSwitch, isSlider } from '../utils';
+import { memo } from 'react';
+import { FieldValues, useController, useFormContext } from 'react-hook-form';
+import { ForgerControllerProps, ForgerProps } from '../types';
 
 const ForgerController = <TFieldValues extends FieldValues = FieldValues>(
   props: ForgerControllerProps<TFieldValues>
 ) => {
-  const { rules, transform, methods, component, name, handler, ...rest } =
-    props;
+  const { rules, transform, methods, component, name, handler, ...rest } = props;
   const {
     field: { onBlur, onChange, value, ref },
     fieldState: { error },
@@ -31,11 +18,11 @@ const ForgerController = <TFieldValues extends FieldValues = FieldValues>(
   const Component = component;
 
   const getTextTransform = (text: unknown) => {
-    return typeof transform === "undefined" ? text : transform.output?.(text);
+    return typeof transform === 'undefined' ? text : transform.output?.(text);
   };
 
   const getTransformedValue = (text: unknown) => {
-    return typeof transform === "undefined" ? text : transform.input?.(text);
+    return typeof transform === 'undefined' ? text : transform.input?.(text);
   };
 
   // Platform-specific event handlers
@@ -47,7 +34,10 @@ const ForgerController = <TFieldValues extends FieldValues = FieldValues>(
       handlers.onChange = () => {};
     } else if (isReactNative) {
       // React Native components use different event handlers
-      if (isTextInput(component) || (component as React.ComponentType<unknown>)?.displayName === 'TextInput') {
+      if (
+        isTextInput(component) ||
+        (component as React.ComponentType<unknown>)?.displayName === 'TextInput'
+      ) {
         handlers.onChangeText = (value: unknown) => onChange(getTextTransform(value));
         handlers.onChange = () => {};
       } else if (isSwitch(component) || isPicker(component) || isSlider(component)) {
@@ -63,7 +53,7 @@ const ForgerController = <TFieldValues extends FieldValues = FieldValues>(
 
     return handlers;
   };
-  
+
   const handleTrigger = getEventHandlers();
 
   return (
@@ -88,9 +78,7 @@ const MemorizeController = memo<ForgerControllerProps<FieldValues>>(
 
     // Check if dependencies have changed
     if (dependencies.length > 0 && prevDependencies.length > 0) {
-      const depsChanged = dependencies.some((dep, index) => 
-        dep !== prevDependencies[index]
-      );
+      const depsChanged = dependencies.some((dep, index) => dep !== prevDependencies[index]);
       if (depsChanged) {
         return false; // Re-render if dependencies changed
       }
@@ -110,7 +98,7 @@ const MemorizeController = memo<ForgerControllerProps<FieldValues>>(
   }
 );
 
-MemorizeController.displayName = "MemorizeController";
+MemorizeController.displayName = 'MemorizeController';
 
 export const Forger = <T extends FieldValues>(props: ForgerProps<T>) => {
   // Fail-fast guard: Forger requires a single valid React element as its component.
@@ -145,4 +133,4 @@ export const Forger = <T extends FieldValues>(props: ForgerProps<T>) => {
   );
 };
 
-Forger.displayName = "Forger";
+Forger.displayName = 'Forger';

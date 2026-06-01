@@ -1,5 +1,5 @@
-import React from "react";
-import { Control, FieldValues, useWatch, useFormState } from "react-hook-form";
+import React from 'react';
+import { Control, FieldValues, useWatch, useFormState } from 'react-hook-form';
 
 /**
  * ForgePersist handler signature (D-12, D-01 break from pre-v1 firehose shape).
@@ -16,10 +16,7 @@ import { Control, FieldValues, useWatch, useFormState } from "react-hook-form";
  */
 type ForgePersist<TFieldValues extends FieldValues = FieldValues> = {
   control: Control<TFieldValues>;
-  handler: (
-    values: TFieldValues,
-    state: { isDirty: boolean; isValid: boolean }
-  ) => void;
+  handler: (values: TFieldValues, state: { isDirty: boolean; isValid: boolean }) => void;
 };
 
 export const usePersist = <TFieldProps extends FieldValues = FieldValues>({

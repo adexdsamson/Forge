@@ -1,10 +1,10 @@
-import { FieldError, FieldErrors, FieldValues, InternalFieldName } from "react-hook-form";
-import { get, set } from "../utils";
+import { FieldError, FieldErrors, FieldValues, InternalFieldName } from 'react-hook-form';
+import { get, set } from '../utils';
 
 export default <T extends FieldValues = FieldValues>(
   errors: FieldErrors<T>,
   error: Partial<Record<string, FieldError>>,
-  name: InternalFieldName,
+  name: InternalFieldName
 ): FieldErrors<T> => {
   const existing = get(errors, name);
   // Field-array errors are index-aligned: errors[name][i] corresponds to row i, with

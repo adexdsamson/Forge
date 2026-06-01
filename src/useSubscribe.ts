@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export type Noop = () => void;
 
@@ -35,7 +35,7 @@ export function useSubscribe<T>(props: Props<T>) {
       });
 
     return () => {
-      if(subscription) {
+      if (subscription) {
         subscription?.unsubscribe?.();
       }
     };

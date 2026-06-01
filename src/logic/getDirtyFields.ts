@@ -1,14 +1,17 @@
-import deepEqual, { isNullOrUndefined, isObject, isPrimitive, isUndefined, objectHasFunction } from "../utils";
+import deepEqual, {
+  isNullOrUndefined,
+  isObject,
+  isPrimitive,
+  isUndefined,
+  objectHasFunction,
+} from '../utils';
 
 function markFieldsDirty<T>(data: T, fields: Record<string, any> = {}) {
   const isParentNodeArray = Array.isArray(data);
 
   if (isObject(data) || isParentNodeArray) {
     for (const key in data) {
-      if (
-        Array.isArray(data[key]) ||
-        (isObject(data[key]) && !objectHasFunction(data[key]))
-      ) {
+      if (Array.isArray(data[key]) || (isObject(data[key]) && !objectHasFunction(data[key]))) {
         fields[key] = Array.isArray(data[key]) ? [] : {};
         markFieldsDirty(data[key], fields[key]);
       } else if (!isNullOrUndefined(data[key])) {
@@ -26,20 +29,14 @@ function getDirtyFieldsFromDefaultValues<T>(
   dirtyFieldsFromValues: Record<
     Extract<keyof T, string>,
     ReturnType<typeof markFieldsDirty> | boolean
-  >,
+  >
 ) {
   const isParentNodeArray = Array.isArray(data);
 
   if (isObject(data) || isParentNodeArray) {
     for (const key in data) {
-      if (
-        Array.isArray(data[key]) ||
-        (isObject(data[key]) && !objectHasFunction(data[key]))
-      ) {
-        if (
-          isUndefined(formValues) ||
-          isPrimitive(dirtyFieldsFromValues[key])
-        ) {
+      if (Array.isArray(data[key]) || (isObject(data[key]) && !objectHasFunction(data[key]))) {
+        if (isUndefined(formValues) || isPrimitive(dirtyFieldsFromValues[key])) {
           dirtyFieldsFromValues[key] = Array.isArray(data[key])
             ? markFieldsDirty(data[key], [])
             : { ...markFieldsDirty(data[key]) };
@@ -47,7 +44,7 @@ function getDirtyFieldsFromDefaultValues<T>(
           getDirtyFieldsFromDefaultValues(
             data[key],
             isNullOrUndefined(formValues) ? {} : formValues[key],
-            dirtyFieldsFromValues[key],
+            dirtyFieldsFromValues[key]
           );
         }
       } else {
@@ -60,8 +57,4 @@ function getDirtyFieldsFromDefaultValues<T>(
 }
 
 export default <T>(defaultValues: T, formValues: T) =>
-  getDirtyFieldsFromDefaultValues(
-    defaultValues,
-    formValues,
-    markFieldsDirty(formValues),
-  );
+  getDirtyFieldsFromDefaultValues(defaultValues, formValues, markFieldsDirty(formValues));

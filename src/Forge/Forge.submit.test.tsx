@@ -8,13 +8,13 @@
  */
 
 /// <reference types="vitest/globals" />
-import React from "react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { Forge } from "./Forge";
-import { Forger } from "../Forger/Forger";
-import { useForge } from "../useForge/useForge";
+import React from 'react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Forge } from './Forge';
+import { Forger } from '../Forger/Forger';
+import { useForge } from '../useForge/useForge';
 
 // ---------------------------------------------------------------------------
 // Minimal custom text-input that Forger wraps.
@@ -27,10 +27,10 @@ const TextInput = React.forwardRef<
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
     name?: string;
-    "data-testid"?: string;
+    'data-testid'?: string;
   }
 >((props, ref) => {
-  const { value = "", onChange, onBlur, name, ...rest } = props;
+  const { value = '', onChange, onBlur, name, ...rest } = props;
   return (
     <input
       ref={ref}
@@ -43,21 +43,21 @@ const TextInput = React.forwardRef<
     />
   );
 });
-TextInput.displayName = "TextInput";
+TextInput.displayName = 'TextInput';
 
 // ---------------------------------------------------------------------------
 // Test 1: Native submit button — clicking type="submit" fires onSubmit
 // ---------------------------------------------------------------------------
-describe("Forge — submit behaviors (RISK-04 / CORR-01 / CORR-04)", () => {
+describe('Forge — submit behaviors (RISK-04 / CORR-01 / CORR-04)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it("Test 1: native submit button fires onSubmit with field values", async () => {
+  it('Test 1: native submit button fires onSubmit with field values', async () => {
     const onSubmit = vi.fn();
 
     function TestForm() {
-      const { control } = useForge({ defaultValues: { username: "alice" } });
+      const { control } = useForge({ defaultValues: { username: 'alice' } });
       return (
         <Forge control={control} onSubmit={onSubmit}>
           <Forger
@@ -75,13 +75,13 @@ describe("Forge — submit behaviors (RISK-04 / CORR-01 / CORR-04)", () => {
 
     render(<TestForm />);
 
-    const submitBtn = screen.getByTestId("submit-btn");
+    const submitBtn = screen.getByTestId('submit-btn');
     await userEvent.click(submitBtn);
 
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledTimes(1);
       expect(onSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({ username: "alice" }),
+        expect.objectContaining({ username: 'alice' }),
         expect.anything()
       );
     });
@@ -90,18 +90,14 @@ describe("Forge — submit behaviors (RISK-04 / CORR-01 / CORR-04)", () => {
   // -------------------------------------------------------------------------
   // Test 2: Enter-to-submit — pressing Enter inside focused text field fires onSubmit
   // -------------------------------------------------------------------------
-  it("Test 2: Enter key in a text field submits the form", async () => {
+  it('Test 2: Enter key in a text field submits the form', async () => {
     const onSubmit = vi.fn();
 
     function TestForm() {
-      const { control } = useForge({ defaultValues: { email: "" } });
+      const { control } = useForge({ defaultValues: { email: '' } });
       return (
         <Forge control={control} onSubmit={onSubmit}>
-          <Forger
-            name="email"
-            component={TextInput}
-            data-testid="email-input"
-          />
+          <Forger name="email" component={TextInput} data-testid="email-input" />
           <button type="submit">Submit</button>
         </Forge>
       );
@@ -109,15 +105,15 @@ describe("Forge — submit behaviors (RISK-04 / CORR-01 / CORR-04)", () => {
 
     render(<TestForm />);
 
-    const input = screen.getByTestId("email-input");
+    const input = screen.getByTestId('email-input');
     await userEvent.click(input);
-    await userEvent.type(input, "test@example.com");
-    await userEvent.keyboard("{Enter}");
+    await userEvent.type(input, 'test@example.com');
+    await userEvent.keyboard('{Enter}');
 
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledTimes(1);
       expect(onSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({ email: "test@example.com" }),
+        expect.objectContaining({ email: 'test@example.com' }),
         expect.anything()
       );
     });
@@ -133,14 +129,14 @@ describe("Forge — submit behaviors (RISK-04 / CORR-01 / CORR-04)", () => {
   // data-wizard-nav="next" + type="button" to onClick = handleWizardSubmit(onSubmit)
   // on the last step, or handleNext on earlier steps.
   // -------------------------------------------------------------------------
-  it("Test 3: wizard last-step submit fires onSubmit when next button clicked on final step", async () => {
+  it('Test 3: wizard last-step submit fires onSubmit when next button clicked on final step', async () => {
     const onSubmit = vi.fn();
 
     function WizardForm() {
       const { control } = useForge({
         isWizard: true,
         totalSteps: 2,
-        defaultValues: { step1: "first", step2: "second" },
+        defaultValues: { step1: 'first', step2: 'second' },
       });
 
       return (
@@ -150,31 +146,19 @@ describe("Forge — submit behaviors (RISK-04 / CORR-01 / CORR-04)", () => {
         <Forge control={control} onSubmit={onSubmit}>
           {/* Step 0 */}
           <div>
-            <Forger
-              name="step1"
-              component={TextInput}
-              data-testid="step1-input"
-            />
+            <Forger name="step1" component={TextInput} data-testid="step1-input" />
             <button type="button" data-wizard-nav="next" data-testid="next-btn">
               Next
             </button>
           </div>
           {/* Step 1 — last step */}
           <div>
-            <Forger
-              name="step2"
-              component={TextInput}
-              data-testid="step2-input"
-            />
+            <Forger name="step2" component={TextInput} data-testid="step2-input" />
             {/*
               On the last step, Forge replaces onClick with
               handleWizardSubmit(safeOnSubmit) — pressing this fires onSubmit.
             */}
-            <button
-              type="button"
-              data-wizard-nav="next"
-              data-testid="wizard-submit-btn"
-            >
+            <button type="button" data-wizard-nav="next" data-testid="wizard-submit-btn">
               Submit
             </button>
           </div>
@@ -185,17 +169,17 @@ describe("Forge — submit behaviors (RISK-04 / CORR-01 / CORR-04)", () => {
     render(<WizardForm />);
 
     // We should be on step 0 — click Next to advance to step 1
-    const nextBtn = screen.getByTestId("next-btn");
+    const nextBtn = screen.getByTestId('next-btn');
     await userEvent.click(nextBtn);
 
     // Now on step 1 (last step) — the submit button should trigger onSubmit
-    const wizardSubmitBtn = await screen.findByTestId("wizard-submit-btn");
+    const wizardSubmitBtn = await screen.findByTestId('wizard-submit-btn');
     await userEvent.click(wizardSubmitBtn);
 
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledTimes(1);
       expect(onSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({ step1: "first", step2: "second" }),
+        expect.objectContaining({ step1: 'first', step2: 'second' }),
         expect.anything()
       );
     });

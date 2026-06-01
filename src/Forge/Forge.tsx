@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, {
   Children,
@@ -7,9 +7,9 @@ import React, {
   FormEvent,
   useCallback,
   useImperativeHandle,
-} from "react";
-import { FieldValues, FormProvider } from "react-hook-form";
-import { ForgeProps } from "../types";
+} from 'react';
+import { FieldValues, FormProvider } from 'react-hook-form';
+import { ForgeProps } from '../types';
 import {
   isButtonSlot,
   isButtonSubmitSlot,
@@ -17,12 +17,9 @@ import {
   isInputSlot,
   isNestedSlot,
   isReactNative,
-} from "../utils";
-import {
-  getComponentType,
-  getEventHandlerName,
-} from "../reactNative";
-import { Forger } from "../Forger";
+} from '../utils';
+import { getComponentType, getEventHandlerName } from '../reactNative';
+import { Forger } from '../Forger';
 
 // Dev-only: lazy-load @hookform/devtools via synchronous require so it is never
 // included in the production bundle. @hookform/devtools is declared as an optional
@@ -34,7 +31,7 @@ declare function require(module: string): any; // eslint-disable-line no-var
 function loadDevTool(): React.ComponentType<{ control: unknown }> {
   try {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require("@hookform/devtools").DevTool;
+    return require('@hookform/devtools').DevTool;
   } catch {
     throw new Error(
       "Forge: debug mode requires '@hookform/devtools'. Install it with `npm i -D @hookform/devtools`."
@@ -51,20 +48,17 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
   ref,
   isNative,
   debug,
-  platform = "auto",
+  platform = 'auto',
 }: ForgeProps<TFieldValues>) => {
   const safeOnSubmit = useCallback(onSubmit ?? (() => {}), [onSubmit]);
   // Determine the actual platform to use
-  const actualPlatform =
-    platform === "auto" ? (isReactNative ? "react-native" : "web") : platform;
+  const actualPlatform = platform === 'auto' ? (isReactNative ? 'react-native' : 'web') : platform;
 
-  const isRNMode =
-    actualPlatform === "react-native" || (isNative && isReactNative);
+  const isRNMode = actualPlatform === 'react-native' || (isNative && isReactNative);
 
   // Wizard state management
   // Handle both ReactNode and function children for wizard mode
-  const childrenArray =
-    typeof children === "function" ? [children] : Children.toArray(children);
+  const childrenArray = typeof children === 'function' ? [children] : Children.toArray(children);
 
   // Get wizard state and functions from control object
   const {
@@ -84,10 +78,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
   type AnyElement = React.ReactElement<Record<string, unknown>>;
 
   // Recursive function to traverse and process the entire nested tree of children
-  const processChildrenRecursively = (
-    children: React.ReactNode,
-    depth = 0
-  ): React.ReactNode => {
+  const processChildrenRecursively = (children: React.ReactNode, depth = 0): React.ReactNode => {
     // Prevent infinite recursion with a reasonable depth limit
     if (depth > 10) {
       return children;
@@ -109,7 +100,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
       // NOTE: a ReactElement's .type can be a function (FC/class), but the element itself
       // is never a function after isValidElement. This branch guards legacy render-prop
       // consumers who accidentally pass a bare function as a child before Forge wraps it.
-      if (typeof child === "function") {
+      if (typeof child === 'function') {
         const wizardProps = isWizard
           ? {
               currentStep,
@@ -122,7 +113,10 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
             }
           : {};
 
-        return (child as unknown as (p: Record<string, unknown>) => React.ReactNode)({ control, ...wizardProps });
+        return (child as unknown as (p: Record<string, unknown>) => React.ReactNode)({
+          control,
+          ...wizardProps,
+        });
       }
 
       // Handle submit button
@@ -141,13 +135,13 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
 
       // Handle button elements - attach form submit handler or wizard navigation
       if (isButtonSlot(child)) {
-        const wizardNav = childProps["data-wizard-nav"];
+        const wizardNav = childProps['data-wizard-nav'];
 
         if (isWizard && wizardNav) {
           let onClick: (() => void) | undefined;
           let disabled = false;
 
-          if (wizardNav === "next") {
+          if (wizardNav === 'next') {
             if (currentStep === totalSteps - 1) {
               // Last step - submit form via RHF-validated handleWizardSubmit threaded with onSubmit.
               // Fall back to handleSubmit when handleWizardSubmit is absent (hand-built ForgeControl).
@@ -158,7 +152,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
               // Navigate to next step
               onClick = handleNext;
             }
-          } else if (wizardNav === "previous") {
+          } else if (wizardNav === 'previous') {
             onClick = handlePrevious;
             disabled = currentStep === 0;
           }
@@ -166,8 +160,8 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
           return cloneElement(el, {
             ...childProps,
             onClick,
-            className: `${(childProps.className as string) || ""} ${
-              isWizard ? "wizard-button" : ""
+            className: `${(childProps.className as string) || ''} ${
+              isWizard ? 'wizard-button' : ''
             }`,
             disabled: disabled || childProps.disabled,
           });
@@ -180,7 +174,9 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
       if (isInputSlot(child) && (isNative || isRNMode)) {
         const componentType = getComponentType(child);
         const eventHandlerName = getEventHandlerName(componentType);
-        const registrationProps = control.register(childProps.name as Parameters<typeof control.register>[0]);
+        const registrationProps = control.register(
+          childProps.name as Parameters<typeof control.register>[0]
+        );
 
         // Merge platform-specific props
         const platformProps = isRNMode
@@ -204,10 +200,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
 
       // If this element has children, process them recursively
       if (childChildren) {
-        const processedChildren = processChildrenRecursively(
-          childChildren,
-          depth + 1
-        );
+        const processedChildren = processChildrenRecursively(childChildren, depth + 1);
 
         // For nested container elements (div, section, main), use createElement to preserve structure
         if (isNestedSlot(child)) {
@@ -265,30 +258,26 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
     updatedChildren = processChildrenRecursively(children);
   }
 
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        onSubmit: () => {
-          if (isWizard && !isLastStep) {
-            // On intermediate wizard steps, programmatic submit advances the wizard,
-            // agreeing with the in-tree wizard nav button behavior (WR-02).
-            handleNext?.();
-            return;
-          }
-          // On the last step (or non-wizard), submit via the same path as the nav button.
-          if (control.handleWizardSubmit) {
-            control.handleWizardSubmit(safeOnSubmit)();
-          } else {
-            control.handleSubmit(safeOnSubmit)();
-          }
-        },
-        currentStep,
-        totalSteps,
-      };
-    },
-    [safeOnSubmit, control, currentStep, totalSteps, isWizard, isLastStep, handleNext]
-  );
+  useImperativeHandle(ref, () => {
+    return {
+      onSubmit: () => {
+        if (isWizard && !isLastStep) {
+          // On intermediate wizard steps, programmatic submit advances the wizard,
+          // agreeing with the in-tree wizard nav button behavior (WR-02).
+          handleNext?.();
+          return;
+        }
+        // On the last step (or non-wizard), submit via the same path as the nav button.
+        if (control.handleWizardSubmit) {
+          control.handleWizardSubmit(safeOnSubmit)();
+        } else {
+          control.handleSubmit(safeOnSubmit)();
+        }
+      },
+      currentStep,
+      totalSteps,
+    };
+  }, [safeOnSubmit, control, currentStep, totalSteps, isWizard, isLastStep, handleNext]);
 
   // CR-01: Wizard-aware form submit guard.
   // On intermediate wizard steps, Enter/implicit submit advances the wizard instead
@@ -304,9 +293,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
   };
 
   const renderFieldProps = control.hasFields
-    ? control?.fields?.map((inputs, index) => (
-        <Forger key={index} {...inputs} />
-      ))
+    ? control?.fields?.map((inputs, index) => <Forger key={index} {...inputs} />)
     : null;
 
   const formChildren = (
@@ -316,7 +303,7 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
       {isWizard && (
         <div
           className="wizard-info"
-          style={{ marginTop: "1rem", fontSize: "0.875rem", color: "#666" }}
+          style={{ marginTop: '1rem', fontSize: '0.875rem', color: '#666' }}
         >
           Step {currentStep + 1} of {totalSteps}
         </div>
@@ -342,23 +329,17 @@ export const Forge = <TFieldValues extends FieldValues = FieldValues>({
     // Tracked for a clean retype in a future phase when <Forge> accepts `methods` directly.
     <FormProvider
       {...(control as unknown as Parameters<typeof FormProvider>[0])}
-      control={control as unknown as Parameters<typeof FormProvider>[0]["control"]}
+      control={control as unknown as Parameters<typeof FormProvider>[0]['control']}
     >
       {isRNMode ? (
         // React Native: render a plain Fragment — no wrapper element, no className/style
         // (consumers wrap in their own <View> for layout). No hard react-native import.
-        <>
-          {formChildren}
-        </>
+        <>{formChildren}</>
       ) : (
         // Web: render a real <form> element so native browser submit semantics apply
         // (Enter-to-submit, type="submit" button, native required/pattern validation).
         // RHF's handleSubmit calls event.preventDefault() internally (T-01-01).
-        <form
-          className={className}
-          noValidate={noValidate}
-          onSubmit={onFormSubmit}
-        >
+        <form className={className} noValidate={noValidate} onSubmit={onFormSubmit}>
           {formChildren}
         </form>
       )}

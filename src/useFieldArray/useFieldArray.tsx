@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 import {
   FieldValues,
   FieldArrayPath,
   UseFieldArrayProps,
   useFormContext,
   useFieldArray as useRHFFieldArray,
-} from "react-hook-form";
+} from 'react-hook-form';
 
 type ForgeFieldArray<
   T extends FieldValues,
   TF extends FieldArrayPath<T>,
-  TK extends string = "id",
-  IN = unknown
+  TK extends string = 'id',
+  IN = unknown,
 > = UseFieldArrayProps<T, TF, TK> & {
   inputProps: IN;
 };
@@ -20,20 +20,13 @@ export const useFieldArray = <
   InputProps = unknown,
   TFieldValues extends FieldValues = FieldValues,
   TFieldArrayName extends FieldArrayPath<TFieldValues> = FieldArrayPath<TFieldValues>,
-  TKeyName extends string = "id"
+  TKeyName extends string = 'id',
 >(
   props: ForgeFieldArray<TFieldValues, TFieldArrayName, TKeyName, InputProps>
 ) => {
   const methods = useFormContext<TFieldValues>();
 
-  const {
-    control = methods.control,
-    name,
-    keyName,
-    inputProps,
-    rules,
-    shouldUnregister,
-  } = props;
+  const { control = methods.control, name, keyName, inputProps, rules, shouldUnregister } = props;
 
   // D-06: Delegate all mutation, id tracking, focus, and validation to RHF's
   // public useFieldArray. Zero _* access.

@@ -1,12 +1,12 @@
 /// <reference types="vitest/globals" />
-import React from "react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, waitFor, act } from "@testing-library/react";
-import { Forge } from "../Forge/Forge";
-import { Forger } from "../Forger/Forger";
-import { useForge } from "../useForge/useForge";
-import { useForgeValues } from "./useForgeValues";
-import { TextInput } from "../test-utils";
+import React from 'react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, waitFor, act } from '@testing-library/react';
+import { Forge } from '../Forge/Forge';
+import { Forger } from '../Forger/Forger';
+import { useForge } from '../useForge/useForge';
+import { useForgeValues } from './useForgeValues';
+import { TextInput } from '../test-utils';
 
 // ---------------------------------------------------------------------------
 // useForgeValues — getValue, setValue, and throws-on-unknown tests.
@@ -21,7 +21,7 @@ import { TextInput } from "../test-utils";
 //   `useForgeValues.getValue: field "${name}" is not registered`
 // ---------------------------------------------------------------------------
 
-describe("useForgeValues — getValue, setValue, throws for unregistered field", () => {
+describe('useForgeValues — getValue, setValue, throws for unregistered field', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -29,7 +29,7 @@ describe("useForgeValues — getValue, setValue, throws for unregistered field",
   // -------------------------------------------------------------------------
   // Test 1: getValue returns the registered field value
   // -------------------------------------------------------------------------
-  it("getValue returns the registered field value", async () => {
+  it('getValue returns the registered field value', async () => {
     let capturedGetValue: any;
 
     // ValuesCapture must be a child inside <Forge> so FormProvider context is available.
@@ -41,7 +41,7 @@ describe("useForgeValues — getValue, setValue, throws for unregistered field",
 
     function TestForm() {
       const { control } = useForge({
-        defaultValues: { email: "test@example.com" },
+        defaultValues: { email: 'test@example.com' },
       });
       return (
         <Forge control={control} onSubmit={vi.fn()}>
@@ -54,14 +54,14 @@ describe("useForgeValues — getValue, setValue, throws for unregistered field",
     render(<TestForm />);
     await waitFor(() => expect(capturedGetValue).toBeDefined());
 
-    expect(capturedGetValue("email")).toBe("test@example.com");
+    expect(capturedGetValue('email')).toBe('test@example.com');
   });
 
   // -------------------------------------------------------------------------
   // Test 2: getValue throws for an unregistered field
   // Error: `useForgeValues.getValue: field "nonexistent" is not registered`
   // -------------------------------------------------------------------------
-  it("getValue throws for an unregistered field", async () => {
+  it('getValue throws for an unregistered field', async () => {
     let capturedGetValue: any;
 
     function ValuesCapture({ control }: { control: any }) {
@@ -71,7 +71,7 @@ describe("useForgeValues — getValue, setValue, throws for unregistered field",
     }
 
     function TestForm() {
-      const { control } = useForge({ defaultValues: { email: "" } });
+      const { control } = useForge({ defaultValues: { email: '' } });
       return (
         <Forge control={control} onSubmit={vi.fn()}>
           <Forger name="email" component={TextInput} />
@@ -85,7 +85,7 @@ describe("useForgeValues — getValue, setValue, throws for unregistered field",
 
     // The exact error message from useForgeValues.tsx lines 71-74:
     // `useForgeValues.getValue: field "${name}" is not registered`
-    expect(() => capturedGetValue("nonexistent" as any)).toThrow(
+    expect(() => capturedGetValue('nonexistent' as any)).toThrow(
       /useForgeValues\.getValue.*nonexistent.*not registered/
     );
   });
@@ -93,7 +93,7 @@ describe("useForgeValues — getValue, setValue, throws for unregistered field",
   // -------------------------------------------------------------------------
   // Test 3: setValue updates the field value; subsequent getValue reflects it
   // -------------------------------------------------------------------------
-  it("setValue updates a field and getValue returns the new value", async () => {
+  it('setValue updates a field and getValue returns the new value', async () => {
     let capturedGetValue: any;
     let capturedSetValue: any;
 
@@ -106,15 +106,11 @@ describe("useForgeValues — getValue, setValue, throws for unregistered field",
 
     function TestForm() {
       const { control } = useForge({
-        defaultValues: { email: "old@example.com" },
+        defaultValues: { email: 'old@example.com' },
       });
       return (
         <Forge control={control} onSubmit={vi.fn()}>
-          <Forger
-            name="email"
-            component={TextInput}
-            data-testid="email-input"
-          />
+          <Forger name="email" component={TextInput} data-testid="email-input" />
           <ValuesCapture control={control} />
         </Forge>
       );
@@ -124,16 +120,16 @@ describe("useForgeValues — getValue, setValue, throws for unregistered field",
     await waitFor(() => expect(capturedGetValue).toBeDefined());
 
     // Initial value
-    expect(capturedGetValue("email")).toBe("old@example.com");
+    expect(capturedGetValue('email')).toBe('old@example.com');
 
     // Update via setValue (RHF public API) — wrap in act to silence React update warning
     await act(async () => {
-      capturedSetValue("email", "new@example.com");
+      capturedSetValue('email', 'new@example.com');
     });
 
     // Verify via getValue after update
     await waitFor(() => {
-      expect(capturedGetValue("email")).toBe("new@example.com");
+      expect(capturedGetValue('email')).toBe('new@example.com');
     });
   });
 });

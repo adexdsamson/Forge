@@ -1,9 +1,4 @@
-import React, {
-  Children,
-  ReactElement,
-  ReactNode,
-  isValidElement,
-} from "react";
+import React, { Children, ReactElement, ReactNode, isValidElement } from 'react';
 import {
   Ref,
   Names,
@@ -18,33 +13,29 @@ import {
   ValidateResult,
   Message,
   ValidationRule,
-} from "react-hook-form";
+} from 'react-hook-form';
 export const isUndefined = (v: unknown): v is undefined => v === undefined;
-export const isString = (v: unknown): v is string => typeof v === "string";
-const isNumber = (v: unknown): v is number => typeof v === "number";
+export const isString = (v: unknown): v is string => typeof v === 'string';
+const isNumber = (v: unknown): v is number => typeof v === 'number';
 // CRITICAL: lodash isObject semantics — true for functions and arrays, false for null.
 // Do NOT use bare `typeof v === "object"` (true for null, false for functions — breaks deepEqual/getDirtyFields).
 export const isObject = (v: unknown): v is object =>
-  v !== null && (typeof v === "object" || typeof v === "function");
+  v !== null && (typeof v === 'object' || typeof v === 'function');
 
-export const isNullOrUndefined = (value: unknown): value is null | undefined =>
-  value == null;
+export const isNullOrUndefined = (value: unknown): value is null | undefined => value == null;
 
 export const isPlainObject = (tempObject: object) => {
-  const prototypeCopy =
-    tempObject.constructor && tempObject.constructor.prototype;
+  const prototypeCopy = tempObject.constructor && tempObject.constructor.prototype;
 
   return (
-    isObject(prototypeCopy) && prototypeCopy.hasOwnProperty("isPrototypeOf")
+    isObject(prototypeCopy) && Object.prototype.hasOwnProperty.call(prototypeCopy, 'isPrototypeOf')
   );
 };
 
 const isKey = (value: string) => /^\w*$/.test(value);
-export const isBoolean = (value: unknown): value is boolean =>
-  typeof value === "boolean";
+export const isBoolean = (value: unknown): value is boolean => typeof value === 'boolean';
 export const isMessage = (value: unknown): value is Message => isString(value);
-export const isDateObject = (value: unknown): value is Date =>
-  value instanceof Date;
+export const isDateObject = (value: unknown): value is Date => value instanceof Date;
 export const isPrimitive = (value: unknown): value is string | number | boolean =>
   isString(value) || isNumber(value) || isBoolean(value);
 
@@ -61,7 +52,7 @@ function baseGet(object: any, updatePath: (string | number)[]) {
 
 function isEmptyArray(obj: unknown[]) {
   for (const key in obj) {
-    if (obj.hasOwnProperty(key) && !isUndefined(obj[key])) {
+    if (Object.prototype.hasOwnProperty.call(obj, key) && !isUndefined(obj[key])) {
       return false;
     }
   }
@@ -69,7 +60,7 @@ function isEmptyArray(obj: unknown[]) {
 }
 
 export const stringToPath = (input: string): string[] =>
-  compact(input.replace(/["|']|\]/g, "").split(/\.|\[/));
+  compact(input.replace(/["|']|\]/g, '').split(/\.|\[/));
 
 export const appendAt = <T>(data: T[], value: T | T[]): T[] => [
   ...data,
@@ -82,39 +73,32 @@ export const fillEmptyArray = <T>(value: T | T[]): undefined[] | undefined =>
 export const isEmptyObject = (value: unknown): value is EmptyObject =>
   isObject(value) && !Object.keys(value).length;
 
-export const isWatched = (
-  name: InternalFieldName,
-  _names: Names,
-  isBlurEvent?: boolean
-) =>
+export const isWatched = (name: InternalFieldName, _names: Names, isBlurEvent?: boolean) =>
   !isBlurEvent &&
   (_names.watchAll ||
     _names.watch.has(name) ||
     [..._names.watch].some(
-      (watchName) =>
-        name.startsWith(watchName) &&
-        /^\.\w+/.test(name.slice(watchName.length))
+      (watchName) => name.startsWith(watchName) && /^\.\w+/.test(name.slice(watchName.length))
     ));
 
 export const isWeb =
-  typeof window !== "undefined" &&
-  typeof window.HTMLElement !== "undefined" &&
-  typeof document !== "undefined";
-export const isReactNative = !isWeb && typeof navigator !== "undefined" && navigator.product === "ReactNative";
-export const isMobile = isReactNative || (isWeb && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+  typeof window !== 'undefined' &&
+  typeof window.HTMLElement !== 'undefined' &&
+  typeof document !== 'undefined';
+export const isReactNative =
+  !isWeb && typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
+export const isMobile =
+  isReactNative ||
+  (isWeb &&
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 
-export const get = <T>(
-  object: T,
-  path?: string,
-  defaultValue?: unknown
-): any => {
+export const get = <T>(object: T, path?: string, defaultValue?: unknown): any => {
   if (!path || !isObject(object)) {
     return defaultValue;
   }
 
   const result = compact(path.split(/[,[\].]+?/)).reduce(
-    (result, key) =>
-      isNullOrUndefined(result) ? result : result[key as keyof {}],
+    (result, key) => (isNullOrUndefined(result) ? result : (result as any)[key]),
     object
   );
 
@@ -133,34 +117,32 @@ export const getFocusFieldName = (
   options.shouldFocus || isUndefined(options.shouldFocus)
     ? options.focusName ||
       `${name}.${isUndefined(options.focusIndex) ? index : options.focusIndex}.`
-    : "";
+    : '';
 
 export const compact = <TValue>(value: TValue[]) =>
   Array.isArray(value) ? value.filter(Boolean) : [];
 
-export const convertToArrayPayload = <T>(value: T) =>
-  Array.isArray(value) ? value : [value];
-export const isFunction = (value: unknown): value is Function =>
-  typeof value === "function";
-export const isRegex = (value: unknown): value is RegExp =>
-  value instanceof RegExp;
+export const convertToArrayPayload = <T>(value: T) => (Array.isArray(value) ? value : [value]);
+export const isFunction = (value: unknown): value is (...args: any[]) => any =>
+  typeof value === 'function';
+export const isRegex = (value: unknown): value is RegExp => value instanceof RegExp;
 
 export const VALIDATION_MODE = {
-  onBlur: "onBlur",
-  onChange: "onChange",
-  onSubmit: "onSubmit",
-  onTouched: "onTouched",
-  all: "all",
+  onBlur: 'onBlur',
+  onChange: 'onChange',
+  onSubmit: 'onSubmit',
+  onTouched: 'onTouched',
+  all: 'all',
 } as const;
 
 export const INPUT_VALIDATION_RULES = {
-  max: "max",
-  min: "min",
-  maxLength: "maxLength",
-  minLength: "minLength",
-  pattern: "pattern",
-  required: "required",
-  validate: "validate",
+  max: 'max',
+  min: 'min',
+  maxLength: 'maxLength',
+  minLength: 'minLength',
+  pattern: 'pattern',
+  required: 'required',
+  validate: 'validate',
 } as const;
 
 export const getValidationModes = (mode?: Mode): ValidationModeFlags => ({
@@ -210,7 +192,12 @@ export function cloneObject<T>(data: T): T {
     // Handle web-specific objects only in web environment
     !(isWeb && (data instanceof Blob || data instanceof FileList)) &&
     // Handle React Native specific objects
-    !(isReactNative && data && typeof data === 'object' && ('uri' in data || '_dispatchInstances' in data)) &&
+    !(
+      isReactNative &&
+      data &&
+      typeof data === 'object' &&
+      ('uri' in data || '_dispatchInstances' in data)
+    ) &&
     (isArray || isObject(data))
   ) {
     copy = isArray ? [] : {};
@@ -219,7 +206,7 @@ export function cloneObject<T>(data: T): T {
       copy = data;
     } else {
       for (const key in data) {
-        if (data.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
           copy[key] = cloneObject(data[key]);
         }
       }
@@ -252,13 +239,12 @@ export const removeArrayAt = <T>(data: T[], index?: number | number[]): T[] =>
       );
 
 export const generateId = () => {
-  const d =
-    typeof performance === "undefined" ? Date.now() : performance.now() * 1000;
+  const d = typeof performance === 'undefined' ? Date.now() : performance.now() * 1000;
 
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16 + d) % 16 | 0;
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = ((Math.random() * 16 + d) % 16) | 0;
 
-    return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+    return (c == 'x' ? r : (r & 0x3) | 0x8).toString(16);
   });
 };
 
@@ -278,8 +264,8 @@ export const set = (object: FieldValues, path: string, value?: unknown) => {
         isObject(objValue) || Array.isArray(objValue)
           ? objValue
           : !isNaN(+tempPath[index + 1])
-          ? []
-          : {};
+            ? []
+            : {};
     }
     object[key] = newValue;
     object = object[key];
@@ -288,11 +274,7 @@ export const set = (object: FieldValues, path: string, value?: unknown) => {
 };
 
 export function unset(object: any, path: string | (string | number)[]) {
-  const paths = Array.isArray(path)
-    ? path
-    : isKey(path)
-    ? [path]
-    : stringToPath(path);
+  const paths = Array.isArray(path) ? path : isKey(path) ? [path] : stringToPath(path);
 
   const childObject = paths.length === 1 ? object : baseGet(object, paths);
 
@@ -317,7 +299,7 @@ export function unset(object: any, path: string | (string | number)[]) {
 export function getValidateError(
   result: ValidateResult,
   ref: Ref,
-  type = "validate"
+  type = 'validate'
 ): FieldError | void {
   if (
     isMessage(result) ||
@@ -326,7 +308,7 @@ export function getValidateError(
   ) {
     return {
       type,
-      message: isMessage(result) ? result : "",
+      message: isMessage(result) ? result : '',
       ref,
     };
   }
@@ -337,15 +319,14 @@ export const getValueAndMessage = (validationData?: ValidationRule) =>
     ? validationData
     : {
         value: validationData,
-        message: "",
+        message: '',
       };
 
 export const isHTMLElement = (value: unknown): value is HTMLElement => {
   if (!isWeb) return false;
   const owner = value ? ((value as HTMLElement).ownerDocument as Document) : 0;
   return (
-    value instanceof
-    (owner && owner.defaultView ? owner.defaultView.HTMLElement : HTMLElement)
+    value instanceof (owner && owner.defaultView ? owner.defaultView.HTMLElement : HTMLElement)
   );
 };
 
@@ -359,21 +340,21 @@ export const isTextInput = (element: any): boolean => {
 
 export const isFileInput = (element: any): boolean => {
   if (!isWeb) return false;
-  return element && element.type === "file";
+  return element && element.type === 'file';
 };
 
 export const isCheckBoxInput = (element: any): boolean => {
   if (isReactNative) {
     return element && (element.displayName === 'CheckBox' || element.type === 'CheckBox');
   }
-  return isWeb && element && element.type === "checkbox";
+  return isWeb && element && element.type === 'checkbox';
 };
 
 export const isRadioInput = (element: any): boolean => {
   if (isReactNative) {
     return element && (element.displayName === 'RadioButton' || element.type === 'RadioButton');
   }
-  return isWeb && element && element.type === "radio";
+  return isWeb && element && element.type === 'radio';
 };
 
 // React Native specific component checks
@@ -399,11 +380,11 @@ type SlotProps = {
 
 export function Slot({ children, ...props }: SlotProps) {
   if (React.Children.count(children) > 1) {
-    throw new Error("Slot: only one child is allowed");
+    throw new Error('Slot: only one child is allowed');
   }
 
   if (React.isValidElement(children)) {
-    const customChildStyle = (children?.props as any)?.style  ?? [];
+    const customChildStyle = (children?.props as any)?.style ?? [];
     const style = props?.style ?? [];
 
     return React.cloneElement(children, {
@@ -419,7 +400,7 @@ export function Slot({ children, ...props }: SlotProps) {
   }
 
   // Non-element, non-null child (e.g. string, number, boolean) — fail fast
-  throw new Error("Slot: child must be a single valid React element");
+  throw new Error('Slot: child must be a single valid React element');
 }
 
 export type AsChildProps<DefaultElementProps, CustomProps> =
@@ -427,11 +408,11 @@ export type AsChildProps<DefaultElementProps, CustomProps> =
   | ({ asChild: true; children: React.ReactNode } & CustomProps);
 
 export function isButtonSubmitSlot(child: ReactNode): child is ReactElement {
-  return isValidElement(child) && (child as any).props.type === "submit";
+  return isValidElement(child) && (child as any).props.type === 'submit';
 }
 
 export function isButtonSlot(child: ReactNode): child is ReactElement {
-  return isValidElement(child) && (child as any).props.type === "button";
+  return isValidElement(child) && (child as any).props.type === 'button';
 }
 
 export function isElementSlot(child: ReactNode): child is ReactElement {
@@ -441,9 +422,9 @@ export function isElementSlot(child: ReactNode): child is ReactElement {
 export function isNestedSlot(child: ReactNode): child is ReactElement {
   return (
     isValidElement(child) &&
-    typeof child.type === "string" &&
+    typeof child.type === 'string' &&
     Children.count(child) !== 0 &&
-    ["section", "div", "main"].includes(child.type)
+    ['section', 'div', 'main'].includes(child.type)
   );
 }
 
@@ -451,11 +432,7 @@ export function isInputSlot(child: ReactNode): child is ReactElement {
   return isValidElement(child) && (child as any).props.name;
 }
 
-export default function deepEqual(
-  object1: any,
-  object2: any,
-  _internal_visited = new WeakSet(),
-) {
+export default function deepEqual(object1: any, object2: any, _internal_visited = new WeakSet()) {
   if (isPrimitive(object1) || isPrimitive(object2)) {
     return object1 === object2;
   }
@@ -513,7 +490,5 @@ export const objectHasFunction = <T>(data: T): boolean => {
 
 export const isMultipleSelect = (element: any): boolean => {
   if (!isWeb) return false;
-  return element && element.type === "select-multiple";
+  return element && element.type === 'select-multiple';
 };
-
-

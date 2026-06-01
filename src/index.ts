@@ -1,9 +1,9 @@
-export * from "./Forge"
-export * from "./Forger";
-export * from "./useForge";
-export * from "./usePersist";
-export * from "./useFieldArray";
-export * from "./useForgeValues";
+export * from './Forge';
+export * from './Forger';
+export * from './useForge';
+export * from './usePersist';
+export * from './useFieldArray';
+export * from './useForgeValues';
 export * from './types';
 export * from './reactNative';
 export * from './useSubscribe';
@@ -17,5 +17,5 @@ export {
   isRadioInput,
   isPicker,
   isSwitch,
-  isSlider
+  isSlider,
 } from './utils';

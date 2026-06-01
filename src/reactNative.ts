@@ -18,7 +18,7 @@ export const REACT_NATIVE_COMPONENTS = {
 // Platform-specific event handler mapping
 export const getEventHandlerName = (componentType: string): string => {
   if (!isReactNative) return 'onChange';
-  
+
   switch (componentType) {
     case REACT_NATIVE_COMPONENTS.TextInput:
       return 'onChangeText';
@@ -37,7 +37,7 @@ export const getEventHandlerName = (componentType: string): string => {
 // Platform-specific value property mapping
 export const getValuePropertyName = (componentType: string): string => {
   if (!isReactNative) return 'value';
-  
+
   switch (componentType) {
     case REACT_NATIVE_COMPONENTS.TextInput:
       return 'value';
@@ -56,41 +56,46 @@ export const getValuePropertyName = (componentType: string): string => {
 // React Native validation helpers
 export const setReactNativeError = (ref: any, error?: string) => {
   if (!isReactNative || !ref?.setNativeProps) return;
-  
+
   ref.setNativeProps({
     error: error || undefined,
-    style: error ? { borderColor: 'red' } : undefined
+    style: error ? { borderColor: 'red' } : undefined,
   });
 };
 
 // Platform-specific component detection
 export const getComponentType = (component: any): string => {
   if (!component) return 'unknown';
-  
+
   // Check displayName first (common in React Native)
   if (component.displayName) {
     return component.displayName;
   }
-  
+
   // Check type property
   if (component.type) {
-    return typeof component.type === 'string' ? component.type : component.type.displayName || 'unknown';
+    return typeof component.type === 'string'
+      ? component.type
+      : component.type.displayName || 'unknown';
   }
-  
+
   // For web components, check tagName
   if (isWeb && component.tagName) {
     return component.tagName.toLowerCase();
   }
-  
+
   return 'unknown';
 };
 
 // Cross-platform props merger
-export const mergePlatformProps = (baseProps: any, platformProps?: { web?: any; reactNative?: any }) => {
+export const mergePlatformProps = (
+  baseProps: any,
+  platformProps?: { web?: any; reactNative?: any }
+) => {
   if (!platformProps) return baseProps;
-  
+
   const platformSpecificProps = isReactNative ? platformProps.reactNative : platformProps.web;
-  
+
   return {
     ...baseProps,
     ...platformSpecificProps,
@@ -120,7 +125,7 @@ export const REACT_NATIVE_VALIDATION_RULES = {
 // React Native file handling (for image picker, document picker, etc.)
 export const handleReactNativeFile = (file: any) => {
   if (!isReactNative) return file;
-  
+
   // Handle React Native image picker result
   if (file && typeof file === 'object' && file.uri) {
     return {
@@ -130,7 +135,7 @@ export const handleReactNativeFile = (file: any) => {
       size: file.fileSize || file.size,
     };
   }
-  
+
   return file;
 };
 
@@ -143,7 +148,7 @@ export const getPlatform = () => {
 
 export const isValidReactNativeComponent = (component: any): boolean => {
   if (!isReactNative || !component) return false;
-  
+
   const componentType = getComponentType(component);
   return Object.values(REACT_NATIVE_COMPONENTS).includes(componentType as any);
 };

@@ -1,9 +1,9 @@
-import { isString, isUndefined } from "../utils";
-import { Field, NativeFieldValue } from "react-hook-form";
+import { isString, isUndefined } from '../utils';
+import { Field, NativeFieldValue } from 'react-hook-form';
 
 export default <T extends NativeFieldValue>(
   value: T,
-  { valueAsNumber, valueAsDate, setValueAs }: Field['_f'],
+  { valueAsNumber, valueAsDate, setValueAs }: Field['_f']
 ) =>
   isUndefined(value)
     ? value

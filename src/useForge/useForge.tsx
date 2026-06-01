@@ -1,16 +1,13 @@
-import { FieldValues, useForm } from "react-hook-form";
-import { useState } from "react";
-import { ForgeControl, UseForgeProps, UseForgeResult } from "../types";
+import { FieldValues, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { ForgeControl, UseForgeProps, UseForgeResult } from '../types';
 
 /**
  * A custom hook that returns a form component and form control functions using the `react-hook-form` library.
  * @param {UseForgeProps} options - The options for the form.
  * @returns {UseForgeResult} - The form control functions and the form component.
  */
-export const useForge = <
-  TFieldValues extends FieldValues = FieldValues,
-  TFieldProps = unknown
->({
+export const useForge = <TFieldValues extends FieldValues = FieldValues, TFieldProps = unknown>({
   defaultValues,
   resolver,
   mode,
@@ -32,8 +29,7 @@ export const useForge = <
     ...(props as any),
   });
 
-  const hasFields =
-    (typeof fields !== "undefined" && fields?.length !== 0) ?? false;
+  const hasFields = (typeof fields !== 'undefined' && fields?.length !== 0) ?? false;
 
   // Wizard state management — currentStep stays in React state so that wizard
   // step transitions trigger re-renders independently of control identity.
@@ -59,16 +55,18 @@ export const useForge = <
     methods.handleSubmit(onSubmit ?? (() => {}));
 
   // Create wizard props object (same shape as before; only the attach mechanism changes).
-  const wizardProps = isWizard ? {
-    isWizard,
-    currentStep,
-    totalSteps,
-    isFirstStep: currentStep === 0,
-    isLastStep: currentStep === totalSteps - 1,
-    handleNext,
-    handlePrevious,
-    handleWizardSubmit,
-  } : {};
+  const wizardProps = isWizard
+    ? {
+        isWizard,
+        currentStep,
+        totalSteps,
+        isFirstStep: currentStep === 0,
+        isLastStep: currentStep === totalSteps - 1,
+        handleNext,
+        handlePrevious,
+        handleWizardSubmit,
+      }
+    : {};
 
   // D-11: Augment control IN PLACE — same instance, prototype + _* internals intact.
   // This fixes the unstable-control identity that caused the useFieldArray useEffect
