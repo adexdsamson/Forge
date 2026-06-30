@@ -1,0 +1,38 @@
+title: "[Idea]: "
+labels: ["idea"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an API suggestion or feature idea? Start here before opening a formal feature request. Once the idea is concrete, we can move it to an issue.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or motivation
+      description: What's the underlying pain point or use case?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Rough proposal
+      description: An idea of what the API or behavior could look like. Pseudocode is welcome.
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options:
+        - Web
+        - React Native
+        - Both
+        - Not platform-specific
+    validations:
+      required: true
+  - type: textarea
+    id: prior-art
+    attributes:
+      label: Prior art / references
+      description: Links to similar APIs in react-hook-form, Formik, react-final-form, etc.

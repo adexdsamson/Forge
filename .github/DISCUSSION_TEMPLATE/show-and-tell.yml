@@ -1,0 +1,23 @@
+title: "[Show & Tell]: "
+labels: ["show-and-tell"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Built something with Forge? Share it here — a demo, an article, a pattern you discovered, anything.
+  - type: textarea
+    id: what
+    attributes:
+      label: What did you build?
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Link
+      description: Live demo, repo, blog post, screenshot, video, etc.
+  - type: textarea
+    id: highlights
+    attributes:
+      label: Interesting bits
+      description: Anything tricky, surprising, or worth sharing about how you used Forge?

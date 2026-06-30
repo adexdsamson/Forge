@@ -1,0 +1,43 @@
+name: Feature request
+description: Propose a concrete change to Forge's API or behavior.
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a rough idea or want to discuss tradeoffs? Start in [Discussions → Ideas](https://github.com/adexdsamson/Forge/discussions/categories/ideas) first. Open an issue when the proposal is concrete enough to implement.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What can't you do today, or what is awkward about the current API?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: The API change or new feature you want. Include code snippets where helpful.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Workarounds you've tried or other approaches you've considered.
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform impact
+      multiple: true
+      options:
+        - Web
+        - React Native
+        - Both
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context

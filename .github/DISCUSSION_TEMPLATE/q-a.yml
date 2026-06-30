@@ -1,0 +1,44 @@
+title: "[Q&A]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for usage questions and "how do I…" help. For confirmed bugs, please [open an issue](https://github.com/adexdsamson/Forge/issues/new?template=bug_report.yml) instead.
+  - type: textarea
+    id: question
+    attributes:
+      label: What are you trying to do?
+      description: Describe the goal, not just the symptom. The clearer the goal, the better the answer.
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What have you tried?
+      description: Code you've written, docs you've read, related discussions/issues you've seen.
+      placeholder: |
+        ```tsx
+        const { control } = useForge({ ... });
+        ```
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options:
+        - Web
+        - React Native (iOS)
+        - React Native (Android)
+        - Not platform-specific
+    validations:
+      required: true
+  - type: input
+    id: forge-version
+    attributes:
+      label: Forge version
+      placeholder: "1.1.0"
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context

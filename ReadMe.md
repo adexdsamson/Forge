@@ -276,6 +276,17 @@ A complete runnable React Native example with multiple field types, validation, 
 
 ---
 
+## Community & Support
+
+- **Questions / "how do I…"** → [Discussions → Q&A](https://github.com/adexdsamson/Forge/discussions/categories/q-a)
+- **API ideas & proposals** → [Discussions → Ideas](https://github.com/adexdsamson/Forge/discussions/categories/ideas)
+- **Show what you built** → [Discussions → Show & Tell](https://github.com/adexdsamson/Forge/discussions/categories/show-and-tell)
+- **Bugs & concrete feature requests** → [Issues](https://github.com/adexdsamson/Forge/issues)
+
+See [SUPPORT.md](./SUPPORT.md) for the full triage guide.
+
+---
+
 ## License
 
 MIT © adexdsamson
