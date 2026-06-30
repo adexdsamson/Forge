@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question (Q&A)
+    url: https://github.com/adexdsamson/Forge/discussions/categories/q-a
+    about: Usage questions, "how do I…", or help with your own code belong in Discussions.
+  - name: Propose an idea
+    url: https://github.com/adexdsamson/Forge/discussions/categories/ideas
+    about: Have an API suggestion or feature idea? Start a discussion before opening an issue.
+  - name: Show & Tell
+    url: https://github.com/adexdsamson/Forge/discussions/categories/show-and-tell
+    about: Share something you built with Forge.
